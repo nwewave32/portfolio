@@ -24,7 +24,7 @@ export class Wave {
     this.stageHeight = stageHeight;
 
     this.centerX = stageWidth / 2;
-    this.centerY = stageHeight / 2;
+    this.centerY = stageHeight / 6;
 
     this.pointGap = this.stageWidth / (this.totalPoints - 1); //현재 스크린 너비에서 전체 점의 개수 나눈값
     this.init();
@@ -36,7 +36,7 @@ export class Wave {
       const point = new Point(this.index + i, this.pointGap * i, this.centerY); //Point(index, x, y);
       this.points[i] = point;
     }
-    this.surferPoint = new Point(2, this.centerX + 200, this.centerY - 30);
+    this.surferPoint = new Point(2, this.centerX + 200, this.centerY - 35);
     this.textBubble = new Point(2, this.centerX + 300, this.centerY - 50);
   }
 
@@ -71,7 +71,7 @@ export class Wave {
 
   drawSurfer(ctx) {
     ctx.beginPath();
-    ctx.fillStyle = "#ff0000";
+    ctx.fillStyle = "rgba(0,0,0,0)";
     this.surferPoint.update();
     this.surfer.x = this.surferPoint.x;
     this.surfer.y = this.surferPoint.y; // 서퍼의 현재 좌표 업데이트
@@ -89,9 +89,14 @@ export class Wave {
 
     ctx.drawImage(img, this.surfer.x, this.surfer.y, 50, 50);
 
+    // const fishImg = new Image();
+    // fishImg.src = `${process.env.PUBLIC_URL}/fish.png`;
+
+    // ctx.drawImage(fishImg, 500, 500, 50, 50);
+
     if (this.isClicked) {
       ctx.beginPath();
-      ctx.fillStyle = "#00ff00";
+      ctx.fillStyle = "rgba(0,0,0,0.2)";
       ctx.arc(
         this.surfer.x + 100,
         this.surfer.y - 50,

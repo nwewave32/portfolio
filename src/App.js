@@ -1,138 +1,158 @@
 import "./css/reset.css";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
+import React, { useState, useEffect } from "react";
 
-import React, { useEffect, useRef, useState } from "react";
-import { WaveGroup } from "./waves/waveGroup"; // 기존 waveGroup import
+import Home from "./components/Home";
+import AboutMe from "./components/AboutMe";
+import Projects from "./components/Projects";
 
-const App = () => {
-  const canvasRef = useRef(null); // Canvas에 대한 Ref 생성
-  const surferRef = useRef(null); // Canvas에 대한 Ref 생성
-  const mainInstance = useRef(null); // Main 클래스 인스턴스 보관
+import Contact from "./components/Contact";
+import styled from "styled-components";
+import { Link } from "react-router-dom";
 
-  const [mouseX, setMouseX] = useState(0); // 마우스 위치 저장
-  const [ripples, setRipples] = useState([]); // 물방울 효과 저장
+const AppContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+`;
 
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    const ctx = canvas.getContext("2d");
-    const waveHeight = 200;
-    const waveLength = canvas.width / 10;
-    const speed = 0.03;
-    let phase = 0;
+const MainContainer = styled.main`
+  flex: 1;
+`;
+const HeaderContainer = styled.header.withConfig({
+  shouldForwardProp: (prop) => !["isHome"].includes(prop),
+})`
+  background-color: ${(props) =>
+    props.isHome ? "rgba(255,255,255,0.4)" : "#282c34"};
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: ${(props) => (props.isHome ? "rgba(0,0,0,0.4)" : "#fff")};
+  position: sticky;
+  top: 0;
+  z-index: 50;
+`;
 
-    const drawRipple = () => {
-      // 물방울 효과 그리기
-      ripples.forEach((ripple, index) => {
-        ripple.radius += 2; // 물방울 크기 증가
-        ctx.beginPath();
-        ctx.arc(ripple.x, ripple.y, ripple.radius, 0, Math.PI * 2);
-        ctx.strokeStyle = `rgba(255, 255, 255, ${1 - ripple.radius / 100})`; // 점점 투명해짐
-        ctx.stroke();
-        ctx.closePath();
+const Logo = styled.div`
+  font-size: 1.5rem;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+`;
 
-        // 물방울이 너무 커지면 배열에서 제거
-        if (ripple.radius > 100) {
-          ripples.splice(index, 1);
-        }
-      });
-      requestAnimationFrame(drawRipple);
-    };
-    // 파도 그리기 함수
-    const drawWave = () => {
-      ctx.beginPath();
-      ctx.moveTo(0, canvas.height / 2);
+const Nav = styled.nav.withConfig({
+  shouldForwardProp: (prop) => !["isHome"].includes(prop),
+})`
+  a {
+    text-decoration: none;
+    margin: 0 10px;
+    font-size: 1rem;
+    color: ${(props) => (props.isHome ? "rgba(0,0,0,0.4)" : "#fff")};
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+`;
 
-      for (let x = 0; x < canvas.width; x += 10) {
-        const y =
-          waveHeight *
-            Math.sin(
-              (x + phase + (mouseX / window.innerWidth) * 50) / waveLength
-            ) + // 마우스에 따른 파도 흔들림
-          canvas.height / 2;
-        ctx.lineTo(x, y);
-      }
-
-      // ctx.lineTo(canvas.width, canvas.height);
-      // ctx.lineTo(0, canvas.height);
-      // ctx.closePath();
-      // ctx.fillStyle = "#6ec6ff";
-      // ctx.fill();
-
-      phase += speed; // 파도 움직임 업데이트
-      requestAnimationFrame(drawWave);
-    };
-    drawRipple();
-    // drawWave();
-  }, [mouseX, ripples]);
-
-  // 마우스 움직임에 따른 파도 흔들림
-  const handleMouseMove = (e) => {
-    setMouseX(e.clientX);
-  };
-
-  // 클릭 시 물방울 효과 추가
-  const handleClick = (e) => {
-    const newRipple = { x: e.clientX, y: e.clientY, radius: 0 };
-    setRipples((oldRipples) => [...oldRipples, newRipple]);
-  };
+const Header = ({}) => {
+  const [isHome, setIsHome] = useState("");
+  const location = useLocation();
 
   useEffect(() => {
-    // 컴포넌트가 마운트될 때만 Main 클래스 인스턴스 생성
-    mainInstance.current = new Main(canvasRef.current);
-
-    // 언마운트될 때 정리 작업
-    return () => {
-      window.removeEventListener("resize", mainInstance.current.resize);
-    };
-  }, []);
-
+    setIsHome(location.pathname.replace("/", "") === "");
+  }, [location]);
+  const navigate = useNavigate();
   return (
-    <canvas
-      ref={canvasRef}
-      onMouseMove={handleMouseMove}
-      onClick={(e) => {
-        e.stopPropagation();
-        handleClick(e);
-      }}
-    />
+    <HeaderContainer isHome={isHome}>
+      <Logo
+        onClick={() => {
+          navigate("/");
+        }}
+      >
+        <img src="wave.png" width={50} alt="nwewave" />
+      </Logo>
+
+      <Nav isHome={isHome}>
+        <Link to="/">Home</Link>
+        <Link to="/about">About Me</Link>
+        <Link to="/projects">Projects</Link>
+
+        <Link to="/contact">Contact</Link>
+      </Nav>
+    </HeaderContainer>
   );
 };
 
-class Main {
-  constructor(canvas) {
-    this.canvas = canvas;
-    this.ctx = this.canvas.getContext("2d");
+const FooterContainer = styled.footer.withConfig({
+  shouldForwardProp: (prop) => !["isHome"].includes(prop),
+})`
+visibility: ${(props) => (props.isHome ? "hidden" : "visible")}
+  background-color: #282c34;
+  color: white;
+  padding: 20px;
+  text-align: center;
+`;
 
-    this.waveGroup = new WaveGroup();
-    window.addEventListener("resize", this.resize.bind(this), false);
-    this.resize();
-    // this.canvas.addEventListener("click", (event) => {
-    //   this.waveGroup.handleClick(event, this.canvas);
-    // });
-    if (!this.clickListenerAdded) {
-      this.canvas.addEventListener("click", (event) => {
-        this.waveGroup.handleClick(event, this.canvas, this.ctx); // bind 대신 바로 함수 호출
-      });
-      this.clickListenerAdded = true; // 리스너가 등록되었음을 표시
+const SocialLinks = styled.div`
+  margin-top: 10px;
+
+  a {
+    color: #61dafb;
+    margin: 0 10px;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
     }
-    requestAnimationFrame(this.animate.bind(this));
   }
+`;
 
-  resize() {
-    this.stageWidth = document.body.clientWidth;
-    this.stageHeight = document.body.clientHeight;
+const Footer = ({}) => {
+  const [isHome, setIsHome] = useState("");
+  const location = useLocation();
 
-    this.canvas.width = this.stageWidth * 2;
-    this.canvas.height = this.stageHeight * 2;
-    this.ctx.scale(2, 2);
+  useEffect(() => {
+    setIsHome(location.pathname.replace("/", "") === "");
+  }, [location]);
+  return (
+    <FooterContainer isHome={isHome}>
+      <p>Copyright 2024. KIMHAMIN. All rights reserved.</p>
+      <SocialLinks>
+        <a href="https://github.com/nwewave32">GitHub</a>
+        <a href="https://linkedin.com/in/hamin-kim-6379472b1">LinkedIn</a>
+      </SocialLinks>
+    </FooterContainer>
+  );
+};
 
-    this.waveGroup.resize(this.stageWidth, this.stageHeight);
-  }
+const App = () => {
+  return (
+    <>
+      <Router>
+        <AppContainer>
+          <Header />
+          <MainContainer>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/about" element={<AboutMe />} />
+              <Route path="/projects" element={<Projects />} />
 
-  animate(t) {
-    this.ctx.clearRect(0, 0, this.stageWidth, this.stageHeight);
-    this.waveGroup.draw(this.ctx);
-    requestAnimationFrame(this.animate.bind(this));
-  }
-}
+              <Route path="/contact" element={<Contact />} />
+            </Routes>
+          </MainContainer>
+          <Footer />
+        </AppContainer>
+      </Router>
+    </>
+  );
+};
 
 export default App;
