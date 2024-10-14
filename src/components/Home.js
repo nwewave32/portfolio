@@ -1,9 +1,9 @@
 import styled from "styled-components";
 import React, { useEffect, useRef, useState } from "react";
 import { Main } from "../waves/main";
+import { Link } from "react-router-dom";
 
 const HeroSection = styled.section`
-  background: #61dafb;
   color: #282c34;
   text-align: center;
   padding: 50px 20px;
@@ -25,6 +25,7 @@ const CTAButton = styled.button`
   font-size: 1.2rem;
   cursor: pointer;
   margin-top: 20px;
+  border: 1px solid #f5f5f5;
 
   &:hover {
     background-color: #444;
@@ -121,9 +122,14 @@ const Home = () => {
   return (
     <>
       <HeroSection>
-        <Heading>Welcome, I'm a Frontend Developer</Heading>
+        <Heading>
+          Welcome, I'm a Frontend Developer{" "}
+          <span style={{ fontWeight: 400 }}>nwewave</span>
+        </Heading>
         <Description>Let's surf with me!</Description>
-        <CTAButton>View My Projects</CTAButton>
+        <CTAButton>
+          <Link to="/projects">View My Projects</Link>
+        </CTAButton>
       </HeroSection>
       <StyledCanvas
         ref={canvasRef}

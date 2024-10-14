@@ -28,13 +28,11 @@ const MainContainer = styled.main`
 const HeaderContainer = styled.header.withConfig({
   shouldForwardProp: (prop) => !["isHome"].includes(prop),
 })`
-  background-color: ${(props) =>
-    props.isHome ? "rgba(255,255,255,0.4)" : "#282c34"};
   padding: 10px 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  color: ${(props) => (props.isHome ? "rgba(0,0,0,0.4)" : "#fff")};
+
   position: sticky;
   top: 0;
   z-index: 50;
@@ -55,7 +53,7 @@ const Nav = styled.nav.withConfig({
     text-decoration: none;
     margin: 0 10px;
     font-size: 1rem;
-    color: ${(props) => (props.isHome ? "rgba(0,0,0,0.4)" : "#fff")};
+
     &:hover {
       text-decoration: underline;
     }

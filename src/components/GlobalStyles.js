@@ -9,15 +9,21 @@ export const TechnologiesUsed = styled.div`
 export const Technology = styled.div`
   font-size: 0.9rem;
   margin-bottom: 5px;
-  background-color: #a9d4f5;
+  background-color: #61dafb;
   max-width: fit-content;
   padding: 4px 5px;
   border-radius: 8px;
   margin-right: 5px;
   word-break: keep-all;
+  color: white;
 `;
 
-export const FlexBox = styled.div.attrs((props) => {})`
+export const FlexBox = styled.div
+  .attrs((props) => {})
+  .withConfig({
+    shouldForwardProp: (prop) =>
+      !["justify", "direction", "align"].includes(prop),
+  })`
   display: flex;
   flex-direction: ${(props) => props.direction};
   justify-content: ${(props) => props.justify};

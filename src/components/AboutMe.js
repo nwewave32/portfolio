@@ -1,29 +1,39 @@
 import React, { useState } from "react";
 import styled, { keyframes } from "styled-components";
-import { Fade } from "react-awesome-reveal"; // 애니메이션 라이브러리
+import { Fade } from "react-awesome-reveal";
+import { FlexBox } from "./GlobalStyles";
+
+const AboutContainer = styled(FlexBox)`
+  width: 100%;
+  height: 100%;
+`;
 
 const AboutSection = styled.section`
   display: flex;
+  flex: 3;
   flex-direction: column;
   align-items: center;
-  padding: 50px;
-  background-color: #f5f5f5;
+  position: sticky;
+  top: 0;
+
+  padding: 80px 20px;
+  height: 100vh;
 `;
 
 const ProfileImageWrapper = styled.div`
   position: relative;
-  width: 200px;
-  height: 200px;
+  width: 180px;
+  height: 180px;
   border-radius: 50%;
   overflow: hidden;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 `;
 
 const ProfileImage = styled.img`
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.3s ease-in-out;
+  transition: transform 0.4s ease-in-out;
 
   &:hover {
     transform: scale(1.1);
@@ -33,18 +43,20 @@ const ProfileImage = styled.img`
 const AboutHeading = styled.h2`
   font-size: 2.5rem;
   margin-top: 20px;
+  text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3); /* 텍스트 그림자 강화 */
 `;
 
 const AboutText = styled.p`
-  font-size: 1.2rem;
-  max-width: 600px;
   text-align: center;
   margin: 20px 0;
+  padding: 0 20px;
+  font-size: 1.1rem;
+  word-break: keep-all;
 `;
 
 const Button = styled.button`
-  background-color: #61dafb;
-  color: white;
+  background-color: #61dafb; /* 버튼 배경색 */
+  color: #282c34; /* 버튼 텍스트 색상 */
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
@@ -53,22 +65,14 @@ const Button = styled.button`
   transition: background-color 0.3s ease-in-out;
 
   &:hover {
-    background-color: #21a1f1;
+    background-color: #21a1f1; /* 호버 시 버튼 배경색 */
   }
-`;
-
-const DetailsSection = styled.div`
-  width: 100%;
-  margin-top: 30px;
-  display: flex;
-  justify-content: center;
-  padding: 20px 24px;
-  text-align: left;
 `;
 
 const CareerHeading = styled.h3`
   font-size: 1.8rem;
   margin-bottom: 10px;
+  cursor: pointer;
 `;
 
 const CareerList = styled.ul`
@@ -98,30 +102,42 @@ const SlideIn = keyframes`
     transform: translateY(0);
   }
 `;
-
+const DetailsSection = styled(FlexBox)`
+  flex: 7;
+  width: 100%;
+`;
 const DetailsWrapper = styled.div`
   animation: ${SlideIn} 0.6s ease forwards;
+  padding: 50px 0;
 `;
 
 const StyledUl = styled.ul`
   margin-top: 5px;
+  list-style-type: none;
+  padding: 0;
 `;
 
 const SkillsSection = styled.section`
-  padding: 50px;
-  background-color: #f5f5f5;
+  padding: 50px 100px;
   text-align: center;
-`; //rgb(244, 242, 237)
+`;
 
-const SkillSet = styled.div`
-  display: flex;
-  justify-content: center;
+const SkillTitle = styled.h2`
+  margin-bottom: 20px;
+  font-weight: 200;
+`;
+
+const SkillSet = styled(FlexBox)`
   flex-wrap: wrap;
 `;
 
 const SkillCard = styled.div`
   margin: 10px;
   text-align: center;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  border-radius: 10px;
+  background-color: #3c3f44;
 `;
 
 const SkillIcon = styled.img`
@@ -135,8 +151,8 @@ const SkillName = styled.p`
 `;
 
 const skills = [
-  { name: "HTML", icon: "/skills/html.png" },
-  { name: "CSS", icon: "/skills/css.png" },
+  { name: "HTML", icon: "/skills/HTML.svg" },
+  { name: "CSS", icon: "/skills/CSS.svg" },
   { name: "JavaScript", icon: "/skills/JavaScript.svg" },
   { name: "React", icon: "/skills/react.png" },
   { name: "Vue", icon: "/skills/VueJS-Light.svg" },
@@ -162,43 +178,30 @@ const skills = [
 ];
 
 const AboutMe = () => {
-  const [showDetails, setShowDetails] = useState(false);
-
-  const handleToggleDetails = () => {
-    setShowDetails(!showDetails);
-  };
+  const [showCareer, setShowCareer] = useState(false);
+  const [showEducation, setShowEducation] = useState(false);
 
   return (
-    <>
-      <AboutSection>
-        <Fade triggerOnce>
-          <ProfileImageWrapper>
-            <ProfileImage src="wave.png" alt="My Profile" />
-          </ProfileImageWrapper>
-          <AboutHeading>About Me</AboutHeading>
-          <AboutText>
-            3년의 프론트엔드 개발 경험을 바탕으로 사용자 친화적인 UI와 성능
-            최적화된 웹 애플리케이션을 개발했습니다. 최신 웹 기술을 사용하여
-            생산성과 품질을 높이는 데 기여했습니다. todo: 수정
-          </AboutText>
+    <AboutContainer>
+      <DetailsSection direction="column" align="center">
+        <Fade delay={100}>
+          <SkillsSection>
+            <SkillTitle>Languages & Dev Tools</SkillTitle>
+            <SkillSet justify="center">
+              {skills.map((skill) => (
+                <Fade delay={100} key={skill.name}>
+                  <SkillCard key={skill.name}>
+                    <SkillIcon src={skill.icon} alt={skill.name} />
+                    <SkillName>{skill.name}</SkillName>
+                  </SkillCard>
+                </Fade>
+              ))}
+            </SkillSet>
+          </SkillsSection>
         </Fade>
-      </AboutSection>
-      <Fade delay={1e3}>
-        <SkillsSection>
-          <h2>My Skills</h2>
-          <SkillSet>
-            {skills.map((skill) => (
-              <SkillCard key={skill.name}>
-                <SkillIcon src={skill.icon} alt={skill.name} />
-                <SkillName>{skill.name}</SkillName>
-              </SkillCard>
-            ))}
-          </SkillSet>
-        </SkillsSection>
-      </Fade>
-      <Fade delay={1e3} cascade damping={1e-1}>
-        <DetailsSection>
-          <DetailsWrapper>
+
+        <DetailsWrapper>
+          <Fade cascade delay={100}>
             <CareerHeading>경력</CareerHeading>
             <CareerList>
               <CareerItem>
@@ -215,7 +218,9 @@ const AboutMe = () => {
                 </StyledUl>
               </CareerItem>
             </CareerList>
+          </Fade>
 
+          <Fade cascade delay={100}>
             <EducationHeading>학력</EducationHeading>
             <CareerList>
               <CareerItem>
@@ -226,10 +231,41 @@ const AboutMe = () => {
                 </StyledUl>
               </CareerItem>
             </CareerList>
-          </DetailsWrapper>
-        </DetailsSection>
-      </Fade>
-    </>
+          </Fade>
+        </DetailsWrapper>
+      </DetailsSection>
+
+      <AboutSection>
+        <Fade triggerOnce>
+          <ProfileImageWrapper
+            onClick={() => {
+              window.open(
+                "https://github.com/nwewave32",
+                "_blank",
+                "noopener, noreferrer"
+              );
+            }}
+          >
+            <ProfileImage src="wave.png" alt="My Profile" />
+          </ProfileImageWrapper>
+          <AboutHeading>About Me</AboutHeading>
+          <AboutText>
+            새로운 것을 창조하는 프론트엔드 개발자. 끊임없는 호기심, 유연한
+            사고, 그리고 빠른 적응력은 저의 닉네임인 ‘nwewave’와 비슷합니다.
+            파도가 쉼 없이 밀려오듯, 저도 변화하는 기술 트렌드 속에서 끊임없이
+            발전하며, 파도의 흐름처럼 사람들과 세상에 긍정적인 기여를 하고
+            싶습니다.
+          </AboutText>
+          <AboutText>
+            A frontend developer who loves creating new things. My boundless
+            curiosity, flexible thinking, and quick adaptability are much like
+            my nickname, ‘nwewave' Just as waves continuously roll in, I strive
+            to grow in the ever-changing tech landscape and, like the flow of
+            the wave, I aim to make a positive impact on people and the world.
+          </AboutText>
+        </Fade>
+      </AboutSection>
+    </AboutContainer>
   );
 };
 

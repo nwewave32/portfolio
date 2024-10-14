@@ -1,6 +1,8 @@
-import React, { useRef, useLayoutEffect } from "react";
+import React, { useRef, useLayoutEffect, useState } from "react";
 import styled from "styled-components";
 import { Technology, TechnologiesUsed, FlexBox } from "./GlobalStyles";
+import { useInView } from "react-intersection-observer";
+import { Fade, Slide } from "react-awesome-reveal";
 
 const ModalOverlay = styled.div`
   position: fixed;
@@ -15,27 +17,22 @@ const ModalOverlay = styled.div`
   z-index: 1000;
 `;
 
-const ModalContainer = styled.div`
-  background-color: white;
-  padding: 30px;
+const ModalContainer = styled(FlexBox)`
+  background-color: #fff;
   width: 80%;
   max-width: 700px;
   border-radius: 10px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-  display: flex;
-  flex-direction: column;
 `;
 
 const ModalTitle = styled.h2`
   font-size: 2rem;
-  margin-bottom: 10px;
+  margin: 10px 0;
 `;
 
 const ModalDescription = styled(FlexBox)`
-  font-size: 1rem;
+  color: #050505;
   margin-bottom: 20px;
-
-  min-height: 300px;
 `;
 
 const ProjectDate = styled.div`
@@ -62,15 +59,31 @@ const ProjectDesc = styled.li`
   }
 `;
 
-const ContentContainer = styled(FlexBox)`
-  padding: 0 24px;
+const ImageContainer = styled(FlexBox).withConfig({
+  shouldForwardProp: (prop) => !["imgUrl"].includes(prop),
+})`
+  width: 100%;
+  height: 300px;
+  margin-bottom: 20px;
 
+  background-image: url(${(props) => props.imgUrl});
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center center;
+
+  transition: #bbb 0.6s ease;
+`;
+
+const ContentContainer = styled(FlexBox)`
+  padding: 24px 0;
   width: 100%;
 `;
 
-const ButtonContainer = styled.div`
+const ButtonContainer = styled(FlexBox)`
   cursor: pointer;
+  padding: 0 20px;
   height: 100%;
+  min-height: 300px;
 `;
 
 const LinkBtn = styled(FlexBox)`
@@ -82,26 +95,60 @@ const LinkBtn = styled(FlexBox)`
   border-radius: 8px;
   line-height: 24px;
   word-break: keep-all;
+  cursor: pointer;
+`;
+
+const BtnImg = styled.img.withConfig({
+  shouldForwardProp: (prop) => !["isHover"].includes(prop),
+})`
+  opacity: ${(props) => (props.isHover ? "0.4" : "0")};
 `;
 
 const NextButton = ({ onClick }) => {
+  const [isHover, setIsHover] = useState(false);
   return (
-    <ButtonContainer onClick={onClick}>
-      <img src="next.png" width={24} height={24} alt="next" />
+    <ButtonContainer
+      onClick={onClick}
+      align="center"
+      onMouseEnter={() => setIsHover((prev) => !prev)}
+      onMouseLeave={() => setIsHover((prev) => !prev)}
+    >
+      <BtnImg
+        src="next.png"
+        width={24}
+        height={24}
+        alt="next"
+        isHover={isHover}
+      />
     </ButtonContainer>
   );
 };
 
 const PrevButton = ({ onClick }) => {
+  const [isHover, setIsHover] = useState(false);
   return (
-    <ButtonContainer onClick={onClick}>
-      <img src="prev.png" width={24} height={24} alt="prev" />
+    <ButtonContainer
+      onClick={onClick}
+      align="center"
+      onMouseEnter={() => setIsHover((prev) => !prev)}
+      onMouseLeave={() => setIsHover((prev) => !prev)}
+    >
+      <BtnImg
+        src="prev.png"
+        width={24}
+        height={24}
+        alt="prev"
+        isHover={isHover}
+      />
     </ButtonContainer>
   );
 };
 
-const Modal = ({ project, onClose, onNext, onPrev }) => {
+const Modal = ({ project, onClose, onNext, onPrev, modalKey }) => {
   const modalRef = useRef(null);
+
+  const [imgIdx, setImgIdx] = useState(0);
+
   useLayoutEffect(() => {
     const handleClickOutside = (event) => {
       if (modalRef.current && !modalRef.current.contains(event.target)) {
@@ -114,31 +161,67 @@ const Modal = ({ project, onClose, onNext, onPrev }) => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
+  const handleClickPrev = () => {
+    setImgIdx((prev) => {
+      let result = prev - 1;
+      if (result < 0) result = project.images.length - 1;
+      return result;
+    });
+  };
+
+  const handleClickNext = () => {
+    setImgIdx((prev) => {
+      let result = prev + 1;
+      if (result > project.images.length - 1) result = 0;
+      return result;
+    });
+  };
+
   return (
     <ModalOverlay>
-      <ModalContainer ref={modalRef}>
-        <FlexBox align="center">
-          <PrevButton onClick={onPrev} />
+      <ModalContainer ref={modalRef} align="center">
+        <PrevButton
+          onClick={() => {
+            onPrev();
+          }}
+        />
 
-          <ContentContainer direction="column" justify="space-between">
-            <FlexBox direction="column" align="flex-start">
-              <ModalTitle>{project.title}</ModalTitle>
-              <ProjectSubTitle>{project.subtitle}</ProjectSubTitle>
-              <ProjectDate>{project.date}</ProjectDate>
-            </FlexBox>
+        <ContentContainer direction="column" justify="space-between">
+          <FlexBox direction="column" align="flex-start">
+            <ModalTitle>{project.title}</ModalTitle>
+            <ProjectSubTitle>{project.subtitle}</ProjectSubTitle>
+            <ProjectDate>{project.date}</ProjectDate>
+          </FlexBox>
+          {project?.images && (
+            <Fade key={imgIdx}>
+              <ImageContainer
+                justify="space-between"
+                imgUrl={project.images[imgIdx]}
+              >
+                <PrevButton onClick={handleClickPrev} />
+                <NextButton onClick={handleClickNext} />
+              </ImageContainer>
+            </Fade>
+          )}
+          <ModalDescription direction="column" align="flex-start">
+            {project.description.map((desc, idx) => {
+              return <ProjectDesc key={idx + desc}>{desc}</ProjectDesc>;
+            })}
+          </ModalDescription>
 
-            <ModalDescription direction="column" align="flex-start">
-              {project.description.map((desc, idx) => {
-                return <ProjectDesc key={idx + desc}>{desc}</ProjectDesc>;
-              })}
-            </ModalDescription>
-            <FlexBox justify="space-between">
-              <TechnologiesUsed>
-                {project.technologies.map((tech, index) => (
-                  <Technology key={index}>{tech}</Technology>
-                ))}
-              </TechnologiesUsed>
-              <LinkBtn>
+          <FlexBox justify="space-between">
+            <TechnologiesUsed>
+              {project.technologies.map((tech, index) => (
+                <Technology key={index}>{tech}</Technology>
+              ))}
+            </TechnologiesUsed>
+            {project?.link && (
+              <LinkBtn
+                onClick={() => {
+                  window.open(project.link, "_blank", "noopener, noreferrer");
+                }}
+              >
                 <img
                   src="link.png"
                   width={24}
@@ -148,10 +231,14 @@ const Modal = ({ project, onClose, onNext, onPrev }) => {
                 />
                 링크
               </LinkBtn>
-            </FlexBox>
-          </ContentContainer>
-          <NextButton onClick={onNext} />
-        </FlexBox>
+            )}
+          </FlexBox>
+        </ContentContainer>
+        <NextButton
+          onClick={() => {
+            onNext();
+          }}
+        />
       </ModalContainer>
     </ModalOverlay>
   );
