@@ -13,6 +13,7 @@ import AboutMe from "./components/AboutMe";
 import Projects from "./components/Projects";
 
 import Contact from "./components/Contact";
+import Test from "./components/Test";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
@@ -84,6 +85,7 @@ const Header = ({}) => {
         <Link to="/projects">Projects</Link>
 
         <Link to="/contact">Contact</Link>
+        <Link to="/test">Test</Link>
       </Nav>
     </HeaderContainer>
   );
@@ -144,6 +146,7 @@ const App = () => {
               <Route path="/projects" element={<Projects />} />
 
               <Route path="/contact" element={<Contact />} />
+              <Route path="/test" element={<Test />} />
             </Routes>
           </MainContainer>
           <Footer />

@@ -1,16 +1,38 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import React, { useEffect, useRef, useState } from "react";
 import { Main } from "../waves/main";
 import { Link } from "react-router-dom";
+import { FlexBox } from "./GlobalStyles";
+
+const HomeContainer = styled(FlexBox)`
+  height: 100%;
+  width: 100%;
+`;
 
 const HeroSection = styled.section`
+  width: 100%;
   color: #282c34;
   text-align: center;
   padding: 50px 20px;
+  transform: translateY(100%);
+  z-index: 9999;
+  overflow: hidden;
+  height: 100%;
+`;
+const moveWords = keyframes`
+  0% {
+    left: 100%;
+  }
+  100% {
+    left: -100%;
+  }
 `;
 
 const Heading = styled.h1`
   font-size: 3rem;
+  position: relative;
+  animation: ${moveWords} 20s linear infinite;
+  margin: 0;
 `;
 
 const Description = styled.p`
@@ -37,6 +59,13 @@ const StyledCanvas = styled.canvas`
   bottom: 0;
   height: 50%;
   z-index: 50;
+`;
+
+const TmpTxt = styled.h1`
+  font-size: 150px;
+  font-weight: 900;
+  -webkit-text-stroke: 3px #fff;
+  color: transparent;
 `;
 
 const Home = () => {
@@ -120,16 +149,17 @@ const Home = () => {
     };
   }, []);
   return (
-    <>
+    <HomeContainer>
       <HeroSection>
-        <Heading>
+        <TmpTxt>nwe wave</TmpTxt>
+        {/* <Heading>
           Welcome, I'm a Frontend Developer{" "}
           <span style={{ fontWeight: 400 }}>nwewave</span>
         </Heading>
         <Description>Let's surf with me!</Description>
         <CTAButton>
-          <Link to="/projects">View My Projects</Link>
-        </CTAButton>
+          <Link to="/contact">CONTACT ME</Link>
+        </CTAButton> */}
       </HeroSection>
       <StyledCanvas
         ref={canvasRef}
@@ -139,7 +169,7 @@ const Home = () => {
           handleClick(e);
         }}
       />
-    </>
+    </HomeContainer>
   );
 };
 

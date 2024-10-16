@@ -11,13 +11,15 @@ const AboutContainer = styled(FlexBox)`
 const AboutSection = styled.section`
   display: flex;
   flex: 3;
-  flex-direction: column;
-  align-items: center;
-  position: sticky;
-  top: 0;
+  position: relative;
+`;
 
+const AboutSticky = styled(FlexBox)`
+  position: fixed;
+  margin-top: 50px;
   padding: 80px 20px;
-  height: 100vh;
+  top: 0%;
+  height: min-content;
 `;
 
 const ProfileImageWrapper = styled.div`
@@ -236,34 +238,37 @@ const AboutMe = () => {
       </DetailsSection>
 
       <AboutSection>
-        <Fade triggerOnce>
-          <ProfileImageWrapper
-            onClick={() => {
-              window.open(
-                "https://github.com/nwewave32",
-                "_blank",
-                "noopener, noreferrer"
-              );
-            }}
-          >
-            <ProfileImage src="wave.png" alt="My Profile" />
-          </ProfileImageWrapper>
-          <AboutHeading>About Me</AboutHeading>
-          <AboutText>
-            새로운 것을 창조하는 프론트엔드 개발자. 끊임없는 호기심, 유연한
-            사고, 그리고 빠른 적응력은 저의 닉네임인 ‘nwewave’와 비슷합니다.
-            파도가 쉼 없이 밀려오듯, 저도 변화하는 기술 트렌드 속에서 끊임없이
-            발전하며, 파도의 흐름처럼 사람들과 세상에 긍정적인 기여를 하고
-            싶습니다.
-          </AboutText>
-          <AboutText>
-            A frontend developer who loves creating new things. My boundless
-            curiosity, flexible thinking, and quick adaptability are much like
-            my nickname, ‘nwewave' Just as waves continuously roll in, I strive
-            to grow in the ever-changing tech landscape and, like the flow of
-            the wave, I aim to make a positive impact on people and the world.
-          </AboutText>
-        </Fade>
+        <AboutSticky direction="column" align="center" justify="center">
+          <Fade triggerOnce>
+            <ProfileImageWrapper
+              onClick={() => {
+                window.open(
+                  "https://github.com/nwewave32",
+                  "_blank",
+                  "noopener, noreferrer"
+                );
+              }}
+            >
+              <ProfileImage src="wave.png" alt="My Profile" />
+            </ProfileImageWrapper>
+            <AboutHeading>About Me</AboutHeading>
+            <AboutText>
+              새로운 것을 창조하는 프론트엔드 개발자. 끊임없는 호기심, 유연한
+              사고, 그리고 빠른 적응력은 저의 닉네임인 ‘nwewave’와 비슷합니다.
+              파도가 쉼 없이 밀려오듯, 저도 변화하는 기술 트렌드 속에서 끊임없이
+              발전하며, 파도의 흐름처럼 사람들과 세상에 긍정적인 기여를 하고
+              싶습니다.
+            </AboutText>
+            <AboutText>
+              A frontend developer who loves creating new things. My boundless
+              curiosity, flexible thinking, and quick adaptability are much like
+              my nickname, ‘nwewave' Just as waves continuously roll in, I
+              strive to grow in the ever-changing tech landscape and, like the
+              flow of the wave, I aim to make a positive impact on people and
+              the world.
+            </AboutText>
+          </Fade>
+        </AboutSticky>
       </AboutSection>
     </AboutContainer>
   );

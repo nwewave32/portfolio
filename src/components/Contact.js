@@ -51,7 +51,7 @@ const SubmitButton = styled.button`
 
 const Contact = () => (
   <ContactSection>
-    <h2>Contact Me</h2>
+    <h2>Let's work together!</h2>
     <ContactForm>
       <Label>Name</Label>
       <Input type="text" name="name" required />

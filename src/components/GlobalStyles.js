@@ -29,3 +29,7 @@ export const FlexBox = styled.div
   justify-content: ${(props) => props.justify};
   align-items: ${(props) => props.align};
 `;
+
+export const FullContainer = styled(FlexBox)`
+  width: 100%;
+`;

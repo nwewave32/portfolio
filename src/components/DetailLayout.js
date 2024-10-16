@@ -4,27 +4,11 @@ import { Technology, TechnologiesUsed, FlexBox } from "./GlobalStyles";
 import { useInView } from "react-intersection-observer";
 import { Fade, Slide } from "react-awesome-reveal";
 
-const ModalOverlay = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.7);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-`;
-
-const ModalContainer = styled(FlexBox)`
-  background-color: #fff;
+const FullContainer = styled(FlexBox)`
+  padding: 50px;
   width: 80%;
-  max-width: 700px;
-  border-radius: 10px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  height: 100vh;
 `;
-
 const ModalTitle = styled.h2`
   font-size: 2rem;
   margin: 10px 0;
@@ -77,8 +61,12 @@ const ImageContainer = styled(FlexBox).withConfig({
 `;
 
 const ContentContainer = styled(FlexBox)`
-  padding: 24px 0;
-  width: 100%;
+  padding: 24px 50px;
+  width: 80%;
+`;
+
+const SideContainer = styled(FlexBox)`
+  width: 20%;
 `;
 
 const ButtonContainer = styled(FlexBox)`
@@ -147,24 +135,9 @@ const PrevButton = ({ onClick }) => {
   );
 };
 
-const Modal = ({ project, onClose, onNext, onPrev, modalKey }) => {
-  const modalRef = useRef(null);
-
+const DetailLayout = ({ project }) => {
+  console.log("##project", project);
   const [imgIdx, setImgIdx] = useState(0);
-
-  useLayoutEffect(() => {
-    const handleClickOutside = (event) => {
-      if (modalRef.current && !modalRef.current.contains(event.target)) {
-        onClose();
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
-
   const handleClickPrev = () => {
     setImgIdx((prev) => (prev === 0 ? project.length - 1 : prev - 1));
   };
@@ -172,73 +145,58 @@ const Modal = ({ project, onClose, onNext, onPrev, modalKey }) => {
   const handleClickNext = () => {
     setImgIdx((prev) => (prev === project.length - 1 ? 0 : prev + 1));
   };
-
   return (
-    <ModalOverlay>
-      <ModalContainer ref={modalRef} align="center">
-        <PrevButton
-          onClick={() => {
-            setImgIdx(0);
-            onPrev(modalKey);
-          }}
-        />
+    <FullContainer>
+      <ContentContainer direction="column" justify="space-between">
+        <FlexBox direction="column" align="flex-start">
+          <ModalTitle>{project.title}</ModalTitle>
+          <ProjectSubTitle>{project.subtitle}</ProjectSubTitle>
+          <ProjectDate>{project.date}</ProjectDate>
+        </FlexBox>
+        {project?.images && (
+          <Fade key={imgIdx}>
+            <ImageContainer
+              justify="space-between"
+              imgUrl={project.images[imgIdx]}
+            >
+              <PrevButton onClick={handleClickPrev} />
+              <NextButton onClick={handleClickNext} />
+            </ImageContainer>
+          </Fade>
+        )}
+        <ModalDescription direction="column" align="flex-start">
+          {project.description.map((desc, idx) => {
+            return <ProjectDesc key={idx + desc}>{desc}</ProjectDesc>;
+          })}
+        </ModalDescription>
 
-        <ContentContainer direction="column" justify="space-between">
-          <FlexBox direction="column" align="flex-start">
-            <ModalTitle>{project.title}</ModalTitle>
-            <ProjectSubTitle>{project.subtitle}</ProjectSubTitle>
-            <ProjectDate>{project.date}</ProjectDate>
-          </FlexBox>
-          {project?.images && (
-            <Fade key={imgIdx}>
-              <ImageContainer
-                justify="space-between"
-                imgUrl={project.images[imgIdx]}
-              >
-                <PrevButton onClick={handleClickPrev} />
-                <NextButton onClick={handleClickNext} />
-              </ImageContainer>
-            </Fade>
+        <FlexBox justify="space-between">
+          <TechnologiesUsed>
+            {project.technologies.map((tech, index) => (
+              <Technology key={index}>{tech}</Technology>
+            ))}
+          </TechnologiesUsed>
+          {project?.link && (
+            <LinkBtn
+              onClick={() => {
+                window.open(project.link, "_blank", "noopener, noreferrer");
+              }}
+            >
+              <img
+                src="link.png"
+                width={24}
+                height={24}
+                alt="link"
+                style={{ marginRight: "3px" }}
+              />
+              링크
+            </LinkBtn>
           )}
-          <ModalDescription direction="column" align="flex-start">
-            {project.description.map((desc, idx) => {
-              return <ProjectDesc key={idx + desc}>{desc}</ProjectDesc>;
-            })}
-          </ModalDescription>
-
-          <FlexBox justify="space-between">
-            <TechnologiesUsed>
-              {project.technologies.map((tech, index) => (
-                <Technology key={index}>{tech}</Technology>
-              ))}
-            </TechnologiesUsed>
-            {project?.link && (
-              <LinkBtn
-                onClick={() => {
-                  window.open(project.link, "_blank", "noopener, noreferrer");
-                }}
-              >
-                <img
-                  src="link.png"
-                  width={24}
-                  height={24}
-                  alt="link"
-                  style={{ marginRight: "3px" }}
-                />
-                링크
-              </LinkBtn>
-            )}
-          </FlexBox>
-        </ContentContainer>
-        <NextButton
-          onClick={() => {
-            setImgIdx(0);
-            onNext(modalKey);
-          }}
-        />
-      </ModalContainer>
-    </ModalOverlay>
+        </FlexBox>
+      </ContentContainer>{" "}
+      <SideContainer></SideContainer>
+    </FullContainer>
   );
 };
 
-export default Modal;
+export default DetailLayout;
