@@ -4,10 +4,6 @@ import "../css/wave.css";
 import { Main } from "../waves/main.js";
 import styled from "styled-components";
 
-const Background = styled.div`
-  background-color: #e3bc88;
-`;
-
 function MainScreen() {
   const canvasRef = useRef(null);
   const [mouseX, setMouseX] = useState(0); // 마우스 위치 저장
@@ -81,7 +77,7 @@ function MainScreen() {
       ref={canvasRef}
       width={window.innerWidth}
       height={200}
-      style={{ display: "block", backgroundColor: "#a1ddff" }}
+      style={{ display: "block", zIndex: "-100" }}
       onMouseMove={handleMouseMove}
       onClick={handleClick}
     />

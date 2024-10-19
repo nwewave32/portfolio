@@ -5,6 +5,7 @@ import WavySeparator from "./WavySeparator";
 import DetailLayout from "./DetailLayout";
 import { Technology, TechnologiesUsed, FlexBox } from "./GlobalStyles";
 import { Fade } from "react-awesome-reveal";
+import { colorSet } from "lib/colorSet";
 
 const ProjectContainer = styled(FlexBox)`
   width: 100%;
@@ -240,13 +241,13 @@ const GridLayout = styled.div.withConfig({
 const ProjectItem = styled(FlexBox).withConfig({
   shouldForwardProp: (prop) => !["radius"].includes(prop),
 })`
-  border: 1px solid #abb2bf;
+  border: 1px solid ${colorSet.base};
   border-radius: ${(props) => props.radius};
   border-right: none;
   min-height: 200px;
   padding: 20px;
   &:hover {
-    background-color: #abb2bf;
+    background-color: ${colorSet.base};
     color: #fff;
   }
 
@@ -254,44 +255,57 @@ const ProjectItem = styled(FlexBox).withConfig({
     border-bottom: none;
   }
   &:nth-last-of-type(5n) {
-    border-right: 1px solid #abb2bf;
+    border-right: 1px solid ${colorSet.base};
   }
   &:last-child {
-    border-right: 1px solid #abb2bf;
+    border-right: 1px solid ${colorSet.base};
   }
+`;
+
+const TmpDiv = styled.div`
+  width: 14.28%;
+  height: 100px;
+  background-color: ${(props) => props.color};
 `;
 
 const GridProjecet = ({ clickProject }) => {
   return (
-    <GridContainer>
-      <TitleSection>
-        <TitleText>Works</TitleText>
-      </TitleSection>
-      <GridSection>
-        <GridLayout gridLeng={Math.ceil(projectsData.length / 2)}>
-          <div></div>
-          {projectsData.map((project, idx) => {
-            let radius = 0;
-            if (idx === 0) radius = "15px 0 0 0";
-            else if (idx === projectsData.length - 1) radius = " 0 0 15px 0";
-            else if (idx === Math.floor(projectsData.length / 2))
-              radius = "15px 0 0 15px";
-            else if (idx === Math.floor(projectsData.length / 2) - 1)
-              radius = "0 15px 0 0";
+    <>
+      <GridContainer>
+        <TitleSection>
+          <TitleText>Works</TitleText>
+        </TitleSection>
+        <GridSection>
+          <GridLayout gridLeng={Math.ceil(projectsData.length / 2)}>
+            <div></div>
+            {projectsData.map((project, idx) => {
+              let radius = 0;
+              if (idx === 0) radius = "15px 0 0 0";
+              else if (idx === projectsData.length - 1) radius = " 0 0 15px 0";
+              else if (idx === Math.floor(projectsData.length / 2))
+                radius = "15px 0 0 15px";
+              else if (idx === Math.floor(projectsData.length / 2) - 1)
+                radius = "0 15px 0 0";
 
-            return (
-              <ProjectItem
-                key={project.id}
-                align="flex-end"
-                radius={radius}
-                onClick={() => clickProject(project.id)}
-              >
-                {project.title}
-              </ProjectItem>
-            );
-          })}
-        </GridLayout>
-      </GridSection>
-    </GridContainer>
+              return (
+                <ProjectItem
+                  key={project.id}
+                  align="flex-end"
+                  radius={radius}
+                  onClick={() => clickProject(project.id)}
+                >
+                  {project.title}
+                </ProjectItem>
+              );
+            })}
+          </GridLayout>
+        </GridSection>
+      </GridContainer>
+      <FlexBox style={{ width: "100%" }}>
+        {Object.keys(colorSet).map((item) => {
+          return <TmpDiv color={colorSet[item]} />;
+        })}
+      </FlexBox>
+    </>
   );
 };

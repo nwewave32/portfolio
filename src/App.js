@@ -16,11 +16,13 @@ import Contact from "./components/Contact";
 import Test from "./components/Test";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { colorSet } from "lib/colorSet";
 
 const AppContainer = styled.div`
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  background-color: ${colorSet.background};
 `;
 
 const MainContainer = styled.main`
@@ -94,9 +96,9 @@ const Header = ({}) => {
 const FooterContainer = styled.footer.withConfig({
   shouldForwardProp: (prop) => !["isHome"].includes(prop),
 })`
-visibility: ${(props) => (props.isHome ? "hidden" : "visible")}
-  background-color: #282c34;
-  color: white;
+  visibility: ${(props) => (props.isHome ? "hidden" : "visible")};
+  background-color: ${colorSet.base};
+
   padding: 20px;
   text-align: center;
 `;
@@ -105,7 +107,6 @@ const SocialLinks = styled.div`
   margin-top: 10px;
 
   a {
-    color: #61dafb;
     margin: 0 10px;
     text-decoration: none;
 

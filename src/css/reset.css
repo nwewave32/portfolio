@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap");
 * {
   user-select: none;
   -ms-user-select: none;
@@ -5,6 +7,7 @@
   margin: 0;
   padding: 0;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  font-family: "Quicksand", "Noto Sans KR";
 }
 
 html {
@@ -30,123 +33,26 @@ h3,
 h4,
 h5,
 h6 {
-  color: #61dafb; /*point color*/
-  font-weight: 300;
+  color: #264653; /*point color*/
+  font-weight: 400;
   word-break: keep-all;
 }
 
 p,
 li,
-a,
 div {
   font-weight: 200;
-  color: #abb2bf; /*text color*/
+  color: #050505; /*text color*/
   text-decoration: none;
   word-break: keep-all;
 }
 
+a {
+  color: #81c9c1;
+}
+
 svg {
   font-weight: bold;
-  max-width: 600px;
+
   height: auto;
-}
-
-.o-section {
-  position: relative;
-}
-
-.o-section--bg-blue .c-section-separator {
-  color: #03364f;
-}
-.c-section-separator--top {
-  bottom: -2px;
-  -webkit-transform: rotate(180deg);
-  transform: rotate(180deg);
-}
-.c-section-separator {
-  height: 160px;
-  position: relative;
-  overflow: hidden;
-  display: grid;
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-  z-index: -1;
-}
-/* svg1 */
-.c-section-separator--blue .u-icon--separator-main {
-  color: #03364f;
-}
-.c-section-separator .u-icon--separator-main {
-  color: #5b6647;
-  position: relative;
-  z-index: 1;
-  -webkit-transform: translateX(-20px);
-  transform: translateX(-20px);
-}
-
-.c-section-separator .u-icon {
-  width: auto;
-  height: 100%;
-  display: block;
-  grid-area: 1 / 1;
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-}
-.u-icon {
-  display: inline-block;
-  width: 1em;
-  height: 100%;
-  stroke-width: 0;
-  stroke: currentColor;
-  fill: currentColor;
-}
-*,
-::after,
-::before {
-  -webkit-box-sizing: inherit;
-  box-sizing: inherit;
-}
-
-svg:not(:root) {
-  overflow-clip-margin: content-box;
-  overflow: hidden;
-}
-.o-section--bg-blue .c-section-separator {
-  color: #03364f;
-}
-
-/* svg2 */
-.c-section-separator .u-icon--separator-secondary {
-  color: #e3e3c4;
-}
-.c-section-separator .u-icon {
-  width: auto;
-  height: 100%;
-  display: block;
-  grid-area: 1 / 1;
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-}
-
-.u-icon {
-  display: inline-block;
-  width: 1em;
-  height: 100%;
-  stroke-width: 0;
-  stroke: currentColor;
-  fill: currentColor;
-}
-*,
-::after,
-::before {
-  -webkit-box-sizing: inherit;
-  box-sizing: inherit;
-}
-
-svg:not(:root) {
-  overflow-clip-margin: content-box;
-  overflow: hidden;
-}
-.o-section--bg-blue .c-section-separator {
-  color: #03364f;
 }

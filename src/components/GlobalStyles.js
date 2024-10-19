@@ -1,3 +1,4 @@
+import { colorSet } from "lib/colorSet";
 import styled from "styled-components";
 
 export const TechnologiesUsed = styled.div`
@@ -9,7 +10,7 @@ export const TechnologiesUsed = styled.div`
 export const Technology = styled.div`
   font-size: 0.9rem;
   margin-bottom: 5px;
-  background-color: #61dafb;
+  background-color: ${colorSet.accent};
   max-width: fit-content;
   padding: 4px 5px;
   border-radius: 8px;

@@ -57,7 +57,6 @@ const AboutText = styled.p`
 `;
 
 const Button = styled.button`
-  background-color: #61dafb; /* 버튼 배경색 */
   color: #282c34; /* 버튼 텍스트 색상 */
   padding: 10px 20px;
   border: none;
