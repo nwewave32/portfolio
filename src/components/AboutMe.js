@@ -15,7 +15,7 @@ const AboutSection = styled.section`
 `;
 
 const AboutSticky = styled(FlexBox)`
-  position: fixed;
+  position: sticky;
   margin-top: 50px;
   padding: 80px 20px;
   top: 0%;
@@ -138,7 +138,6 @@ const SkillCard = styled.div`
   box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
   padding: 15px;
   border-radius: 10px;
-  background-color: #3c3f44;
 `;
 
 const SkillIcon = styled.img`

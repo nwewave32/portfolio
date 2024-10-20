@@ -31,12 +31,15 @@ const MainContainer = styled.main`
 const HeaderContainer = styled.header.withConfig({
   shouldForwardProp: (prop) => !["isHome"].includes(prop),
 })`
+  width: 100%;
+  box-sizing: border-box;
   padding: 10px 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-
-  position: sticky;
+  background-color: ${(props) =>
+    props.isHome ? colorSet.base : "transparent"};
+  position: fixed;
   top: 0;
   z-index: 50;
 `;
@@ -56,6 +59,7 @@ const Nav = styled.nav.withConfig({
     text-decoration: none;
     margin: 0 10px;
     font-size: 1rem;
+    color: ${(props) => (props.isHome ? colorSet.highlight : colorSet.base)};
 
     &:hover {
       text-decoration: underline;
@@ -97,7 +101,7 @@ const FooterContainer = styled.footer.withConfig({
   shouldForwardProp: (prop) => !["isHome"].includes(prop),
 })`
   visibility: ${(props) => (props.isHome ? "hidden" : "visible")};
-  background-color: ${colorSet.base};
+  background-color: ${colorSet.background};
 
   padding: 20px;
   text-align: center;

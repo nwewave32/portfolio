@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useLayoutEffect } from "react";
 import styled, { keyframes } from "styled-components";
 
 import WavySeparator from "./WavySeparator";
@@ -6,21 +6,31 @@ import DetailLayout from "./DetailLayout";
 import { Technology, TechnologiesUsed, FlexBox } from "./GlobalStyles";
 import { Fade } from "react-awesome-reveal";
 import { colorSet } from "lib/colorSet";
+import InfiniteAutoSlider from "./InfiniteAutoSlider";
 
 const ProjectContainer = styled(FlexBox)`
   width: 100%;
   box-sizing: border-box;
 `;
 
-const ProjectsSection = styled.div`
-  padding: 50px;
-  width: 80%;
+const ProjectsSection = styled(FlexBox)`
+  width: 100vw;
+  overflow: hidden;
   height: 100vh;
+  padding: 0 50px;
+  background-color: ${colorSet.base};
+  box-sizing: border-box;
 `;
 
 const DetailSection = styled(FlexBox)`
   padding: 0 50px;
   width: 100%;
+`;
+
+const EmptySeparator = styled.div`
+  width: 100%;
+  height: 250px;
+  background-color: ${colorSet.base};
 `;
 
 const projectsData = [
@@ -195,14 +205,15 @@ const Projects = () => {
 
   return (
     <ProjectContainer direction="column" align="center">
-      <ProjectsSection>
+      <ProjectsSection justify="center">
         <GridProjecet
           clickProject={(index) => {
             setSelectedProjectIndex(index);
           }}
         />
       </ProjectsSection>
-      <WavySeparator />
+      <EmptySeparator />
+      <WavySeparator color={colorSet.base} />
       {selectedProjectIndex !== null && (
         <DetailSection id="detail">
           <DetailLayout project={projectsData[selectedProjectIndex]} />
@@ -214,98 +225,56 @@ const Projects = () => {
 
 export default Projects;
 
-const GridContainer = styled(FlexBox)`
-  width: 100%;
-  height: 100%;
-  padding: 20px;
-
-  box-sizing: border-box;
-`;
-const TitleSection = styled(FlexBox)`
-  flex: 2;
-  height: 100%;
-`;
-const TitleText = styled.h2``;
-const GridSection = styled(FlexBox)`
-  flex: 8;
-  height: 100%;
-`;
-const GridLayout = styled.div.withConfig({
-  shouldForwardProp: (prop) => !["gridLeng"].includes(prop),
-})`
+const GridContainer = styled.div`
   display: grid;
-  grid-template-columns: repeat(${(props) => props.gridLeng}, 1fr);
-  grid-template-rows: repeat(2, 1fr);
-  max-height: 500px;
-`;
-const ProjectItem = styled(FlexBox).withConfig({
-  shouldForwardProp: (prop) => !["radius"].includes(prop),
-})`
-  border: 1px solid ${colorSet.base};
-  border-radius: ${(props) => props.radius};
-  border-right: none;
-  min-height: 200px;
-  padding: 20px;
-  &:hover {
-    background-color: ${colorSet.base};
-    color: #fff;
-  }
-
-  &:nth-child(-n + 4) {
-    border-bottom: none;
-  }
-  &:nth-last-of-type(5n) {
-    border-right: 1px solid ${colorSet.base};
-  }
-  &:last-child {
-    border-right: 1px solid ${colorSet.base};
-  }
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+  border-radius: 0 0 10px 10px;
 `;
 
-const TmpDiv = styled.div`
-  width: 14.28%;
+const Column = styled(FlexBox)`
+  flex: 1;
+`;
+
+const TopGradientSeparator = styled.div`
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 50px;
+
+  background: linear-gradient(${colorSet.background}, transparent);
+`;
+
+const BottomGradientSeparator = styled.div`
+  position: absolute;
+  bottom: 0;
+  width: 100%;
   height: 100px;
-  background-color: ${(props) => props.color};
+
+  background: linear-gradient(transparent, ${colorSet.background});
 `;
 
 const GridProjecet = ({ clickProject }) => {
   return (
-    <>
-      <GridContainer>
-        <TitleSection>
-          <TitleText>Works</TitleText>
-        </TitleSection>
-        <GridSection>
-          <GridLayout gridLeng={Math.ceil(projectsData.length / 2)}>
-            <div></div>
-            {projectsData.map((project, idx) => {
-              let radius = 0;
-              if (idx === 0) radius = "15px 0 0 0";
-              else if (idx === projectsData.length - 1) radius = " 0 0 15px 0";
-              else if (idx === Math.floor(projectsData.length / 2))
-                radius = "15px 0 0 15px";
-              else if (idx === Math.floor(projectsData.length / 2) - 1)
-                radius = "0 15px 0 0";
-
-              return (
-                <ProjectItem
-                  key={project.id}
-                  align="flex-end"
-                  radius={radius}
-                  onClick={() => clickProject(project.id)}
-                >
-                  {project.title}
-                </ProjectItem>
-              );
-            })}
-          </GridLayout>
-        </GridSection>
-      </GridContainer>
-      <FlexBox style={{ width: "100%" }}>
-        {Object.keys(colorSet).map((item) => {
-          return <TmpDiv color={colorSet[item]} />;
-        })}
-      </FlexBox>
-    </>
+    <GridContainer>
+      {Array.from({ length: 4 }).map((_, columnIndex) => {
+        return (
+          <Column key={columnIndex} direction="column">
+            <InfiniteAutoSlider
+              projects={projectsData}
+              isUp={columnIndex % 2 === 0}
+              clickProject={clickProject}
+              columnIndex={columnIndex}
+            />
+          </Column>
+        );
+      })}
+      <TopGradientSeparator />
+      <BottomGradientSeparator />
+    </GridContainer>
   );
 };

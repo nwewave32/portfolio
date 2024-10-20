@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Technology, TechnologiesUsed, FlexBox } from "./GlobalStyles";
 import { useInView } from "react-intersection-observer";
 import { Fade, Slide } from "react-awesome-reveal";
+import { colorSet } from "lib/colorSet";
 
 const FullContainer = styled(FlexBox)`
   padding: 50px;
