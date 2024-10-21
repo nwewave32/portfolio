@@ -29,8 +29,9 @@ const DetailSection = styled(FlexBox)`
 
 const EmptySeparator = styled.div`
   width: 100%;
-  height: 250px;
+  padding-top: 500px;
   background-color: ${colorSet.base};
+  position: relative;
 `;
 
 const projectsData = [
@@ -212,8 +213,10 @@ const Projects = () => {
           }}
         />
       </ProjectsSection>
-      <EmptySeparator />
-      <WavySeparator color={colorSet.base} />
+      <EmptySeparator>
+        <WavySeparator color={colorSet.background} />
+      </EmptySeparator>
+
       {selectedProjectIndex !== null && (
         <DetailSection id="detail">
           <DetailLayout project={projectsData[selectedProjectIndex]} />
@@ -234,6 +237,8 @@ const GridContainer = styled.div`
   overflow: hidden;
   position: relative;
   border-radius: 0 0 10px 10px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
 `;
 
 const Column = styled(FlexBox)`
@@ -273,8 +278,6 @@ const GridProjecet = ({ clickProject }) => {
           </Column>
         );
       })}
-      <TopGradientSeparator />
-      <BottomGradientSeparator />
     </GridContainer>
   );
 };

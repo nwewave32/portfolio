@@ -1,5 +1,5 @@
 import { colorSet } from "lib/colorSet";
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import styled, { keyframes } from "styled-components";
 
 const scroll = (height, margin, length) => keyframes`
@@ -34,10 +34,12 @@ const SlideTrack = styled.div.withConfig({
     40s linear infinite;
 `;
 
-const Slide = styled.div`
+const Slide = styled.div.withConfig({
+  shouldForwardProp: (prop) => !["isHovered"].includes(prop),
+})`
   background-color: ${(props) =>
     props.isHovered ? colorSet.base : colorSet.background};
-  color: ${(props) => (props.isHovered ? colorSet.background : colorSet.base)};
+
   border-radius: 8px;
   padding: 20px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -45,6 +47,15 @@ const Slide = styled.div`
   height: ${(props) => props.height}px;
   font-size: 32px;
   font-weight: 400;
+`;
+
+const cardTransition = ({ isHovered }) => {
+  return isHovered ? "transform: translateY(180px);" : "";
+};
+
+const CardTitle = styled.div`
+  ${cardTransition};
+  color: ${(props) => (props.isHovered ? colorSet.background : colorSet.base)};
 `;
 
 // 컴포넌트
@@ -58,6 +69,14 @@ const InfiniteAutoSlider = ({ columnIndex, projects, isUp, clickProject }) => {
   const MARGIN = 20;
   const HEIGHT = 300;
   const LENGTH = projects.length;
+
+  const checkIsHovered = useCallback(
+    (id) => {
+      return columnIndex === hoverItem.column && id === hoverItem.idx;
+    },
+    [hoverItem]
+  );
+
   return (
     <Slider>
       <SlideTrack height={HEIGHT} length={LENGTH} margin={MARGIN} isUp={isUp}>
@@ -75,11 +94,11 @@ const InfiniteAutoSlider = ({ columnIndex, projects, isUp, clickProject }) => {
             onMouseLeave={() => {
               setHoverItem(HOVER_ITEM_FORMAT);
             }}
-            isHovered={
-              columnIndex === hoverItem.column && project.id === hoverItem.idx
-            }
+            isHovered={checkIsHovered(project.id)}
           >
-            {project.title}
+            <CardTitle isHovered={checkIsHovered(project.id)}>
+              {project.title}
+            </CardTitle>
           </Slide>
         ))}
       </SlideTrack>

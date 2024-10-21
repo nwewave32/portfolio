@@ -11,7 +11,7 @@ const FullContainer = styled(FlexBox)`
   height: 100vh;
 `;
 const ModalTitle = styled.h2`
-  font-size: 2rem;
+  font-size: 5rem;
   margin: 10px 0;
   font-weight: 500;
 `;
@@ -183,14 +183,7 @@ const DetailLayout = ({ project }) => {
                 window.open(project.link, "_blank", "noopener, noreferrer");
               }}
             >
-              <img
-                src="link.png"
-                width={24}
-                height={24}
-                alt="link"
-                style={{ marginRight: "3px" }}
-              />
-              링크
+              Visit site
             </LinkBtn>
           )}
         </FlexBox>
