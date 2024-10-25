@@ -1,6 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { colorSlice } from "features/global";
+import trackReducer from "features/global";
 
 export default configureStore({
-  reducer: {},
+  reducer: {
+    track: trackReducer,
+  },
 });

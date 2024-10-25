@@ -1,67 +1,79 @@
+import { colorSet } from "lib/colorSet";
 import React from "react";
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
 
-// 애니메이션 키프레임
-const scroll = (height, length) => keyframes`
-  0% { transform: translateY(0); }
-  100% { transform: translateY(calc(-${height}px * ${length})); }
-`;
-
-// 스타일 정의
-const Slider = styled.div`
-  background: white;
-  box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.125);
-  width: 250px;
-  margin: auto;
-  overflow: hidden;
-  position: relative;
-  height: 600px; /* 슬라이더의 높이 설정 */
-`;
-
-const SlideTrack = styled.div`
+const BackgroundContainer = styled.div`
+  background-color: ${colorSet.background};
   display: flex;
-  flex-direction: column; /* 세로 배열로 변경 */
-  height: ${(props) => `calc(${props.height} * ${props.length} * 2px)`};
-  animation: ${(props) => scroll(props.height, props.length)} 10s linear
-    infinite;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
 `;
 
-const Slide = styled.div`
-  width: 100%; /* 슬라이드의 너비는 부모와 동일 */
-  height: ${(props) => props.height}px;
+const SvgContainer = styled.svg`
+  font-weight: bold;
+  max-width: 600px;
+  height: auto;
 `;
 
-const Image = styled.img`
-  width: 100%; /* 이미지의 너비는 슬라이드의 너비와 동일 */
-  height: ${(props) => props.height}px;
-`;
-
-// 컴포넌트
-const Test = () => {
-  const slides = [
-    "https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/1.png",
-    "https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/2.png",
-    "https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/3.png",
-    "https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/4.png",
-    "https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/5.png",
-    "https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/6.png",
-    "https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/7.png",
-  ];
-
-  const HEIGHT = 100;
-  const LENGTH = slides.length;
-
+export default function Test() {
   return (
-    <Slider>
-      <SlideTrack height={HEIGHT} length={LENGTH}>
-        {slides.concat(slides).map((src, index) => (
-          <Slide key={index} height={HEIGHT}>
-            <Image src={src} alt="" height={HEIGHT} />
-          </Slide>
-        ))}
-      </SlideTrack>
-    </Slider>
+    <BackgroundContainer>
+      <SvgContainer viewBox="0 0 100 20">
+        <defs>
+          <linearGradient id="gradient" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="5%" stopColor="#326384" />
+            <stop offset="95%" stopColor="#123752" />
+          </linearGradient>
+          <pattern
+            id="wave"
+            x="0"
+            y="0"
+            width="120"
+            height="20"
+            patternUnits="userSpaceOnUse"
+          >
+            <path
+              id="wavePath"
+              d="M-40 9 Q-30 7 -20 9 T0 9 T20 9 T40 9 T60 9 T80 9 T100 9 T120 9 V20 H-40z"
+              fill="url(#gradient)"
+            >
+              <animateTransform
+                attributeName="transform"
+                begin="0s"
+                dur="1.5s"
+                type="translate"
+                from="0,0"
+                to="40,0"
+                repeatCount="indefinite"
+              />
+            </path>
+          </pattern>
+        </defs>
+        <text
+          textAnchor="middle"
+          x="50"
+          y="15"
+          fontSize="17"
+          fill="url(#wave)"
+          fillOpacity="0.6"
+        >
+          VISIT SITE
+        </text>
+        <text
+          textAnchor="middle"
+          x="50"
+          y="15"
+          fontSize="17"
+          fill="url(#gradient)"
+          fillOpacity="0.1"
+        >
+          VISIT SITE
+        </text>
+      </SvgContainer>
+    </BackgroundContainer>
   );
-};
-
-export default Test;
+}

@@ -1,49 +1,52 @@
-import React, { useRef, useLayoutEffect, useState } from "react";
-import styled from "styled-components";
+import React, { useEffect, useLayoutEffect, useState, Fragment } from "react";
+import styled, { keyframes } from "styled-components";
 import { Technology, TechnologiesUsed, FlexBox } from "./GlobalStyles";
 import { useInView } from "react-intersection-observer";
 import { Fade, Slide } from "react-awesome-reveal";
 import { colorSet } from "lib/colorSet";
 
 const FullContainer = styled(FlexBox)`
-  padding: 50px;
-  width: 80%;
+  width: 100%;
   height: 100vh;
-`;
-const ModalTitle = styled.h2`
-  font-size: 5rem;
-  margin: 10px 0;
-  font-weight: 500;
+  background-color: ${colorSet.background};
 `;
 
-const ModalDescription = styled(FlexBox)`
-  color: #050505;
+const TitleSection = styled.section`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: column;
+  width: 80%;
+  min-height: 300px;
+  padding: 80px 0 30px 0;
+`;
+
+const ProjectTitle = styled.h2`
+  font-size: 5rem;
+  font-weight: 400;
   margin-bottom: 20px;
 `;
 
-const ProjectDate = styled.div`
-  color: #6e7275;
-  margin-bottom: 15px;
+const ProjectSubTitle = styled(FlexBox)`
+  width: 100%;
+  margin-bottom: 10px;
 `;
 
-const ProjectSubTitle = styled.p`
-  font-size: 1rem;
-  margin-bottom: 10px;
-  font-weight: 300;
+const KeyBox = styled.div`
+  margin-right: 10px;
+`;
+
+const ValueBox = styled.div``;
+
+const ProjectDescription = styled(FlexBox)`
+  margin-bottom: 20px;
+  height: 800px;
+  background-color: pink;
 `;
 
 const ProjectDesc = styled.li`
   list-style: circle;
   margin-bottom: 5px;
-  &:before {
-    content: "";
-    position: absolute;
-
-    left: 0;
-    width: 5px;
-    height: 1px;
-    border-top: 1px #555 solid;
-  }
 `;
 
 const ImageContainer = styled(FlexBox).withConfig({
@@ -66,28 +69,44 @@ const ContentContainer = styled(FlexBox)`
   width: 80%;
 `;
 
-const SideContainer = styled(FlexBox)`
-  width: 20%;
-`;
-
 const ButtonContainer = styled(FlexBox)`
   cursor: pointer;
   padding: 0 20px;
   height: 100%;
-  min-height: 300px;
 `;
 
 const LinkBtn = styled(FlexBox)`
-  font-size: 0.9rem;
+  position: relative;
   height: fit-content;
-  background-color: #dce0e3;
-  max-width: fit-content;
-  padding: 4px 5px;
+  padding: 10px;
   border-radius: 8px;
   line-height: 24px;
   word-break: keep-all;
   cursor: pointer;
   color: #000;
+  background-color: transparent;
+`;
+const hover = () => keyframes`
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(0); }
+`;
+
+const waveAnimation = ({ isHovered }) => {
+  return isHovered ? `animation: ${hover} 2s;` : "";
+};
+
+const BtnWave = styled.div`
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  opacity: 0.4;
+  border-radius: 30px;
+  background-color: ${colorSet.accent};
+  width: 100%;
+  height: 0%;
+  transform: ${(props) =>
+    props.isHovered ? "translateY(100%)" : "translateY(0%)"};
+  transition: transform 2s ease-in-out;
 `;
 
 const BtnImg = styled.img.withConfig({
@@ -137,8 +156,11 @@ const PrevButton = ({ onClick }) => {
 };
 
 const DetailLayout = ({ project }) => {
-  console.log("##project", project);
   const [imgIdx, setImgIdx] = useState(0);
+  const [isHovered, setIsHovered] = useState(false);
+  useEffect(() => {
+    console.log("##isHovered", isHovered);
+  }, [isHovered]);
   const handleClickPrev = () => {
     setImgIdx((prev) => (prev === 0 ? project.length - 1 : prev - 1));
   };
@@ -146,14 +168,57 @@ const DetailLayout = ({ project }) => {
   const handleClickNext = () => {
     setImgIdx((prev) => (prev === project.length - 1 ? 0 : prev + 1));
   };
+
+  const titleSection = [
+    {
+      key: "Subtitle:",
+      value: project.subtitle,
+    },
+    {
+      key: "Category:",
+      value: project.category === "corp" ? "회사 프로젝트" : "개인 프로젝트",
+    },
+    {
+      key: "Duration:",
+      value: project.date,
+    },
+  ];
+
+  const handleMouseEvent = () => {
+    setIsHovered((prev) => !prev);
+  };
+
   return (
-    <FullContainer>
-      <ContentContainer direction="column" justify="space-between">
-        <FlexBox direction="column" align="flex-start">
-          <ModalTitle>{project.title}</ModalTitle>
-          <ProjectSubTitle>{project.subtitle}</ProjectSubTitle>
-          <ProjectDate>{project.date}</ProjectDate>
-        </FlexBox>
+    <FullContainer justify="center">
+      <ContentContainer
+        direction="column"
+        justify="space-between"
+        align="center"
+      >
+        <TitleSection>
+          <ProjectTitle>{project.title}</ProjectTitle>
+          <div style={{ width: "100%" }}>
+            {titleSection.map((item) => (
+              <ProjectSubTitle justify="space-between">
+                <KeyBox>{item.key} </KeyBox>
+                <ValueBox>{item.value}</ValueBox>
+              </ProjectSubTitle>
+            ))}
+          </div>
+          {project?.link && (
+            <LinkBtn
+              onClick={() => {
+                window.open(project.link, "_blank", "noopener, noreferrer");
+              }}
+              onMouseEnter={handleMouseEvent}
+              // onMouseLeave={handleMouseEvent}
+              isHovered={isHovered}
+            >
+              Visit site
+              <BtnWave isHovered={isHovered} />
+            </LinkBtn>
+          )}
+        </TitleSection>
         {project?.images && (
           <Fade key={imgIdx}>
             <ImageContainer
@@ -165,11 +230,11 @@ const DetailLayout = ({ project }) => {
             </ImageContainer>
           </Fade>
         )}
-        <ModalDescription direction="column" align="flex-start">
+        <ProjectDescription direction="column" align="flex-start">
           {project.description.map((desc, idx) => {
             return <ProjectDesc key={idx + desc}>{desc}</ProjectDesc>;
           })}
-        </ModalDescription>
+        </ProjectDescription>
 
         <FlexBox justify="space-between">
           <TechnologiesUsed>
@@ -177,18 +242,8 @@ const DetailLayout = ({ project }) => {
               <Technology key={index}>{tech}</Technology>
             ))}
           </TechnologiesUsed>
-          {project?.link && (
-            <LinkBtn
-              onClick={() => {
-                window.open(project.link, "_blank", "noopener, noreferrer");
-              }}
-            >
-              Visit site
-            </LinkBtn>
-          )}
         </FlexBox>
-      </ContentContainer>{" "}
-      <SideContainer></SideContainer>
+      </ContentContainer>
     </FullContainer>
   );
 };

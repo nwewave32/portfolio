@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useLayoutEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styled, { keyframes } from "styled-components";
 
 import WavySeparator from "./WavySeparator";
@@ -7,23 +7,27 @@ import { Technology, TechnologiesUsed, FlexBox } from "./GlobalStyles";
 import { Fade } from "react-awesome-reveal";
 import { colorSet } from "lib/colorSet";
 import InfiniteAutoSlider from "./InfiniteAutoSlider";
+import { useDispatch, useSelector } from "react-redux";
 
 const ProjectContainer = styled(FlexBox)`
   width: 100%;
   box-sizing: border-box;
+  background-color: ${colorSet.base};
 `;
 
 const ProjectsSection = styled(FlexBox)`
+  position: relative;
   width: 100vw;
   overflow: hidden;
   height: 100vh;
-  padding: 0 50px;
   background-color: ${colorSet.base};
   box-sizing: border-box;
+  opacity: ${(props) => props.visibility};
+  transform: ${(props) => `scale(${props.visibility})`};
+  transition: opacity 1s ease-in-out, transform 0.4s ease-in-out;
 `;
 
 const DetailSection = styled(FlexBox)`
-  padding: 0 50px;
   width: 100%;
 `;
 
@@ -32,6 +36,50 @@ const EmptySeparator = styled.div`
   padding-top: 500px;
   background-color: ${colorSet.base};
   position: relative;
+`;
+
+const rotateText = keyframes`
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+`;
+
+const BackToTopButton = styled.button`
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: none;
+  background-color: ${colorSet.accent};
+  color: #fff;
+  font-size: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  overflow: hidden;
+
+  &:hover {
+    animation: ${rotateText} 2s linear infinite;
+  }
+`;
+
+const RotatingSection = styled.section`
+  position: absolute;
+  animation: ${rotateText} 10.5s linear infinite;
+`;
+
+const Letter = styled.span`
+  position: absolute;
+  font-family: Poppins;
+  top: -35px;
+
+  font-size: 10px;
+  display: inline-block;
+  color: white;
+  transform-origin: 0 35px;
+  transform: ${({ index }) => `rotate(${index * 14.5}deg)`};
 `;
 
 const projectsData = [
@@ -121,9 +169,9 @@ const projectsData = [
   {
     id: 4,
     category: "corp",
-    title: "ThinQ App",
+    title: "ThinQ",
     date: "2022.01 - 2024.04",
-    subtitle: "LG 전자의 IoT 제품 전용 어플리케이션 / 회사 프로젝트",
+    subtitle: "LG 전자의 IoT 제품 전용 어플리케이션 ",
     description: [
       "5개 이상의 제품에서 React.js 프레임워크 이용한 개발 및 유지보수 작업",
       "디자이너, 백엔드 개발자, PM 등 다양한 팀원들과의 원활한 협업",
@@ -141,8 +189,9 @@ const projectsData = [
       "Git",
     ],
     link: "https://www.lge.co.kr/lg-thinq",
-    thumbnail: "thinq/thinq_thumb.png",
+    thumbnail: "thinq/thinq_logo.png",
     images: [
+      "thinq/thinq_thumb.png",
       "thinq/thinq.png",
       "thinq/hb.png",
       "thinq/wm.png",
@@ -156,7 +205,7 @@ const projectsData = [
     category: "corp",
     title: "나코차(나의 코치를 찾아줘)",
     date: "2023.05 - 2023.09",
-    subtitle: "스포츠 코치 매칭 플랫폼 / 회사 프로젝트",
+    subtitle: "스포츠 코치 매칭 플랫폼 ",
     description: [
       "외부 개발자와 협업",
       "GetX, Bloc, Provider를 이용해 상태 관리와 효율적인 UX를 제공",
@@ -179,7 +228,7 @@ const projectsData = [
     category: "corp",
     title: "RentVe",
     date: "2023.10 - 2024.04",
-    subtitle: "렌트카 업체 CMS / 회사 프로젝트",
+    subtitle: "렌트카 업체 CMS ",
     description: [
       "담당 프로젝트",
       "1人 기획, 개발(프론트와 백 동시에 개발)",
@@ -194,33 +243,85 @@ const projectsData = [
 ];
 
 const Projects = () => {
+  const [visibility, setVisibility] = useState(1);
+  const sectionRef = useRef(null);
+  const [topBtnVisibility, setTopBtnVisibility] = useState(false);
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  // useEffect(() => {
+  //   const observer = new IntersectionObserver(
+  //     ([entry]) => setIsVisible(entry.isIntersecting),
+  //     { threshold: 0.6 } // Adjust threshold as needed
+  //   );
+
+  //   if (sectionRef.current) observer.observe(sectionRef.current);
+  //   return () => {
+  //     if (sectionRef.current) observer.unobserve(sectionRef.current);
+  //   };
+  // }, []);
+
   const [selectedProjectIndex, setSelectedProjectIndex] = useState(null);
+
   useEffect(() => {
-    console.log("##selectedProjectIndex", selectedProjectIndex);
     const detailSection = document.body.querySelector("#detail");
+
     if (detailSection) {
       const offset = detailSection.offsetTop;
       window.scrollTo({ top: offset, behavior: "smooth" });
     }
+
+    const handleScroll = () => {
+      if (window.scrollY > window.outerHeight / 4)
+        setVisibility(1 - window.scrollY / window.outerHeight);
+      else setVisibility(1);
+
+      if (window.scrollY > window.outerHeight / 3) setTopBtnVisibility(true);
+      else setTopBtnVisibility(false);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
   }, [selectedProjectIndex]);
 
+  const text = "back to top";
+
+  const letters = text.split("");
+
   return (
-    <ProjectContainer direction="column" align="center">
-      <ProjectsSection justify="center">
+    <ProjectContainer direction="column" align="center" ref={sectionRef}>
+      <ProjectsSection justify="center" visibility={visibility} id="project">
         <GridProjecet
           clickProject={(index) => {
             setSelectedProjectIndex(index);
           }}
         />
       </ProjectsSection>
+
       <EmptySeparator>
         <WavySeparator color={colorSet.background} />
       </EmptySeparator>
-
       {selectedProjectIndex !== null && (
         <DetailSection id="detail">
           <DetailLayout project={projectsData[selectedProjectIndex]} />
         </DetailSection>
+      )}
+
+      {topBtnVisibility && (
+        <BackToTopButton onClick={scrollToTop}>
+          <RotatingSection>
+            {letters.map((item, index) => (
+              <Letter key={index} index={index}>
+                {item}
+              </Letter>
+            ))}
+          </RotatingSection>
+        </BackToTopButton>
       )}
     </ProjectContainer>
   );
@@ -239,6 +340,7 @@ const GridContainer = styled.div`
   border-radius: 0 0 10px 10px;
   margin-bottom: 10px;
   box-sizing: border-box;
+  padding: 0 20px;
 `;
 
 const Column = styled(FlexBox)`
@@ -264,6 +366,8 @@ const BottomGradientSeparator = styled.div`
 `;
 
 const GridProjecet = ({ clickProject }) => {
+  const startTrack = useSelector((state) => state.track.value);
+
   return (
     <GridContainer>
       {Array.from({ length: 4 }).map((_, columnIndex) => {
@@ -274,6 +378,7 @@ const GridProjecet = ({ clickProject }) => {
               isUp={columnIndex % 2 === 0}
               clickProject={clickProject}
               columnIndex={columnIndex}
+              startToMove={startTrack}
             />
           </Column>
         );
