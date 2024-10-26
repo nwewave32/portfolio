@@ -1,6 +1,6 @@
 import { colorSet } from "lib/colorSet";
-import React from "react";
-import styled from "styled-components";
+import React, { useState } from "react";
+import styled, { keyframes } from "styled-components";
 
 const BackgroundContainer = styled.div`
   background-color: ${colorSet.background};
@@ -19,9 +19,41 @@ const SvgContainer = styled.svg`
   height: auto;
 `;
 
+const Container = styled.div`
+  position: relative;
+  width: 180px;
+  height: 130px;
+  border: 1px solid #000;
+  padding: 10px;
+  font-size: 4em;
+  background-color: transparent;
+  overflow: hidden;
+  color: red;
+`;
+
+const BackContainer = styled.div`
+  position: absolute;
+  bottom: ${(props) => (props.isHover ? 0 : "-150px")};
+  left: 0px;
+  width: 180px;
+  height: 130px;
+  padding: 10px;
+  background-color: rgba(0, 0, 224, 0.2);
+  transition: bottom 2s;
+`;
+
 export default function Test() {
+  const [isHover, setIsHover] = useState(false);
   return (
     <BackgroundContainer>
+      <Container
+        onMouseOver={() => setIsHover((prev) => !prev)}
+        onMouseOut={() => setIsHover((prev) => !prev)}
+      >
+        {isHover.toString()}
+        <BackContainer isHover={isHover} />
+      </Container>
+
       <SvgContainer viewBox="0 0 100 20">
         <defs>
           <linearGradient id="gradient" x1="0" x2="0" y1="0" y2="1">
