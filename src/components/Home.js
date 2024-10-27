@@ -15,7 +15,7 @@ const HeroSection = styled.section`
   text-align: center;
   padding: 50px 20px;
   transform: translateY(100%);
-  z-index: 9999;
+  z-index: 9;
   overflow: hidden;
   height: 100%;
 `;
@@ -75,58 +75,58 @@ const Home = () => {
   const [mouseX, setMouseX] = useState(0); // 마우스 위치 저장
   const [ripples, setRipples] = useState([]); // 물방울 효과 저장
 
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    const ctx = canvas.getContext("2d");
-    const waveHeight = 200;
-    const waveLength = canvas.width / 10;
-    const speed = 0.03;
-    let phase = 0;
+  // useEffect(() => {
+  //   const canvas = canvasRef.current;
+  //   const ctx = canvas.getContext("2d");
+  //   const waveHeight = 200;
+  //   const waveLength = canvas.width / 10;
+  //   const speed = 0.03;
+  //   let phase = 0;
 
-    const drawRipple = () => {
-      // 물방울 효과 그리기
-      ripples.forEach((ripple, index) => {
-        ripple.radius += 2; // 물방울 크기 증가
-        ctx.beginPath();
-        ctx.arc(ripple.x, ripple.y, ripple.radius, 0, Math.PI * 2);
-        ctx.strokeStyle = `rgba(255, 255, 255, ${1 - ripple.radius / 100})`; // 점점 투명해짐
-        ctx.stroke();
-        ctx.closePath();
+  //   const drawRipple = () => {
+  //     // 물방울 효과 그리기
+  //     ripples.forEach((ripple, index) => {
+  //       ripple.radius += 2; // 물방울 크기 증가
+  //       ctx.beginPath();
+  //       ctx.arc(ripple.x, ripple.y, ripple.radius, 0, Math.PI * 2);
+  //       ctx.strokeStyle = `rgba(255, 255, 255, ${1 - ripple.radius / 100})`; // 점점 투명해짐
+  //       ctx.stroke();
+  //       ctx.closePath();
 
-        // 물방울이 너무 커지면 배열에서 제거
-        if (ripple.radius > 100) {
-          ripples.splice(index, 1);
-        }
-      });
-      requestAnimationFrame(drawRipple);
-    };
-    // 파도 그리기 함수
-    const drawWave = () => {
-      ctx.beginPath();
-      ctx.moveTo(0, canvas.height / 2);
+  //       // 물방울이 너무 커지면 배열에서 제거
+  //       if (ripple.radius > 100) {
+  //         ripples.splice(index, 1);
+  //       }
+  //     });
+  //     requestAnimationFrame(drawRipple);
+  //   };
+  //   // 파도 그리기 함수
+  //   const drawWave = () => {
+  //     ctx.beginPath();
+  //     ctx.moveTo(0, canvas.height / 2);
 
-      for (let x = 0; x < canvas.width; x += 10) {
-        const y =
-          waveHeight *
-            Math.sin(
-              (x + phase + (mouseX / window.innerWidth) * 50) / waveLength
-            ) + // 마우스에 따른 파도 흔들림
-          canvas.height / 2;
-        ctx.lineTo(x, y);
-      }
+  //     for (let x = 0; x < canvas.width; x += 10) {
+  //       const y =
+  //         waveHeight *
+  //           Math.sin(
+  //             (x + phase + (mouseX / window.innerWidth) * 50) / waveLength
+  //           ) + // 마우스에 따른 파도 흔들림
+  //         canvas.height / 2;
+  //       ctx.lineTo(x, y);
+  //     }
 
-      // ctx.lineTo(canvas.width, canvas.height);
-      // ctx.lineTo(0, canvas.height);
-      // ctx.closePath();
-      // ctx.fillStyle = "#6ec6ff";
-      // ctx.fill();
+  //     // ctx.lineTo(canvas.width, canvas.height);
+  //     // ctx.lineTo(0, canvas.height);
+  //     // ctx.closePath();
+  //     // ctx.fillStyle = "#6ec6ff";
+  //     // ctx.fill();
 
-      phase += speed; // 파도 움직임 업데이트
-      requestAnimationFrame(drawWave);
-    };
-    drawRipple();
-    // drawWave();
-  }, [mouseX, ripples]);
+  //     phase += speed; // 파도 움직임 업데이트
+  //     requestAnimationFrame(drawWave);
+  //   };
+  //   drawRipple();
+  //   // drawWave();
+  // }, [mouseX, ripples]);
 
   // 마우스 움직임에 따른 파도 흔들림
   const handleMouseMove = (e) => {
@@ -141,11 +141,11 @@ const Home = () => {
 
   useEffect(() => {
     // 컴포넌트가 마운트될 때만 Main 클래스 인스턴스 생성
-    mainInstance.current = new Main(canvasRef.current);
+    // mainInstance.current = new Main(canvasRef.current);
 
     // 언마운트될 때 정리 작업
     return () => {
-      window.removeEventListener("resize", mainInstance.current.resize);
+      // window.removeEventListener("resize", mainInstance.current.resize);
     };
   }, []);
   return (
@@ -161,14 +161,14 @@ const Home = () => {
           <Link to="/contact">CONTACT ME</Link>
         </CTAButton> */}
       </HeroSection>
-      <StyledCanvas
+      {/* <StyledCanvas
         ref={canvasRef}
         onMouseMove={handleMouseMove}
         onClick={(e) => {
           e.stopPropagation();
           handleClick(e);
         }}
-      />
+      /> */}
     </HomeContainer>
   );
 };

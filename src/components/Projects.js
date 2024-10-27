@@ -22,6 +22,7 @@ const ProjectsSection = styled(FlexBox)`
   height: 100vh;
   background-color: ${colorSet.base};
   box-sizing: border-box;
+  will-change: opacity, transform;
   opacity: ${(props) => props.visibility};
   transform: ${(props) => `scale(${props.visibility})`};
   transition: opacity 1s ease-in-out, transform 0.4s ease-in-out;
@@ -74,7 +75,7 @@ const Letter = styled.span`
   position: absolute;
   font-family: Poppins;
   top: -35px;
-
+  will-change: transform;
   font-size: 10px;
   display: inline-block;
   color: white;
@@ -97,7 +98,15 @@ const projectsData = [
       "최초 웹사이트 개발",
     ],
     technologies: ["VanilaJS", "Parcel", "Github Pages"],
-    link: "https://nwewave32.github.io/cookie_or_death/",
+    buttons: [
+      {
+        id: 0,
+        type: "link",
+        url: "https://nwewave32.github.io/cookie_or_death/",
+        title: "Visit Site",
+      },
+    ],
+
     thumbnail: "cookie_or_death/cookie1.png",
     images: [
       "cookie_or_death/cookie1.png",
@@ -124,7 +133,15 @@ const projectsData = [
       "Recoil",
       "Figma",
     ],
-    link: "https://nwewave32.github.io/nicknamemaker/",
+    buttons: [
+      {
+        id: 0,
+        type: "link",
+        url: "https://nwewave32.github.io/nicknamemaker/",
+        title: "Visit Site",
+      },
+    ],
+
     thumbnail: "nicknamemaker/nicknamemaker3.png",
     images: [
       "nicknamemaker/nicknamemaker1.png",
@@ -164,7 +181,14 @@ const projectsData = [
       "React Router",
       "Framer Motion",
     ],
-    link: "https://nwewave32.github.io/portfolio/",
+    buttons: [
+      {
+        id: 0,
+        type: "link",
+        url: "https://nwewave32.github.io/portfolio/",
+        title: "Visit Site",
+      },
+    ],
   },
   {
     id: 4,
@@ -188,7 +212,7 @@ const projectsData = [
       "Mixpanel",
       "Git",
     ],
-    link: "https://www.lge.co.kr/lg-thinq",
+
     thumbnail: "thinq/thinq_logo.png",
     images: [
       "thinq/thinq_thumb.png",
@@ -197,6 +221,21 @@ const projectsData = [
       "thinq/wm.png",
       "thinq/dw.png",
       "thinq/sc.png",
+    ],
+
+    buttons: [
+      {
+        id: 0,
+        type: "link",
+        url: "https://www.lge.co.kr/lg-thinq",
+        title: "Visit Site",
+      },
+      {
+        id: 1,
+        type: "download",
+        url: "https://play.google.com/store/apps/details?id=com.lgeha.nuts&hl=ko",
+        title: "Download App",
+      },
     ],
   },
 
@@ -214,13 +253,28 @@ const projectsData = [
     ],
 
     technologies: ["Dart", "Flutter", "GetX", "Postman", "Firebase"],
-    link: "https://nacocha.com/",
+
     thumbnail: "nacocha/nacocha.png",
     images: [
       "nacocha/nacocha.png",
       "nacocha/nacocha1.png",
       "nacocha/nacocha2.png",
       "nacocha/nacocha3.png",
+    ],
+
+    buttons: [
+      {
+        id: 0,
+        type: "link",
+        url: "https://nacocha.com/",
+        title: "Visit Site",
+      },
+      {
+        id: 1,
+        type: "download",
+        url: "https://play.google.com/store/apps/details?id=com.nacocha.nacocha_v1&hl=gsw&gl=KR",
+        title: "Download App",
+      },
     ],
   },
   {
@@ -236,7 +290,16 @@ const projectsData = [
       "Tailwind CSS를 활용하여 별도의 CSS 파일 없이 스타일링",
     ],
     technologies: ["PHP", "Laravel", "Vue.js", "Vuex", "MySQL", "TailwindCSS"],
-    link: "https://amuz.co.kr/service",
+
+    buttons: [
+      {
+        id: 0,
+        type: "link",
+        url: "https://amuz.co.kr/service",
+        title: "Visit Site",
+      },
+    ],
+
     thumbnail: "rentve/rentve.png",
     images: ["rentve/rentve.png"],
   },
@@ -290,12 +353,15 @@ const Projects = () => {
   }, [selectedProjectIndex]);
 
   const text = "back to top";
-
   const letters = text.split("");
 
   return (
     <ProjectContainer direction="column" align="center" ref={sectionRef}>
-      <ProjectsSection justify="center" visibility={visibility} id="project">
+      <ProjectsSection
+        justify="center"
+        visibility={visibility < 0 ? 0 : visibility}
+        id="project"
+      >
         <GridProjecet
           clickProject={(index) => {
             setSelectedProjectIndex(index);
