@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { colorSet } from "lib/colorSet";
 import {
   BrowserRouter as Router,
@@ -8,11 +8,12 @@ import {
   useLocation,
   useNavigate,
 } from "react-router-dom";
+import { Zoom } from "react-awesome-reveal";
+import Contact from "./Contact";
 
 const FooterContainer = styled.footer.withConfig({
-  shouldForwardProp: (prop) => !["isHome"].includes(prop),
+  shouldForwardProp: (prop) => ![""].includes(prop),
 })`
-  visibility: ${(props) => (props.isHome ? "hidden" : "visible")};
   background-color: ${colorSet.background};
 
   padding: 20px 0;
@@ -33,45 +34,86 @@ const SocialLinks = styled.div`
 `;
 
 const Footer = ({}) => {
-  const [isHome, setIsHome] = useState("");
+  const [isContact, setContact] = useState(false);
+  const [visible, setIsVisible] = useState(false);
   const location = useLocation();
+  const footerRef = useRef();
+  const [scrollPer, setScrollPer] = useState(0);
+
+  const handleScroll = useCallback(() => {
+    if (visible)
+      if (footerRef.current.offsetTop <= window.scrollY + window.innerHeight) {
+        console.log(
+          "##asdf",
+          window.scrollY,
+          window.innerHeight,
+          footerRef.current.offsetTop,
+          window.scrollY + window.innerHeight - footerRef.current.offsetTop
+        );
+        const result =
+          (window.scrollY + window.innerHeight - footerRef.current.offsetTop) /
+          window.innerHeight;
+        console.log("##result", result);
+        setScrollPer(result);
+      } else setScrollPer(0);
+  }, [visible]);
 
   useEffect(() => {
-    setIsHome(location.pathname.replace("/", "") === "");
+    window.addEventListener("scroll", handleScroll);
+    // window.addEventListener("wheel", (e) => {
+    //   if (visible) {
+    //     setScrollPer((prev) => {
+    //       console.log("##prev", prev);
+    //       if (prev === undefined || prev < 0) prev = 0;
+    //       let result = prev;
+    //       console.log("##result1", result);
+    //       console.log("##e.deltaY", e.deltaY);
+    //       if (e.deltaY > 0) {
+    //         result = result + 10;
+    //       } else if (e.deltaY < 0) {
+    //         result -= 10;
+    //       }
+    //       console.log("##result2", result);
+    //       return result;
+    //     });
+    //   } else setScrollPer(0);
+    // });
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [visible]);
+
+  useEffect(() => {
+    if (location.pathname === "/contact") setContact(true);
+    else setContact(false);
   }, [location]);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsVisible(entry.isIntersecting),
+      { threshold: 0.1 } // Adjust threshold as needed
+    );
+
+    if (footerRef.current) observer.observe(footerRef.current);
+    return () => {
+      if (footerRef.current) observer.unobserve(footerRef.current);
+    };
+  }, []);
+
   return (
-    <FooterContainer isHome={isHome}>
+    <FooterContainer ref={footerRef}>
       <p>Copyright 2024. KIMHAMIN. All rights reserved.</p>
-      <SocialLinks>
-        <a href="https://github.com/nwewave32">GitHub</a>
-        <a href="https://linkedin.com/in/hamin-kim-6379472b1">LinkedIn</a>
-      </SocialLinks>
-      {/* <svg
-        class="u-icon u-icon--shape-blue-1"
-        viewBox="0 0 1440 780"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          fill-rule="evenodd"
-          clip-rule="evenodd"
-          d="M391.76 206.372C398.561 257.577 422.989 333.816 564.264 307.142C623.961 295.87 672.971 246.349 725.851 192.917C798.112 119.9 877.602 39.5799 1001.47 39.5799C1020.03 39.5799 1045.16 44.9126 1072.57 50.73C1117.77 60.2253 1171.78 75.3692 1217.1 58.8446C1235.02 52.3131 1251.54 29.2773 1269.26 0H1440V757.5C1409.35 752.861 1330.28 742.392 1297.5 780H962.5C1253.14 611 992 438 927 557.5C901.437 604.497 858 780 629.5 780H0V0H234.397C255.086 12.6598 283.808 20.9856 336.62 15.677C379.328 15.677 422.989 38.5147 422.989 81.0731C422.989 99.9999 415.468 116.747 407.713 134.014C398.519 158.147 388.212 179.658 391.76 206.372Z"
-          fill="url(#liner-grad-586)"
-        ></path>
-        <defs>
-          <linearGradient
-            id="liner-grad-586"
-            x1="1374.09"
-            y1="454.721"
-            x2="24.9217"
-            y2="461.887"
-            gradientUnits="userSpaceOnUse"
-          >
-            <stop stop-color="#043F5D"></stop>
-            <stop offset="1" stop-color="#022B40"></stop>
-          </linearGradient>
-        </defs>
-      </svg> */}
+      {visible &&
+        (isContact ? (
+          <Zoom>
+            <SocialLinks>
+              <a href="https://github.com/nwewave32">GitHub</a>
+              <a href="https://linkedin.com/in/hamin-kim-6379472b1">LinkedIn</a>
+            </SocialLinks>
+          </Zoom>
+        ) : (
+          <Contact visible={visible} />
+        ))}
     </FooterContainer>
   );
 };

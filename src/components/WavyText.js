@@ -1,3 +1,4 @@
+import { colorSet } from "lib/colorSet";
 import React, { useEffect } from "react";
 import styled, { keyframes } from "styled-components";
 
@@ -33,7 +34,7 @@ const Container = styled.div.withConfig({
   shouldForwardProp: (prop) => !["isSamePage"].includes(prop),
 })`
   margin-bottom: 2rem;
-
+  color: ${colorSet.background};
   border-bottom: ${(props) => (props.isSamePage ? "2px solid" : "none")};
   padding-bottom: 1px;
 `;

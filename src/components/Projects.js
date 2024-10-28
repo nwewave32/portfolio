@@ -4,7 +4,7 @@ import styled, { keyframes } from "styled-components";
 import WavySeparator from "./WavySeparator";
 import DetailLayout from "./DetailLayout";
 import { Technology, TechnologiesUsed, FlexBox } from "./GlobalStyles";
-import { Fade } from "react-awesome-reveal";
+import { Zoom } from "react-awesome-reveal";
 import { colorSet } from "lib/colorSet";
 import InfiniteAutoSlider from "./InfiniteAutoSlider";
 import { useDispatch, useSelector } from "react-redux";
@@ -357,17 +357,19 @@ const Projects = () => {
 
   return (
     <ProjectContainer direction="column" align="center" ref={sectionRef}>
-      <ProjectsSection
-        justify="center"
-        visibility={visibility < 0 ? 0 : visibility}
-        id="project"
-      >
-        <GridProjecet
-          clickProject={(index) => {
-            setSelectedProjectIndex(index);
-          }}
-        />
-      </ProjectsSection>
+      <Zoom>
+        <ProjectsSection
+          justify="center"
+          visibility={visibility < 0 ? 0 : visibility}
+          id="project"
+        >
+          <GridProjecet
+            clickProject={(index) => {
+              setSelectedProjectIndex(index);
+            }}
+          />
+        </ProjectsSection>
+      </Zoom>
 
       <EmptySeparator>
         <WavySeparator color={colorSet.background} />

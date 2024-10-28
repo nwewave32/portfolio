@@ -120,6 +120,7 @@ const StyledUl = styled.ul`
 
 const SkillsSection = styled.section`
   padding: 50px 100px;
+  padding-top: 80px;
   text-align: center;
 `;
 
