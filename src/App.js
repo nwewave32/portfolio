@@ -37,7 +37,7 @@ const App = () => {
               <Route path="/about" element={<AboutMe />} />
               <Route path="/works" element={<Projects />} />
 
-              <Route path="/contact" element={<Contact scrollPer={0} />} />
+              <Route path="/contact" element={<Contact />} />
               <Route path="/test" element={<Test />} />
             </Routes>
           </MainContainer>

@@ -372,7 +372,10 @@ const Projects = () => {
       </Zoom>
 
       <EmptySeparator>
-        <WavySeparator color={colorSet.background} />
+        <WavySeparator
+          mainColor={colorSet.background}
+          backColor={colorSet.accent}
+        />
       </EmptySeparator>
       {selectedProjectIndex !== null && (
         <DetailSection id="detail">

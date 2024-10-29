@@ -103,6 +103,7 @@ const FullScreenHeader = styled.div.withConfig({
   width: 100vw;
   height: 100vh;
   background-color: ${colorSet.neutral};
+
   display: flex;
   justify-content: center;
   align-items: center;
@@ -121,12 +122,13 @@ const StyledSVG = styled.svg`
   top: 0px;
   left: 0;
   z-index: 10;
+  filter: drop-shadow(4px 5px 3px rgb(0 0 0 / 0.4));
 `;
 
 const Nav = styled.nav`
   width: 100%;
+  height: 100vh;
 
-  padding-left: 50px;
   a,
   a > div {
     text-decoration: none;
@@ -137,7 +139,9 @@ const Nav = styled.nav`
 `;
 
 const NavContainer = styled(FlexBox)`
+  padding: 50px 0;
   width: 80%;
+  height: 100%;
   position: relative;
   z-index: 10;
 `;
@@ -184,6 +188,7 @@ const Header = () => {
 
   useEffect(() => {
     setIsOpen(false);
+    window.scrollTo(0, 0);
   }, [location]);
 
   const [isHovered, setIsHovered] = useState(false);
@@ -240,7 +245,7 @@ const Header = () => {
           </defs>
         </StyledSVG>
         <Nav>
-          <NavContainer direction="column">
+          <NavContainer direction="column" justify="center">
             {navArr.map((item) => {
               return (
                 <Link to={item.path} key={item.title}>

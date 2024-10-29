@@ -15,7 +15,7 @@ const StyledSvg = styled.svg`
   filter: drop-shadow(2px 3px 1px rgb(255 255 255 / 0.4));
 `;
 
-const Test = () => {
+const Moon = () => {
   const [svgArr, setSvgArr] = useState([]);
   useLayoutEffect(() => {
     let tmpArr = [];
@@ -55,7 +55,6 @@ const Test = () => {
           <g transform="translate(150.16167159410367 149.12873890939673)">
             <path
               d="M91.3 -89.1C115.6 -66.9 130.8 -33.5 129.5 -1.3C128.3 30.9 110.5 61.9 86.2 84.7C61.9 107.5 30.9 122.3 -2.2 124.5C-35.4 126.7 -70.7 116.4 -94.4 93.5C-118 70.7 -130 35.4 -129.9 0.1C-129.8 -35.1 -117.6 -70.2 -93.9 -92.4C-70.2 -114.6 -35.1 -123.8 -0.8 -123C33.5 -122.1 66.9 -111.3 91.3 -89.1"
-              // fill={svgItem.color}
               fill={svgItem?.isCenter ? svgItem.color : "none"}
               stroke={svgItem.color}
               stroke-width="6"
@@ -63,47 +62,8 @@ const Test = () => {
           </g>
         </StyledSvg>
       ))}
-
-      {/* <StyledSvg
-        id="visual"
-        viewBox="20 20 280 280"
-        width="280"
-        height="280"
-        xmlns="http://www.w3.org/2000/svg"
-        version="1.1"
-        posX={10}
-        posY={10}
-      >
-        <g transform="translate(150.16167159410367 149.12873890939673)">
-          <path
-            d="M91.3 -89.1C115.6 -66.9 130.8 -33.5 129.5 -1.3C128.3 30.9 110.5 61.9 86.2 84.7C61.9 107.5 30.9 122.3 -2.2 124.5C-35.4 126.7 -70.7 116.4 -94.4 93.5C-118 70.7 -130 35.4 -129.9 0.1C-129.8 -35.1 -117.6 -70.2 -93.9 -92.4C-70.2 -114.6 -35.1 -123.8 -0.8 -123C33.5 -122.1 66.9 -111.3 91.3 -89.1"
-            fill="none"
-            stroke="red"
-            stroke-width="6"
-          ></path>
-        </g>
-      </StyledSvg>
-      <StyledSvg
-        id="visual"
-        viewBox="20 20 280 280"
-        width="280"
-        height="280"
-        xmlns="http://www.w3.org/2000/svg"
-        version="1.1"
-        posX={0}
-        posY={10}
-      >
-        <g transform="translate(150.16167159410367 149.12873890939673)">
-          <path
-            d="M91.3 -89.1C115.6 -66.9 130.8 -33.5 129.5 -1.3C128.3 30.9 110.5 61.9 86.2 84.7C61.9 107.5 30.9 122.3 -2.2 124.5C-35.4 126.7 -70.7 116.4 -94.4 93.5C-118 70.7 -130 35.4 -129.9 0.1C-129.8 -35.1 -117.6 -70.2 -93.9 -92.4C-70.2 -114.6 -35.1 -123.8 -0.8 -123C33.5 -122.1 66.9 -111.3 91.3 -89.1"
-            fill="none"
-            stroke="#FF0066"
-            stroke-width="6"
-          ></path>
-        </g>
-      </StyledSvg> */}
     </MoonContainer>
   );
 };
 
-export default Test;
+export default Moon;

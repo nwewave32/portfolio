@@ -8,16 +8,21 @@ import {
   useLocation,
   useNavigate,
 } from "react-router-dom";
-import { Zoom } from "react-awesome-reveal";
+import { Fade, Slide, Zoom } from "react-awesome-reveal";
 import Contact from "./Contact";
 
 const FooterContainer = styled.footer.withConfig({
-  shouldForwardProp: (prop) => ![""].includes(prop),
+  shouldForwardProp: (prop) => !["isHome"].includes(prop),
 })`
-  background-color: ${colorSet.background};
+  background-color: ${({ isHome }) =>
+    isHome ? colorSet.base : colorSet.background};
 
-  padding: 20px 0;
+  padding: 20px 0 25px 0;
   text-align: center;
+  p {
+    position: relative;
+    z-index: 5;
+  }
 `;
 
 const SocialLinks = styled.div`
@@ -26,6 +31,8 @@ const SocialLinks = styled.div`
   a {
     margin: 0 10px;
     text-decoration: none;
+    position: relative;
+    z-index: 5;
 
     &:hover {
       text-decoration: underline;
@@ -38,50 +45,6 @@ const Footer = ({}) => {
   const [visible, setIsVisible] = useState(false);
   const location = useLocation();
   const footerRef = useRef();
-  const [scrollPer, setScrollPer] = useState(0);
-
-  const handleScroll = useCallback(() => {
-    if (visible)
-      if (footerRef.current.offsetTop <= window.scrollY + window.innerHeight) {
-        console.log(
-          "##asdf",
-          window.scrollY,
-          window.innerHeight,
-          footerRef.current.offsetTop,
-          window.scrollY + window.innerHeight - footerRef.current.offsetTop
-        );
-        const result =
-          (window.scrollY + window.innerHeight - footerRef.current.offsetTop) /
-          window.innerHeight;
-        console.log("##result", result);
-        setScrollPer(result);
-      } else setScrollPer(0);
-  }, [visible]);
-
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-    // window.addEventListener("wheel", (e) => {
-    //   if (visible) {
-    //     setScrollPer((prev) => {
-    //       console.log("##prev", prev);
-    //       if (prev === undefined || prev < 0) prev = 0;
-    //       let result = prev;
-    //       console.log("##result1", result);
-    //       console.log("##e.deltaY", e.deltaY);
-    //       if (e.deltaY > 0) {
-    //         result = result + 10;
-    //       } else if (e.deltaY < 0) {
-    //         result -= 10;
-    //       }
-    //       console.log("##result2", result);
-    //       return result;
-    //     });
-    //   } else setScrollPer(0);
-    // });
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, [visible]);
 
   useEffect(() => {
     if (location.pathname === "/contact") setContact(true);
@@ -101,20 +64,22 @@ const Footer = ({}) => {
   }, []);
 
   return (
-    <FooterContainer ref={footerRef}>
-      <p>Copyright 2024. KIMHAMIN. All rights reserved.</p>
-      {visible &&
-        (isContact ? (
-          <Zoom>
-            <SocialLinks>
-              <a href="https://github.com/nwewave32">GitHub</a>
-              <a href="https://linkedin.com/in/hamin-kim-6379472b1">LinkedIn</a>
-            </SocialLinks>
-          </Zoom>
-        ) : (
-          <Contact visible={visible} />
-        ))}
-    </FooterContainer>
+    <>
+      <FooterContainer ref={footerRef} isHome={location.pathname === "/"}>
+        <p>Copyright 2024. KIMHAMIN. All rights reserved.</p>
+        {visible && (
+          <SocialLinks>
+            <a href="https://github.com/nwewave32">GitHub</a>
+            <a href="https://linkedin.com/in/hamin-kim-6379472b1">LinkedIn</a>
+          </SocialLinks>
+        )}
+      </FooterContainer>
+      {visible && location.pathname === "/" && (
+        <Fade>
+          <Contact visible={visible} isContact={isContact} />
+        </Fade>
+      )}
+    </>
   );
 };
 

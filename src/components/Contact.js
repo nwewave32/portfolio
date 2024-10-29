@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import styled from "styled-components";
 import { FlexBox } from "./GlobalStyles";
 
 const ContactSection = styled.section.attrs(({ scrollPer }) => ({
   style: {
-    // transform: `translateY( ${scrollPer}%)`,
-    // opacity: `${scrollPer}`,
+    transform: `translateY( ${100 - scrollPer}%)`,
+    opacity: `${scrollPer / 100}`,
   },
 }))`
   will-change: transform, opacity;
@@ -78,7 +78,7 @@ const RightSide = styled(FlexBox)`
   padding: 50px 20px;
 `;
 
-const Contact = ({ visible, scrollPer }) => {
+const Contact = ({ visible = true, isContact = true }) => {
   const [name, setName] = useState("");
   const [emailContent, setEmailContent] = useState("");
 
@@ -89,6 +89,36 @@ const Contact = ({ visible, scrollPer }) => {
     )}&body=${encodeURIComponent(emailContent)}`;
     window.location.href = mailtoLink; // mailto 링크로 이동
   };
+
+  const [scrollPer, setScrollPer] = useState(isContact ? 100 : 0);
+
+  const handleScroll = useCallback(
+    (e) => {
+      if (visible) {
+        setScrollPer((prev) => {
+          if (prev === undefined || prev < 0) prev = 0;
+          let result = prev;
+
+          if (e.deltaY > 0) {
+            result += 5;
+            if (result > 100) result = 100;
+          } else if (e.deltaY < 0) {
+            result -= 1;
+          }
+
+          return result;
+        });
+      } else setScrollPer(0);
+    },
+    [visible]
+  );
+
+  useEffect(() => {
+    if (!isContact) window.addEventListener("wheel", handleScroll);
+    return () => {
+      window.removeEventListener("wheel", handleScroll);
+    };
+  }, [visible]);
 
   return (
     <ContactSection scrollPer={scrollPer}>
