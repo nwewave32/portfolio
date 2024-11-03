@@ -7,3 +7,10 @@ export const colorSet = {
   highlight: "#81c9c1", // 민트톤 (강조해야 할 부분이나 작은 포인트에 사용)
   text: "#050505", // 짙은 검정 (텍스트 가독성 확보)
 };
+
+export const waveColorSet = {
+  layer1: "#486b7a",
+  layer2: "#315260",
+  layer3: "#23404c",
+  layer4: "#1d343d",
+};

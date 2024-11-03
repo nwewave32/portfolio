@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import React, { useState, useEffect, useRef, useCallback } from "react";
-import { colorSet } from "lib/colorSet";
+import { colorSet, waveColorSet } from "lib/colorSet";
 import {
   BrowserRouter as Router,
   Route,
@@ -15,7 +15,7 @@ const FooterContainer = styled.footer.withConfig({
   shouldForwardProp: (prop) => !["isHome"].includes(prop),
 })`
   background-color: ${({ isHome }) =>
-    isHome ? colorSet.base : colorSet.background};
+    isHome ? waveColorSet.layer4 : colorSet.background};
 
   padding: 20px 0 25px 0;
   text-align: center;

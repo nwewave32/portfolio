@@ -89,11 +89,6 @@ export class Wave {
 
     ctx.drawImage(img, this.surfer.x, this.surfer.y, 50, 50);
 
-    // const fishImg = new Image();
-    // fishImg.src = `${process.env.PUBLIC_URL}/fish.png`;
-
-    // ctx.drawImage(fishImg, 500, 500, 50, 50);
-
     if (this.isClicked) {
       ctx.beginPath();
       ctx.fillStyle = "rgba(0,0,0,0.2)";

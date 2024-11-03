@@ -8,7 +8,9 @@ const MoonContainer = styled.div`
   width: 300px;
   height: 300px;
 `;
-const StyledSvg = styled.svg`
+const StyledSvg = styled.svg.withConfig({
+  shouldForwardProp: (prop) => !["posY", "posX"].includes(prop),
+})`
   position: absolute;
   top: ${({ posY }) => posY}px;
   left: ${({ posX }) => posX}px;
@@ -43,6 +45,7 @@ const Moon = () => {
     <MoonContainer>
       {svgArr.map((svgItem) => (
         <StyledSvg
+          key={svgItem.posX + svgItem.posY}
           id="visual"
           viewBox="0 0 300 300"
           width={svgItem.radius}
@@ -57,7 +60,7 @@ const Moon = () => {
               d="M91.3 -89.1C115.6 -66.9 130.8 -33.5 129.5 -1.3C128.3 30.9 110.5 61.9 86.2 84.7C61.9 107.5 30.9 122.3 -2.2 124.5C-35.4 126.7 -70.7 116.4 -94.4 93.5C-118 70.7 -130 35.4 -129.9 0.1C-129.8 -35.1 -117.6 -70.2 -93.9 -92.4C-70.2 -114.6 -35.1 -123.8 -0.8 -123C33.5 -122.1 66.9 -111.3 91.3 -89.1"
               fill={svgItem?.isCenter ? svgItem.color : "none"}
               stroke={svgItem.color}
-              stroke-width="6"
+              strokeWidth="6"
             ></path>
           </g>
         </StyledSvg>

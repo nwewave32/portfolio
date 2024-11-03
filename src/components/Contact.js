@@ -1,6 +1,7 @@
 import React, { useState, useCallback, useEffect } from "react";
 import styled from "styled-components";
 import { FlexBox } from "./GlobalStyles";
+import { colorSet } from "lib/colorSet";
 
 const ContactSection = styled.section.attrs(({ scrollPer }) => ({
   style: {
@@ -60,21 +61,21 @@ const Textarea = styled.textarea`
 const SubmitButton = styled.button`
   padding: 10px 20px;
   font-size: 1.2rem;
-  color: white;
+  color: ${colorSet.background};
 
   border: none;
   cursor: pointer;
   width: 100%;
   &:hover {
-    background-color: #21a1f1;
+    background-color: ${colorSet.highlight};
   }
 `;
 
 const LeftSide = styled(FlexBox)`
-  flex: 4;
+  flex: 6;
 `;
 const RightSide = styled(FlexBox)`
-  flex: 6;
+  flex: 4;
   padding: 50px 20px;
 `;
 

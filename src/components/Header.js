@@ -237,10 +237,10 @@ const Header = () => {
               y2="461.887"
               gradientUnits="userSpaceOnUse"
             >
-              <stop offset="0%" stop-color={colorSet.neutral}></stop>
-              <stop offset="40%" stop-color={colorSet.secondary}></stop>
-              <stop offset="70%" stop-color={colorSet.accent}></stop>
-              <stop offset="100%" stop-color={colorSet.base}></stop>
+              <stop offset="0%" stopColor={colorSet.neutral}></stop>
+              <stop offset="40%" stopColor={colorSet.secondary}></stop>
+              <stop offset="70%" stopColor={colorSet.accent}></stop>
+              <stop offset="100%" stopColor={colorSet.base}></stop>
             </linearGradient>
           </defs>
         </StyledSVG>
