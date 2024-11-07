@@ -2,6 +2,7 @@ import React, { useState, useCallback, useEffect } from "react";
 import styled from "styled-components";
 import { FlexBox } from "./GlobalStyles";
 import { colorSet } from "lib/colorSet";
+import { breakpoints } from "lib/globalData";
 
 const ContactSection = styled.section.attrs(({ scrollPer }) => ({
   style: {
@@ -21,6 +22,11 @@ const ContactSection = styled.section.attrs(({ scrollPer }) => ({
   position: fixed;
   bottom: 0;
   // z-index: 5;
+
+  /* Tablet - Portrait 이상 */
+  @media (max-width: ${breakpoints.tabletPortrait}px) {
+    flex-direction: column-reverse;
+  }
 `;
 
 const ContactForm = styled.form`
@@ -29,31 +35,49 @@ const ContactForm = styled.form`
   flex-direction: column;
   align-items: flex-start;
   box-sizing: border-box;
+
+  /* Tablet - Portrait 이상 */
+  @media (max-width: ${breakpoints.tabletPortrait}px) {
+    padding: 18px;
+  }
+
+  /* Desktop 이상 */
+  @media (min-width: ${breakpoints.imac}px) {
+    padding: 80px;
+  }
+`;
+
+const TitleH2 = styled.h2`
+  font-size: 3.5vh;
+  /* Tablet - Portrait 이상 */
+  @media (max-width: ${breakpoints.tabletPortrait}px) {
+    padding: 18px;
+  }
 `;
 
 const Label = styled.label`
   margin-bottom: 10px;
-  font-size: 1.2rem;
+  font-size: 1.5vh;
 `;
 
 const Input = styled.input`
   padding: 10px;
   margin-bottom: 20px;
-  font-size: 1rem;
+  font-size: 1vh;
   border: 1px solid #ccc;
   border-radius: 4px;
-  width: 95%;
+  width: 100%;
   font-weight: 300;
 `;
 
 const Textarea = styled.textarea`
   padding: 10px;
   margin-bottom: 20px;
-  font-size: 1rem;
+  font-size: 1vh;
   border: 1px solid #ccc;
   border-radius: 4px;
   height: 150px;
-  width: 95%;
+  width: 100%;
   font-weight: 300;
   resize: none;
 `;
@@ -77,6 +101,10 @@ const LeftSide = styled(FlexBox)`
 const RightSide = styled(FlexBox)`
   flex: 4;
   padding: 50px 20px;
+`;
+
+const StyledSVG = styled.svg`
+  width: 100%;
 `;
 
 const Contact = ({ visible = true, isContact = true }) => {
@@ -124,11 +152,9 @@ const Contact = ({ visible = true, isContact = true }) => {
   return (
     <ContactSection scrollPer={scrollPer}>
       <LeftSide>
-        <svg
+        <StyledSVG
           id="visual"
           viewBox="0 0 900 600"
-          width="900"
-          height="600"
           xmlns="http://www.w3.org/2000/svg"
           version="1.1"
           preserveAspectRatio="none"
@@ -153,10 +179,10 @@ const Contact = ({ visible = true, isContact = true }) => {
             d="M0 601L25 601C50 601 100 601 150 601C200 601 250 601 300 601C350 601 400 601 450 601C500 601 550 601 600 601C650 601 700 601 750 601C800 601 850 601 875 601L900 601L900 515L875 522C850 529 800 543 750 549C700 555 650 553 600 551C550 549 500 547 450 547C400 547 350 549 300 547C250 545 200 539 150 533C100 527 50 521 25 518L0 515Z"
             fill="#5c968f"
           ></path>
-        </svg>
+        </StyledSVG>
       </LeftSide>
       <RightSide direction="column" justify="center">
-        <h2>Let's surf with me!</h2>
+        <TitleH2>Let's surf with me!</TitleH2>
         <ContactForm onSubmit={handleSubmit}>
           <Label>Name</Label>
           <Input

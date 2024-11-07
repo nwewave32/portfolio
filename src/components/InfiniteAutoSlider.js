@@ -2,8 +2,6 @@ import { colorSet } from "lib/colorSet";
 import React, { useCallback, useState, useEffect } from "react";
 import styled, { keyframes } from "styled-components";
 
-import { useSelector, useDispatch } from "react-redux";
-
 const scroll = (height, margin, length) => keyframes`
   0% { transform: translateY(0); }
   100% { transform: translateY(calc(-${height + margin}px * ${length})); }
@@ -61,16 +59,21 @@ const Slide = styled.div.withConfig({
 `;
 
 const cardTransition = ({ isHovered }) => {
-  return isHovered
-    ? "transform: translateY(180px); transition-duration: 1.5s;"
-    : "";
+  return isHovered ? "top: 65%; transition-duration: 1.5s;" : "";
 };
 
 const CardTitle = styled.div.withConfig({
   shouldForwardProp: (prop) => !["isHovered"].includes(prop),
 })`
+  display: inline-block;
+  position: absolute;
+  top: 5%;
+  left: 4%;
   ${cardTransition};
   color: ${(props) => (props.isHovered ? colorSet.background : colorSet.base)};
+  font-size: 3.5vh;
+  line-height: 1;
+  overflow-wrap: normal;
 `;
 
 const BlurredCover = styled.div`
@@ -83,18 +86,26 @@ const BlurredCover = styled.div`
   border-radius: 8px;
 `;
 
-const InfiniteAutoSlider = ({ columnIndex, projects, isUp, clickProject }) => {
-  const dispatch = useDispatch();
+const InfiniteAutoSlider = ({
+  columnIndex,
+  projects,
+  isUp,
+  clickProject,
+  height,
+}) => {
   const [needStop, setNeedStop] = useState(false);
 
+  useEffect(() => {}, []);
+
   const handleMouseEnter = (projectId) => {
+    //todo: 화면 커지면 마우스 오버 안됨
     setHoverItem({ column: columnIndex, idx: projectId });
-    setNeedStop(true); // 애니메이션 멈춤
+    setNeedStop(true);
   };
 
   const handleMouseLeave = () => {
     setHoverItem(HOVER_ITEM_FORMAT);
-    setNeedStop(false); // 애니메이션 재시작
+    setNeedStop(false);
   };
 
   const HOVER_ITEM_FORMAT = {
@@ -104,7 +115,8 @@ const InfiniteAutoSlider = ({ columnIndex, projects, isUp, clickProject }) => {
   const [hoverItem, setHoverItem] = useState(HOVER_ITEM_FORMAT);
 
   const MARGIN = 20;
-  const HEIGHT = 300;
+  //const HEIGHT = Math.max(Math.floor(window.innerHeight / 4), 300);
+
   const LENGTH = projects.length;
 
   const checkIsHovered = useCallback(
@@ -117,7 +129,7 @@ const InfiniteAutoSlider = ({ columnIndex, projects, isUp, clickProject }) => {
   return (
     <Slider>
       <SlideTrack
-        height={HEIGHT}
+        height={height}
         length={LENGTH}
         margin={MARGIN}
         isUp={isUp}
@@ -126,7 +138,7 @@ const InfiniteAutoSlider = ({ columnIndex, projects, isUp, clickProject }) => {
         {projects.concat(projects).map((project, index) => (
           <Slide
             key={index}
-            height={HEIGHT}
+            height={height}
             margin={MARGIN}
             onClick={() => clickProject(project.id)}
             onMouseEnter={() => handleMouseEnter(project.id)}

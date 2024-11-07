@@ -10,11 +10,28 @@ import { Technology, TechnologiesUsed, FlexBox } from "./GlobalStyles";
 import { useInView } from "react-intersection-observer";
 import { Fade, Slide } from "react-awesome-reveal";
 import { colorSet } from "lib/colorSet";
+import { breakpoints } from "lib/globalData";
 
 const FullContainer = styled(FlexBox)`
   width: 100%;
-
   background-color: ${colorSet.background};
+`;
+
+const ContentContainer = styled(FlexBox)`
+  padding: 24px 50px;
+  width: 80%;
+
+  /* Mobile 이하 */
+  @media (max-width: ${breakpoints.mobile}px) {
+    width: 100%;
+
+    padding: 18px;
+  }
+
+  /* Tablet - Portrait 이상 */
+  @media (max-width: ${breakpoints.tabletPortrait}px) {
+    width: 100%;
+  }
 `;
 
 const TitleSection = styled.section.withConfig({
@@ -32,16 +49,39 @@ const TitleSection = styled.section.withConfig({
 
   position: sticky;
   top: 0px;
+
+  /* Mobile 이하 */
+  @media (max-width: ${breakpoints.mobile}px) {
+    width: 100%;
+  }
 `;
 // will-change: transform;
 // transform: translateY(-${(props) => props.scrollY}px);
-
-const ProjectTitle = styled.h2`
-  font-size: 5rem;
-  font-weight: 400;
+const TitleContainer = styled.div`
+  width: 100%;
   margin-bottom: 20px;
+  text-align: center;
 `;
 
+const ProjectTitle = styled.h2`
+  font-size: 5em;
+  font-weight: 400;
+  line-height: 1;
+  height: max-content;
+  /* Mobile 이하 */
+  @media (max-width: ${breakpoints.mobile}px) {
+    font-size: 2em;
+  }
+  /* Tablet - Portrait 이상 */
+  @media (max-width: ${breakpoints.tabletPortrait}px) {
+    font-size: 3em;
+  }
+`;
+
+const SubTitleContainer = styled.div`
+  width: 100%;
+  margin-top: 20px;
+`;
 const ProjectSubTitle = styled(FlexBox)`
   width: 100%;
   margin-bottom: 10px;
@@ -58,6 +98,11 @@ const ValueBox = styled.div``;
 const DescriptionSection = styled.section`
   width: 64vw;
   margin-top: 20px;
+  /* Mobile 이하 */
+  @media (max-width: ${breakpoints.mobile}px) {
+    width: 100%;
+    padding: 0 18px;
+  }
 `;
 const ProjectDescription = styled(FlexBox)`
   margin-bottom: 20px;
@@ -72,6 +117,10 @@ const ImageSection = styled.section`
   background-color: ${colorSet.background};
   width: 80vw;
   margin-bottom: 500px;
+  /* Tablet - Portrait 이상 */
+  @media (max-width: ${breakpoints.tabletPortrait}px) {
+    width: 90vw;
+  }
 `;
 
 const ImageContainer = styled(FlexBox)`
@@ -83,20 +132,17 @@ const ImageBox = styled.div`
   margin-bottom: 300px;
 
   position: sticky;
-  top: 120px;
+  top: 100px;
   height: 100%;
+  min-height: 500px;
   background-color: ${colorSet.background};
+  opacity: 1;
 `;
 
 const EmptySeparator = styled.div`
   height: 500px;
   width: 100%;
   background-color: pink;
-`;
-
-const ContentContainer = styled(FlexBox)`
-  padding: 24px 50px;
-  width: 80%;
 `;
 
 const ButtonContainer = styled(FlexBox)`
@@ -107,6 +153,7 @@ const ButtonContainer = styled(FlexBox)`
 const ButtonsLayout = styled.div.withConfig({
   shouldForwardProp: (prop) => !["btnLeng"].includes(prop),
 })`
+  margin-top: 10px;
   display: grid;
   grid-template-columns: repeat(${(props) => props.$btnLeng}, 1fr);
   column-gap: 10px;
@@ -176,58 +223,9 @@ const StyledSvg = styled.svg.attrs((props) => ({}))`
 // Usage
 <StyledSvg fill="#000" transform="rotate(45deg)" />;
 
-const NextButton = ({ onClick }) => {
-  const [isHover, setIsHover] = useState(false);
-  return (
-    <ButtonContainer
-      onClick={onClick}
-      align="center"
-      onMouseEnter={() => setIsHover((prev) => !prev)}
-      onMouseLeave={() => setIsHover((prev) => !prev)}
-    >
-      <BtnImg
-        src="next.png"
-        width={24}
-        height={24}
-        alt="next"
-        isHover={isHover}
-      />
-    </ButtonContainer>
-  );
-};
-
-const PrevButton = ({ onClick }) => {
-  const [isHover, setIsHover] = useState(false);
-  return (
-    <ButtonContainer
-      onClick={onClick}
-      align="center"
-      onMouseEnter={() => setIsHover((prev) => !prev)}
-      onMouseLeave={() => setIsHover((prev) => !prev)}
-    >
-      <BtnImg
-        src="prev.png"
-        width={24}
-        height={24}
-        alt="prev"
-        isHover={isHover}
-      />
-    </ButtonContainer>
-  );
-};
-
 const DetailLayout = ({ project }) => {
-  const [imgIdx, setImgIdx] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
   const [hoveredType, setHoveredType] = useState("");
-
-  const handleClickPrev = () => {
-    setImgIdx((prev) => (prev === 0 ? project.length - 1 : prev - 1));
-  };
-
-  const handleClickNext = () => {
-    setImgIdx((prev) => (prev === project.length - 1 ? 0 : prev + 1));
-  };
 
   const titleSectionArr = [
     {
@@ -289,15 +287,18 @@ const DetailLayout = ({ project }) => {
           }}
           id="title"
         >
-          <ProjectTitle>{project.title}</ProjectTitle>
-          <div style={{ width: "100%" }}>
+          <TitleContainer>
+            <ProjectTitle>{project.title}</ProjectTitle>
+          </TitleContainer>
+
+          <SubTitleContainer>
             {titleSectionArr.map((item) => (
               <ProjectSubTitle justify="space-between" key={item.key}>
                 <KeyBox>{item.key} </KeyBox>
                 <ValueBox>{item.value}</ValueBox>
               </ProjectSubTitle>
             ))}
-          </div>
+          </SubTitleContainer>
           {project?.buttons && (
             <ButtonsLayout
               $btnLeng={project?.buttons ? project?.buttons.length : 0}
@@ -343,7 +344,7 @@ const DetailLayout = ({ project }) => {
         </TitleSection>
         <ImageSection>
           {project?.images && (
-            <Fade key={imgIdx}>
+            <Fade>
               <ImageContainer direction="column">
                 {project.images.map((image, idx) => {
                   return (

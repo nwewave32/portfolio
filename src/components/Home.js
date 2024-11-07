@@ -131,7 +131,7 @@ const Home = () => {
                       delay={1e3}
                       style={{ display: "flex", width: "100%" }}
                     >
-                      <GoToWorkContainer></GoToWorkContainer>
+                      {/* <GoToWorkContainer></GoToWorkContainer> */}
                     </Fade>
                   </>
                 )}

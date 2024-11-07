@@ -8,6 +8,7 @@ import { Zoom } from "react-awesome-reveal";
 import { colorSet } from "lib/colorSet";
 import InfiniteAutoSlider from "./InfiniteAutoSlider";
 import { useDispatch, useSelector } from "react-redux";
+import { breakpoints } from "lib/globalData";
 
 const ProjectContainer = styled(FlexBox)`
   width: 100%;
@@ -60,6 +61,7 @@ const BackToTopButton = styled.button`
   justify-content: center;
   cursor: pointer;
   overflow: hidden;
+  z-index: 10;
 
   &:hover {
     animation: ${rotateText} 2s linear infinite;
@@ -170,7 +172,8 @@ const projectsData = [
     id: 3,
     category: "side",
     title: "포트폴리오 웹사이트",
-    date: "2024.10 - ",
+    date: "2024.10 - 2024.11",
+    subtitle: "포트폴리오 전시 사이트",
     description: [
       "내 포트폴리오를 전시하는 웹사이트를 제작하여 인터랙티브한 사용자 경험과 반응형 디자인을 구현",
       "최신 React 기술과 styled-components를 사용하여 개발",
@@ -242,7 +245,7 @@ const projectsData = [
   {
     id: 5,
     category: "corp",
-    title: "나코차(나의 코치를 찾아줘)",
+    title: "나코차 (나의 코치를 찾아줘)",
     date: "2023.05 - 2023.09",
     subtitle: "스포츠 코치 매칭 플랫폼 ",
     description: [
@@ -313,18 +316,6 @@ const Projects = () => {
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
-
-  // useEffect(() => {
-  //   const observer = new IntersectionObserver(
-  //     ([entry]) => setIsVisible(entry.isIntersecting),
-  //     { threshold: 0.6 } // Adjust threshold as needed
-  //   );
-
-  //   if (sectionRef.current) observer.observe(sectionRef.current);
-  //   return () => {
-  //     if (sectionRef.current) observer.unobserve(sectionRef.current);
-  //   };
-  // }, []);
 
   const [selectedProjectIndex, setSelectedProjectIndex] = useState(null);
 
@@ -402,9 +393,12 @@ export default Projects;
 
 const GridContainer = styled.div`
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(
+    ${({ length }) => length},
+    ${({ width }) => width}px
+  );
   gap: 24px;
-  width: 100%;
+  width: 100vw;
   height: 100vh;
   overflow: hidden;
   position: relative;
@@ -412,36 +406,25 @@ const GridContainer = styled.div`
   margin-bottom: 10px;
   box-sizing: border-box;
   padding: 0 20px;
+  justify-content: center;
 `;
 
-const Column = styled(FlexBox)`
+const Column = styled.div`
   flex: 1;
 `;
 
-const TopGradientSeparator = styled.div`
-  position: absolute;
-  top: 0;
-  width: 100%;
-  height: 50px;
-
-  background: linear-gradient(${colorSet.background}, transparent);
-`;
-
-const BottomGradientSeparator = styled.div`
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  height: 100px;
-
-  background: linear-gradient(transparent, ${colorSet.background});
-`;
-
 const GridProjecet = ({ clickProject }) => {
-  const startTrack = useSelector((state) => state.track.value);
+  const isMobile = window.innerWidth <= breakpoints.mobile;
+  const getHeight = () => {
+    if (isMobile) return 250;
+    else return Math.max(Math.floor(window.innerHeight / 4), 300);
+  };
+  const HEIGHT = getHeight();
+  const LENGTH = isMobile ? 3 : 4;
 
   return (
-    <GridContainer>
-      {Array.from({ length: 4 }).map((_, columnIndex) => {
+    <GridContainer width={HEIGHT} length={LENGTH}>
+      {Array.from({ length: LENGTH }).map((_, columnIndex) => {
         return (
           <Column key={columnIndex} direction="column">
             <InfiniteAutoSlider
@@ -449,7 +432,7 @@ const GridProjecet = ({ clickProject }) => {
               isUp={columnIndex % 2 === 0}
               clickProject={clickProject}
               columnIndex={columnIndex}
-              startToMove={startTrack}
+              height={HEIGHT}
             />
           </Column>
         );

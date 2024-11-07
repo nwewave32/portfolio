@@ -34,3 +34,5 @@ export const FlexBox = styled.div
 export const FullContainer = styled(FlexBox)`
   width: 100%;
 `;
+
+export const StyledSvg = styled.svg``;

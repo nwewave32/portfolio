@@ -13,16 +13,44 @@ import Test from "./components/Test";
 import styled from "styled-components";
 
 import { colorSet } from "lib/colorSet";
+import { breakpoints } from "lib/globalData";
+// const AppContainer = styled.div`
+//   display: flex;
+//   flex-direction: column;
+//   min-height: 100vh;
+//   background-color: ${colorSet.background};
+// `;
 
+const MainContainer = styled.main`
+  flex: 1;
+`;
+
+// 컨테이너 스타일 정의
 const AppContainer = styled.div`
   display: flex;
   flex-direction: column;
   min-height: 100vh;
   background-color: ${colorSet.background};
-`;
 
-const MainContainer = styled.main`
-  flex: 1;
+  /* Mobile 이하 */
+  @media (max-width: ${breakpoints.mobile}px) {
+  }
+
+  /* Tablet - Portrait 이상 */
+  @media (min-width: ${breakpoints.mobile}px) {
+  }
+
+  /* Tablet - Landscape 이상 */
+  @media (min-width: ${breakpoints.tabletPortrait}px) {
+  }
+
+  /* Laptop 이상 */
+  @media (min-width: ${breakpoints.tabletLandscape}px) {
+  }
+
+  /* Desktop 이상 */
+  @media (min-width: ${breakpoints.laptop}px) {
+  }
 `;
 
 const App = () => {

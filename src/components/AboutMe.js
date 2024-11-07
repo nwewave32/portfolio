@@ -2,24 +2,27 @@ import React, { useState } from "react";
 import styled, { keyframes } from "styled-components";
 import { Fade } from "react-awesome-reveal";
 import { FlexBox } from "./GlobalStyles";
+import WavySeparator from "./WavySeparator";
+import { colorSet } from "lib/colorSet";
+import { breakpoints } from "lib/globalData";
 
 const AboutContainer = styled(FlexBox)`
   width: 100%;
   height: 100%;
+  overflow: hidden;
 `;
 
 const AboutSection = styled.section`
-  display: flex;
-  flex: 3;
-  position: relative;
+  width: 100%;
+  padding: 150px;
+  background-color: ${colorSet.base};
 `;
 
-const AboutSticky = styled(FlexBox)`
-  position: sticky;
-  margin-top: 50px;
-  padding: 80px 20px;
-  top: 0%;
-  height: min-content;
+const StyledFade = styled(Fade)`
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
 `;
 
 const ProfileImageWrapper = styled.div`
@@ -28,7 +31,9 @@ const ProfileImageWrapper = styled.div`
   height: 180px;
   border-radius: 50%;
   overflow: hidden;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 20px rgba(255, 255, 255, 0.2);
+  background-color: ${colorSet.background};
+  margin-bottom: 10px;
 `;
 
 const ProfileImage = styled.img`
@@ -44,16 +49,44 @@ const ProfileImage = styled.img`
 
 const AboutHeading = styled.h2`
   font-size: 2.5rem;
-  margin-top: 20px;
-  text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3); /* 텍스트 그림자 강화 */
+  margin: 30px 0;
+  text-shadow: 1px 1px 5px rgba(255, 255, 255, 0.3);
+  color: ${colorSet.background};
 `;
 
 const AboutText = styled.p`
+  width: 50%;
   text-align: center;
   margin: 20px 0;
   padding: 0 20px;
   font-size: 1.1rem;
+  line-height: 2.1rem;
   word-break: keep-all;
+  color: ${colorSet.background};
+`;
+
+const TextFade = styled(Fade)`
+  width: 50%;
+
+  text-align: center;
+  margin: 20px 0;
+  padding: 0 20px;
+  font-size: 1.1rem;
+  line-height: 2.1rem;
+
+  color: ${colorSet.background};
+  overflow-wrap: break-word;
+  white-space: normal !important;
+
+  /* Mobile 이하 */
+  @media (max-width: ${breakpoints.mobile}px) {
+    width: 90%;
+  }
+
+  /* Desktop 이상 */
+  @media (min-width: ${breakpoints.imac}px) {
+    width: 35%;
+  }
 `;
 
 const Button = styled.button`
@@ -104,12 +137,12 @@ const SlideIn = keyframes`
   }
 `;
 const DetailsSection = styled(FlexBox)`
-  flex: 7;
   width: 100%;
+  max-width: 1000px;
 `;
 const DetailsWrapper = styled.div`
   animation: ${SlideIn} 0.6s ease forwards;
-  padding: 50px 0;
+  padding: 50px 18px;
 `;
 
 const StyledUl = styled.ul`
@@ -119,9 +152,13 @@ const StyledUl = styled.ul`
 `;
 
 const SkillsSection = styled.section`
-  padding: 50px 100px;
-  padding-top: 80px;
+  padding: 80px 100px 50px 100px;
   text-align: center;
+
+  /* Mobile 이하 */
+  @media (max-width: ${breakpoints.mobile}px) {
+    padding: 50px 18px;
+  }
 `;
 
 const SkillTitle = styled.h2`
@@ -145,10 +182,34 @@ const SkillIcon = styled.img`
   width: 80px;
   height: 80px;
   margin-bottom: 10px;
+
+  /* Mobile 이하 */
+  @media (max-width: ${breakpoints.mobile}px) {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 5px;
+  }
 `;
 
 const SkillName = styled.p`
   font-size: 1.2rem;
+`;
+
+const EmptySeparator = styled.div`
+  width: 100%;
+  padding-top: 500px;
+  background-color: ${colorSet.base};
+  position: relative;
+
+  /* Mobile 이하 */
+  @media (max-width: ${breakpoints.mobile}px) {
+    padding-top: 200px;
+  }
+
+  /* Tablet - Portrait 이상 */
+  @media (min-width: ${breakpoints.mobile}px) {
+    padding-top: 350px;
+  }
 `;
 
 const skills = [
@@ -179,11 +240,54 @@ const skills = [
 ];
 
 const AboutMe = () => {
-  const [showCareer, setShowCareer] = useState(false);
-  const [showEducation, setShowEducation] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
 
   return (
-    <AboutContainer>
+    <AboutContainer direction="column" align="center">
+      <AboutSection>
+        <StyledFade triggerOnce>
+          <ProfileImageWrapper
+            onClick={() => {
+              window.open(
+                "https://github.com/nwewave32",
+                "_blank",
+                "noopener, noreferrer"
+              );
+            }}
+          >
+            <ProfileImage
+              src={isHovered ? "main/me.png" : "wave.png"}
+              onMouseEnter={() => setIsHovered(true)}
+              onMouseLeave={() => setIsHovered(false)}
+              alt="My Profile"
+            />
+          </ProfileImageWrapper>
+          <AboutHeading>About Me</AboutHeading>
+
+          <TextFade>
+            새로운 것을 창조하는 프론트엔드 개발자. 끊임없는 호기심, 유연한
+            사고, 그리고 빠른 적응력은 저의 닉네임인 ‘nwewave’와 비슷합니다.
+            파도가 쉼 없이 밀려오듯, 저도 변화하는 기술 트렌드 속에서 끊임없이
+            발전하며, 파도의 흐름처럼 사람들과 세상에 긍정적인 기여를 하고
+            싶습니다.
+          </TextFade>
+
+          <TextFade>
+            A frontend developer who loves creating new things. My boundless
+            curiosity, flexible thinking, and quick adaptability are much like
+            my nickname, ‘nwewave' Just as waves continuously roll in, I strive
+            to grow in the ever-changing tech landscape and, like the flow of
+            the wave, I aim to make a positive impact on people and the world.
+          </TextFade>
+        </StyledFade>
+      </AboutSection>
+
+      <EmptySeparator>
+        <WavySeparator
+          mainColor={colorSet.background}
+          backColor={colorSet.accent}
+        />
+      </EmptySeparator>
       <DetailsSection direction="column" align="center">
         <Fade delay={100}>
           <SkillsSection>
@@ -235,40 +339,6 @@ const AboutMe = () => {
           </Fade>
         </DetailsWrapper>
       </DetailsSection>
-
-      <AboutSection>
-        <AboutSticky direction="column" align="center" justify="center">
-          <Fade triggerOnce>
-            <ProfileImageWrapper
-              onClick={() => {
-                window.open(
-                  "https://github.com/nwewave32",
-                  "_blank",
-                  "noopener, noreferrer"
-                );
-              }}
-            >
-              <ProfileImage src="wave.png" alt="My Profile" />
-            </ProfileImageWrapper>
-            <AboutHeading>About Me</AboutHeading>
-            <AboutText>
-              새로운 것을 창조하는 프론트엔드 개발자. 끊임없는 호기심, 유연한
-              사고, 그리고 빠른 적응력은 저의 닉네임인 ‘nwewave’와 비슷합니다.
-              파도가 쉼 없이 밀려오듯, 저도 변화하는 기술 트렌드 속에서 끊임없이
-              발전하며, 파도의 흐름처럼 사람들과 세상에 긍정적인 기여를 하고
-              싶습니다.
-            </AboutText>
-            <AboutText>
-              A frontend developer who loves creating new things. My boundless
-              curiosity, flexible thinking, and quick adaptability are much like
-              my nickname, ‘nwewave' Just as waves continuously roll in, I
-              strive to grow in the ever-changing tech landscape and, like the
-              flow of the wave, I aim to make a positive impact on people and
-              the world.
-            </AboutText>
-          </Fade>
-        </AboutSticky>
-      </AboutSection>
     </AboutContainer>
   );
 };

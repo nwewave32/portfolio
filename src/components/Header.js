@@ -16,6 +16,7 @@ import { FlexBox, FullContainer } from "./GlobalStyles";
 import { FLATTENABLE_KEYS } from "@babel/types";
 import WavyText from "./WavyText";
 import { Zoom } from "react-awesome-reveal";
+import { breakpoints } from "lib/globalData";
 
 const Logo = styled.div`
   position: fixed;
@@ -139,18 +140,27 @@ const Nav = styled.nav`
 `;
 
 const NavContainer = styled(FlexBox)`
-  padding: 50px 0;
-  width: 80%;
+  padding: 50px;
+  width: 100%;
   height: 100%;
   position: relative;
   z-index: 10;
+
+  /* Mobile 이하 */
+  @media (max-width: ${breakpoints.mobile}px) {
+    padding: 20px;
+  }
 `;
 
-const LinkItem = styled(FlexBox).withConfig({
+const StyledLink = styled(Link)`
+  box-sizing: border-box;
+`;
+const LinkItem = styled.div.withConfig({
   shouldForwardProp: (prop) => !["isSamePage"].includes(prop),
 })`
   font-size: 5em;
   text-decoration: ${(props) => (props.isSamePage ? "underline" : "none")};
+  width: min-content;
 `;
 
 const navArr = [
@@ -221,7 +231,11 @@ const Header = () => {
         <StyledSVG
           viewBox="0 0 1440 780"
           fill="none"
-          preserveAspectRatio="none"
+          preserveAspectRatio={
+            window.innerWidth <= breakpoints.tabletPortrait
+              ? "xMinYMin slice"
+              : "none"
+          }
           xmlns="http://www.w3.org/2000/svg"
         >
           <path
@@ -245,10 +259,10 @@ const Header = () => {
           </defs>
         </StyledSVG>
         <Nav>
-          <NavContainer direction="column" justify="center">
+          <NavContainer direction="column" justify="space-evenly">
             {navArr.map((item) => {
               return (
-                <Link to={item.path} key={item.title}>
+                <StyledLink to={item.path} key={item.title}>
                   <LinkItem
                     onMouseEnter={() => handleMouseEvent(item.title)}
                     onMouseLeave={() => handleMouseEvent(item.title)}
@@ -259,7 +273,7 @@ const Header = () => {
                       isActive={isHovered && hoveredType === item.title}
                     />
                   </LinkItem>
-                </Link>
+                </StyledLink>
               );
             })}
           </NavContainer>
