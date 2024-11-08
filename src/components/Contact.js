@@ -21,7 +21,6 @@ const ContactSection = styled.section.attrs(({ scrollPer }) => ({
   overflow: hidden;
   position: fixed;
   bottom: 0;
-  // z-index: 5;
 
   /* Tablet - Portrait 이상 */
   @media (max-width: ${breakpoints.tabletPortrait}px) {

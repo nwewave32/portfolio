@@ -122,7 +122,7 @@ const StyledSVG = styled.svg`
   position: absolute;
   top: 0px;
   left: 0;
-  z-index: 10;
+  z-index: 101;
   filter: drop-shadow(4px 5px 3px rgb(0 0 0 / 0.4));
 `;
 
@@ -144,7 +144,7 @@ const NavContainer = styled(FlexBox)`
   width: 100%;
   height: 100%;
   position: relative;
-  z-index: 10;
+  z-index: 101;
 
   /* Mobile 이하 */
   @media (max-width: ${breakpoints.mobile}px) {

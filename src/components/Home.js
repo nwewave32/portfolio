@@ -19,6 +19,13 @@ const HomeContainer = styled.div`
   background-color: ${HOME_BACK_COLOR};
 `;
 
+const Logo = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+`;
 const Section = styled.section`
   width: 100vw;
   height: 100vh;
@@ -116,6 +123,16 @@ const Home = () => {
         text1={phraseArr[0]}
         text2={phraseArr[1]}
       />
+      <Logo>
+        {/* <img src="main/nwewave_text.png" width={1000} alt="logo" /> */}
+        <img src="main/n.png" height={100} alt="logo" />
+        <img src="main/w.png" height={100} alt="logo" />
+        <img src="main/e.png" height={100} alt="logo" />
+        <img src="main/w.png" height={100} alt="logo" />
+        <img src="main/a.png" height={100} alt="logo" />
+        <img src="main/v.png" height={100} alt="logo" />
+        <img src="main/e.png" height={100} alt="logo" />
+      </Logo>
       <TargetSection id="targetSec">
         <TargetSectionDiv
           className="target"
@@ -140,7 +157,11 @@ const Home = () => {
           })}
         </TargetSectionDiv>
       </TargetSection>
-      <Section></Section>
+      <Section>
+        {/* <Logo>
+          <img src="main/nwewave_text.png" width={900} alt="logo" />
+        </Logo>*/}
+      </Section>
     </HomeContainer>
   );
 };

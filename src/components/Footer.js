@@ -21,7 +21,7 @@ const FooterContainer = styled.footer.withConfig({
   text-align: center;
   p {
     position: relative;
-    z-index: 5;
+    z-index: 100;
   }
 `;
 
@@ -32,7 +32,7 @@ const SocialLinks = styled.div`
     margin: 0 10px;
     text-decoration: none;
     position: relative;
-    z-index: 5;
+    z-index: 100;
 
     &:hover {
       text-decoration: underline;

@@ -166,7 +166,7 @@ const LinkBtn = styled(FlexBox).withConfig({
   flex-wrap: nowrap;
   text-align: center;
   position: relative;
-  z-index: 3;
+
   padding: 10px;
   line-height: 24px;
   word-break: keep-all;
