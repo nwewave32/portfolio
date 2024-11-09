@@ -8,6 +8,7 @@ import { colorSet } from "lib/colorSet";
 import Moon from "./Moon";
 import MainWave from "./MainWave";
 import { Fade, Slide } from "react-awesome-reveal";
+import { breakpoints } from "lib/globalData";
 
 const HOME_BACK_COLOR = "#1d343d";
 const HOME_TOP_COLOR = colorSet.secondary;
@@ -19,12 +20,46 @@ const HomeContainer = styled.div`
   background-color: ${HOME_BACK_COLOR};
 `;
 
-const Logo = styled.div`
-  position: absolute;
+const transform = ({ per }) => {
+  const percent = 100 - per * 100;
+  const percent2 = Number(per) * 1.5;
+
+  if (percent < 50) {
+    return "display: none;";
+  } else
+    return `
+  transform: 
+    translate(-50%, -50%) 
+    scale(${1 - percent2}, ${1 - percent2});
+`;
+};
+
+const Logo = styled.div.withConfig({
+  shouldForwardProp: (prop) => !["per"].includes(prop),
+})`
+  position: fixed;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+
   z-index: 10;
+  width: max-content;
+
+  ${({ per }) => transform({ per })};
+  transition: transform 2s linear;
+`;
+
+const StyledImg = styled.img.attrs(() => ({}))`
+  height: 20vh;
+
+  /* Mobile 이하 */
+  @media (max-width: ${breakpoints.mobile}px) {
+    height: 10vw;
+  }
+
+  /* Tablet - Portrait 이상 */
+  @media (max-width: ${breakpoints.tabletPortrait}px) {
+    height: 10vw;
+  }
 `;
 const Section = styled.section`
   width: 100vw;
@@ -52,7 +87,9 @@ const backgroundColor = ({ per }) => {
   `;
 };
 
-const TargetSectionDiv = styled.div`
+const TargetSectionDiv = styled.div.withConfig({
+  shouldForwardProp: (prop) => !["isTarget"].includes(prop),
+})`
   position: ${({ isTarget }) => (isTarget ? "fixed" : "relative")};
   left: 0;
   top: 0;
@@ -117,22 +154,23 @@ const Home = () => {
 
   return (
     <HomeContainer>
+      <Logo per={((waveTop * PACE + 100) / window.innerHeight).toFixed(3)}>
+        {/* <img src="main/nwewave_text.png" width={1000} alt="logo" /> */}
+        <StyledImg src="main/n.svg" alt="logo" />
+        <StyledImg src="main/w.svg" alt="logo" />
+        <StyledImg src="main/e.svg" alt="logo" />
+        <StyledImg src="main/w.svg" alt="logo" />
+        <StyledImg src="main/a.svg" alt="logo" />
+        <StyledImg src="main/v.svg" alt="logo" />
+        <StyledImg src="main/e.svg" alt="logo" />
+      </Logo>
       <MainWave
         waveTop={waveTop}
         pace={PACE}
         text1={phraseArr[0]}
         text2={phraseArr[1]}
       />
-      <Logo>
-        {/* <img src="main/nwewave_text.png" width={1000} alt="logo" /> */}
-        <img src="main/n.png" height={100} alt="logo" />
-        <img src="main/w.png" height={100} alt="logo" />
-        <img src="main/e.png" height={100} alt="logo" />
-        <img src="main/w.png" height={100} alt="logo" />
-        <img src="main/a.png" height={100} alt="logo" />
-        <img src="main/v.png" height={100} alt="logo" />
-        <img src="main/e.png" height={100} alt="logo" />
-      </Logo>
+
       <TargetSection id="targetSec">
         <TargetSectionDiv
           className="target"

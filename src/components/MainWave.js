@@ -4,7 +4,9 @@ import gsap from "gsap";
 import { colorSet, waveColorSet } from "lib/colorSet";
 import { FlexBox } from "./GlobalStyles";
 
-const FixedWave = styled.div`
+const FixedWave = styled.div.withConfig({
+  shouldForwardProp: (prop) => !["waveTop", "pace"].includes(prop),
+})`
   position: fixed;
   bottom: -2%;
   left: 0;
@@ -24,14 +26,18 @@ const StyledSVG = styled.svg`
   filter: drop-shadow(-4px -5px -3px rgb(0 0 0 / 0.4));
 `;
 
-const DynamicWave = styled.path`
+const DynamicWave = styled.path.withConfig({
+  shouldForwardProp: (prop) => !["wavePace"].includes(prop),
+})`
   will-change: transform;
   transform: translateX(-${({ wavePace }) => wavePace}px);
 `;
 
 const WavyText = styled.text`
-  font-weight: 200;
+  font-weight: 300;
   fill: ${({ color }) => color};
+  font-size: 5vh;
+  opacity: 0.7;
 `;
 
 const MainWave = ({ waveTop, pace, text1, text2 }) => {
@@ -51,11 +57,12 @@ const MainWave = ({ waveTop, pace, text1, text2 }) => {
           fill={colorSet.neutral}
           wavePace={waveTop * 0.35}
         ></DynamicWave>
-        <WavyText fontSize={20} color={colorSet.text}>
+        <WavyText color={colorSet.text}>
           <textPath
             id="text-path"
             href="#text-curve"
-            startOffset={waveTop * 2 - 500}
+            // startOffset={waveTop * 2 - window.innerHeight}
+            //todo: 해당 문구 어떻게 보여주지
           >
             {text1}
           </textPath>
@@ -86,7 +93,7 @@ const MainWave = ({ waveTop, pace, text1, text2 }) => {
           <textPath
             id="text-path"
             href="#text-curve2"
-            startOffset={waveTop * 2 - window.innerWidth - 500}
+            startOffset={waveTop * 2 - window.innerWidth - window.innerHeight}
           >
             {text2}
           </textPath>
