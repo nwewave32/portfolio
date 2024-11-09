@@ -16,12 +16,12 @@ const FooterContainer = styled.footer.withConfig({
 })`
   background-color: ${({ isHome }) =>
     isHome ? waveColorSet.layer4 : colorSet.background};
-
+  overflow-y: hidden;
   padding: 20px 0 25px 0;
   text-align: center;
   p {
+    z-index: 10;
     position: relative;
-    z-index: 100;
   }
 `;
 
@@ -32,7 +32,7 @@ const SocialLinks = styled.div`
     margin: 0 10px;
     text-decoration: none;
     position: relative;
-    z-index: 100;
+    z-index: 10;
 
     &:hover {
       text-decoration: underline;
@@ -54,7 +54,7 @@ const Footer = ({}) => {
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => setIsVisible(entry.isIntersecting),
-      { threshold: 0.1 } // Adjust threshold as needed
+      { threshold: 1.0 } // Adjust threshold as needed
     );
 
     if (footerRef.current) observer.observe(footerRef.current);
@@ -65,19 +65,17 @@ const Footer = ({}) => {
 
   return (
     <>
-      <FooterContainer ref={footerRef} isHome={location.pathname === "/"}>
+      <FooterContainer isHome={location.pathname === "/"}>
         <p>Copyright 2024. KIMHAMIN. All rights reserved.</p>
-        {visible && (
-          <SocialLinks>
-            <a href="https://github.com/nwewave32">GitHub</a>
-            <a href="https://linkedin.com/in/hamin-kim-6379472b1">LinkedIn</a>
-          </SocialLinks>
-        )}
+        <SocialLinks ref={footerRef}>
+          <a href="https://github.com/nwewave32">GitHub</a>
+          <a href="https://linkedin.com/in/hamin-kim-6379472b1">LinkedIn</a>
+        </SocialLinks>
       </FooterContainer>
       {visible && location.pathname === "/" && (
-        <Fade>
+        <>
           <Contact visible={visible} isContact={isContact} />
-        </Fade>
+        </>
       )}
     </>
   );

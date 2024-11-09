@@ -4,9 +4,9 @@ import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { FlexBox } from "./GlobalStyles";
 import WavySeparator from "./WavySeparator";
-import { colorSet } from "lib/colorSet";
+import { colorSet, waveColorSet } from "lib/colorSet";
 import Moon from "./Moon";
-import MainWave from "./MainWave";
+import MainWave, { WavyText } from "./MainWave";
 import { Fade, Slide } from "react-awesome-reveal";
 import { breakpoints } from "lib/globalData";
 
@@ -16,7 +16,7 @@ const HOME_TOP_COLOR = colorSet.secondary;
 const HomeContainer = styled.div`
   width: 100%;
   overflow: hidden;
-
+  position: relative;
   background-color: ${HOME_BACK_COLOR};
 `;
 
@@ -61,59 +61,51 @@ const StyledImg = styled.img.attrs(() => ({}))`
     height: 10vw;
   }
 `;
-const Section = styled.section`
-  width: 100vw;
-  height: 100vh;
-  position: relative;
+
+const SectionContainer = styled.div
+  .attrs(({ per }) => ({
+    style: {
+      marginTop: `calc(100vh - ${per}px)`,
+      transform: `translateY(${per}px)`,
+    },
+  }))
+  .withConfig({
+    shouldForwardProp: (prop) => !["per", "pageHeight"].includes(prop),
+  })`
+  height: 400vh;
 `;
-
-const TargetSection = styled.section`
-  width: 100vw;
-
-  position: relative;
-
-  height: 600vh;
-  z-index: 4;
-`;
-
-const backgroundColor = ({ per }) => {
-  const per1 = 100 - per < 0 ? 0 : 100 - per;
-  return `
-    background: linear-gradient(
-      to bottom,
-      ${HOME_TOP_COLOR} ${per1}%,
-      ${HOME_BACK_COLOR} ${per1}% 
-    );
-  `;
-};
-
-const TargetSectionDiv = styled.div.withConfig({
-  shouldForwardProp: (prop) => !["isTarget"].includes(prop),
+const Section = styled.section.withConfig({
+  shouldForwardProp: (prop) => !["bg"].includes(prop),
 })`
-  position: ${({ isTarget }) => (isTarget ? "fixed" : "relative")};
-  left: 0;
-  top: 0;
-  width: 600vh;
-  height: 100%;
-  display: flex;
-
-  ${({ per }) => backgroundColor({ per })};
-`;
-
-const TargetSectionArticle = styled.article`
-  width: 200vh;
+  width: 100vw;
   height: 100vh;
-  display: flex;
-
   position: relative;
+  background-color: ${({ bg }) => bg ?? HOME_BACK_COLOR};
 `;
 
-const GoToWorkContainer = styled(FlexBox)`
-  width: 40%;
-  height: 40%;
-  background-color: rgba(255, 255, 255, 0.1);
+const StyledSVG = styled.svg``;
+
+const FixedSection = styled(Section).withConfig({
+  shouldForwardProp: (prop) => !["per"].includes(prop),
+})`
+  position: fixed;
+  top: ${({ per }) => (per > 100 ? -30 : 0)}%;
+  left: 0;
+  background-color: ${HOME_TOP_COLOR};
+`;
+
+const IntroContainer = styled.div`
+  position: absolute;
+  right: 5%;
+  top: 0;
+  width: 50vw;
+  padding: 20px;
   border-radius: 20px;
-  margin: auto;
+  background-color: rgba(247, 247, 247, 0.2);
+  box-sizing: border-box;
+  font-size: 3vh;
+  line-height: 2;
+  color: ${colorSet.background};
 `;
 
 const phraseArr = [
@@ -125,81 +117,101 @@ const phraseArr = [
   "파도처럼 유연하게 적응하고, 창의적으로 문제를 해결합니다.",
 ];
 const Home = () => {
-  const [targetSecOffsetTop, TargetsetSectionOffsetTop] = useState(0);
-  const [isTarget, setIsTarget] = useState(false);
+  const section2Ref = useRef();
+  const [visible, setIsVisible] = useState(false);
   const [waveTop, setWaveTop] = useState(0);
-  const PACE = 0.25;
-
-  useLayoutEffect(() => {
-    const target = document.querySelector("#targetSec");
-    if (target) TargetsetSectionOffsetTop(target.offsetTop);
-  }, []);
+  const PACE = 2;
+  const [percent, setPercent] = useState(0);
 
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollTop = window.scrollY;
-
-      if (currentScrollTop >= targetSecOffsetTop) {
-        setIsTarget(true);
-        const goLeft = currentScrollTop - targetSecOffsetTop;
-        setWaveTop(goLeft);
-
-        gsap.to(".target", { left: -goLeft, ease: "linear" });
-      } else setIsTarget(false);
+      setWaveTop(currentScrollTop);
     };
 
     window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [targetSecOffsetTop]);
+
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsVisible(entry.isIntersecting),
+      { threshold: 1.0 } // Adjust threshold as needed
+    );
+
+    if (section2Ref.current) observer.observe(section2Ref.current);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+
+      if (section2Ref.current) observer.unobserve(section2Ref.current);
+    };
+  }, []);
+
+  useEffect(() => {
+    setPercent((waveTop * PACE + 100) / window.innerHeight);
+  }, [waveTop]);
 
   return (
     <HomeContainer>
-      <Logo per={((waveTop * PACE + 100) / window.innerHeight).toFixed(3)}>
-        {/* <img src="main/nwewave_text.png" width={1000} alt="logo" /> */}
-        <StyledImg src="main/n.svg" alt="logo" />
-        <StyledImg src="main/w.svg" alt="logo" />
-        <StyledImg src="main/e.svg" alt="logo" />
-        <StyledImg src="main/w.svg" alt="logo" />
-        <StyledImg src="main/a.svg" alt="logo" />
-        <StyledImg src="main/v.svg" alt="logo" />
-        <StyledImg src="main/e.svg" alt="logo" />
-      </Logo>
-      <MainWave
-        waveTop={waveTop}
-        pace={PACE}
-        text1={phraseArr[0]}
-        text2={phraseArr[1]}
-      />
+      <FixedSection per={Math.floor(percent * 100)}>
+        <Logo per={percent.toFixed(3)}>
+          <StyledImg src="main/n.svg" alt="logo" />
+          <StyledImg src="main/w.svg" alt="logo" />
+          <StyledImg src="main/e.svg" alt="logo" />
+          <StyledImg src="main/w.svg" alt="logo" />
+          <StyledImg src="main/a.svg" alt="logo" />
+          <StyledImg src="main/v.svg" alt="logo" />
+          <StyledImg src="main/e.svg" alt="logo" />
+        </Logo>
+      </FixedSection>
+      <SectionContainer
+        per={
+          waveTop * PACE >= window.innerHeight
+            ? window.innerHeight
+            : waveTop * PACE
+        }
+      >
+        <MainWave
+          waveTop={waveTop}
+          pace={PACE}
+          text1={phraseArr[0]}
+          text2={phraseArr[1]}
+        />
+        <Section id="first">
+          <StyledSVG
+            viewBox="0 0 6000 400"
+            width="6000"
+            height="400"
+            xmlns="http://www.w3.org/2000/svg"
+            version="1.1"
+          >
+            <path
+              d="M0 326L43.5 324.5C87 323 174 320 261 329.8C348 339.7 435 362.3 522 362C609 361.7 696 338.3 782.8 331.7C869.7 325 956.3 335 1043.2 345.5C1130 356 1217 367 1304 360.5C1391 354 1478 330 1565 332.2C1652 334.3 1739 362.7 1826 375.5C1913 388.3 2000 385.7 2087 377.5C2174 369.3 2261 355.7 2348 349C2435 342.3 2522 342.7 2609 345.5C2696 348.3 2783 353.7 2869.8 359.3C2956.7 365 3043.3 371 3130.2 362C3217 353 3304 329 3391 322.8C3478 316.7 3565 328.3 3652 337.5C3739 346.7 3826 353.3 3913 361.8C4000 370.3 4087 380.7 4174 385.5C4261 390.3 4348 389.7 4435 386.3C4522 383 4609 377 4696 373.5C4783 370 4870 369 4956.8 371C5043.7 373 5130.3 378 5217.2 371.2C5304 364.3 5391 345.7 5478 338.2C5565 330.7 5652 334.3 5739 337C5826 339.7 5913 341.3 5956.5 342.2L6000 343"
+              fill="none"
+              stroke="none"
+              strokeWidth="1"
+              id="text-curve3"
+            ></path>
 
-      <TargetSection id="targetSec">
-        <TargetSectionDiv
-          className="target"
-          isTarget={isTarget}
-          per={Math.floor(((waveTop * PACE + 100) / window.innerHeight) * 100)}
-        >
-          {["1", "2", "3"].map((num, index) => {
-            return (
-              <TargetSectionArticle key={index}>
-                {index === 2 && (
-                  <>
-                    <Fade
-                      delay={1e3}
-                      style={{ display: "flex", width: "100%" }}
-                    >
-                      {/* <GoToWorkContainer></GoToWorkContainer> */}
-                    </Fade>
-                  </>
-                )}
-              </TargetSectionArticle>
-            );
-          })}
-        </TargetSectionDiv>
-      </TargetSection>
-      <Section>
-        {/* <Logo>
-          <img src="main/nwewave_text.png" width={900} alt="logo" />
-        </Logo>*/}
-      </Section>
+            <WavyText fill={colorSet.background}>
+              <textPath
+                id="text-path"
+                href="#text-curve3"
+                startOffset={waveTop * 5 - window.innerWidth * 2.5 - 500}
+              >
+                {phraseArr[2]}
+              </textPath>
+            </WavyText>
+          </StyledSVG>
+
+          <IntroContainer>
+            "안녕하세요 - 한국에서 활동하는 프론트엔드 개발자입니다. 저는
+            리액트를 중심으로 사용자와 소통하는 웹을 설계하며, 다양한 사람들과의
+            아이디어 교류와 협업을 중요시합니다. 언제나 더 나은 경험을 위해 함께
+            고민하고, 효율적인 소통으로 창의적인 결과를 만들어내고자 합니다."
+          </IntroContainer>
+        </Section>
+        <Section id="second" ref={section2Ref} bg="yellow"></Section>
+        <Section id="third"></Section>
+      </SectionContainer>
     </HomeContainer>
   );
 };

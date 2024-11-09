@@ -7,16 +7,12 @@ import { FlexBox } from "./GlobalStyles";
 const FixedWave = styled.div.withConfig({
   shouldForwardProp: (prop) => !["waveTop", "pace"].includes(prop),
 })`
-  position: fixed;
-  bottom: -2%;
+  position: absolute;
+  top: -400px;
   left: 0;
 
-  will-change: trnasform;
-  transform: translate(
-    0,
-    calc(-2% - ${({ waveTop, pace }) => waveTop * pace}px)
-  );
-  transition: transform linear;
+  transform: perspective(1200px);
+
   z-index: 10;
 `;
 
@@ -26,17 +22,23 @@ const StyledSVG = styled.svg`
   filter: drop-shadow(-4px -5px -3px rgb(0 0 0 / 0.4));
 `;
 
-const DynamicWave = styled.path.withConfig({
-  shouldForwardProp: (prop) => !["wavePace"].includes(prop),
-})`
+const DynamicWave = styled.path
+  .attrs(({ wavePace }) => ({
+    style: {
+      transform: `translateX(-${wavePace}px)`,
+    },
+  }))
+  .withConfig({
+    shouldForwardProp: (prop) => !["wavePace"].includes(prop),
+  })`
   will-change: transform;
-  transform: translateX(-${({ wavePace }) => wavePace}px);
+  
 `;
 
-const WavyText = styled.text`
+export const WavyText = styled.text`
   font-weight: 300;
   fill: ${({ color }) => color};
-  font-size: 5vh;
+  font-size: 3vh;
   opacity: 0.7;
 `;
 
@@ -61,7 +63,7 @@ const MainWave = ({ waveTop, pace, text1, text2 }) => {
           <textPath
             id="text-path"
             href="#text-curve"
-            // startOffset={waveTop * 2 - window.innerHeight}
+            startOffset={waveTop * 4 - 500}
             //todo: 해당 문구 어떻게 보여주지
           >
             {text1}
@@ -93,7 +95,7 @@ const MainWave = ({ waveTop, pace, text1, text2 }) => {
           <textPath
             id="text-path"
             href="#text-curve2"
-            startOffset={waveTop * 2 - window.innerWidth - window.innerHeight}
+            startOffset={waveTop * 4 - window.innerWidth - 500}
           >
             {text2}
           </textPath>

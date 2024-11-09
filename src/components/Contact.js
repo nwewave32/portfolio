@@ -4,12 +4,16 @@ import { FlexBox } from "./GlobalStyles";
 import { colorSet } from "lib/colorSet";
 import { breakpoints } from "lib/globalData";
 
-const ContactSection = styled.section.attrs(({ scrollPer }) => ({
-  style: {
-    transform: `translateY( ${100 - scrollPer}%)`,
-    opacity: `${scrollPer / 100}`,
-  },
-}))`
+const ContactSection = styled.section
+  .attrs(({ scrollPer }) => ({
+    style: {
+      transform: `translateY( ${100 - scrollPer}%)`,
+      opacity: `${scrollPer / 100}`,
+    },
+  }))
+  .withConfig({
+    shouldForwardProp: (prop) => !["scrollPer"].includes(prop),
+  })`
   will-change: transform, opacity;
   transition: transform 1.5s ease, opacity 1.5s ease;
   width: 100vw;
