@@ -35,4 +35,18 @@ export const FullContainer = styled(FlexBox)`
   width: 100%;
 `;
 
-export const StyledSvg = styled.svg``;
+export const StyledSvg = styled.svg`
+  width: 100%;
+`;
+
+export const WavyText = styled.text`
+  font-weight: 300;
+  fill: ${({ color }) => color};
+  font-size: 3vh;
+  opacity: 0.7;
+`;
+
+export const StyledSpan = styled.tspan`
+  fill: ${colorSet.accent};
+  font-size: 2em;
+`;
