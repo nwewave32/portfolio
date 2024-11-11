@@ -12,7 +12,7 @@ import React, {
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { colorSet } from "lib/colorSet";
-import { FlexBox, FullContainer } from "./GlobalStyles";
+import { FlexBox } from "./GlobalStyles";
 import { FLATTENABLE_KEYS } from "@babel/types";
 import WavyText from "./WavyText";
 import { Zoom } from "react-awesome-reveal";

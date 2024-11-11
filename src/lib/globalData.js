@@ -105,6 +105,7 @@ export const projectsData = [
       "React Router",
       "Framer Motion",
     ],
+    thumbnail: "portfolio/portfolio_main.png",
     buttons: [
       {
         id: 0,

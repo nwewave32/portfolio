@@ -31,7 +31,15 @@ export const FlexBox = styled.div
   align-items: ${(props) => props.align};
 `;
 
-export const FullContainer = styled(FlexBox)`
+export const FullContainer = styled(FlexBox)
+  .attrs(({ height = "auto" }) => ({
+    style: {
+      height: `${height}`,
+    },
+  }))
+  .withConfig({
+    shouldForwardProp: (prop) => !["windowWidth", "px", "py"].includes(prop),
+  })`
   width: 100%;
 `;
 

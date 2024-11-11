@@ -51,6 +51,10 @@ const AppContainer = styled.div`
   /* Desktop 이상 */
   @media (min-width: ${breakpoints.laptop}px) {
   }
+
+  /* imac 이상 */
+  @media (min-width: ${breakpoints.imac}px) {
+  }
 `;
 
 const App = () => {

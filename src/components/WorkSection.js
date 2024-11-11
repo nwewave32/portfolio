@@ -12,40 +12,162 @@ import {
 } from "./GlobalStyles";
 import WavySeparator from "./WavySeparator";
 import InfiniteAutoSlider from "./InfiniteAutoSlider";
+import CustomButton from "./CustomButton";
+import { type } from "@testing-library/user-event/dist/type";
+import { useDispatch, useSelector } from "react-redux";
+import { setSelectedProjectId } from "features/global";
+import { useNavigate } from "react-router-dom";
 
 const Column = styled.div`
   width: ${({ width }) => width}px;
   padding: 0px 20px;
 `;
 
-const WorkSection = ({ isTargetShown, scroll }) => {
-  const isMobile = window.innerWidth <= breakpoints.mobile;
-  const getHeight = () => {
-    if (isMobile) return 250;
-    else return Math.max(Math.floor(window.innerHeight / 4), 300);
+const ProjectWrap = styled.div
+  .attrs(({ visibility }) => ({
+    style: {
+      opacity: `${visibility}`,
+      transform: `${`scale(${visibility}) translateY(-10%)`}`,
+    },
+  }))
+  .withConfig({
+    shouldForwardProp: (prop) => !["visibility"].includes(prop),
+  })`
+  
+  width: 50vw;
+  height: 70%;
+
+  display:grid;
+	grid-template-columns: repeat(3, minmax(100px, auto));
+	grid-template-rows: repeat(2, minmax(100px, auto));
+  row-gap: 20px;
+
+  
+
+  transition: opacity 1s ease-in-out, transform 0.4s ease-in-out;
+`;
+
+const GridCell = styled.div`
+  &:nth-child(1) {
+    grid-column-start: 1;
+    grid-column-end: 3;
+    grid-row-start: 1;
+    grid-row-end: 2;
+  }
+
+  &:nth-child(4) {
+    grid-column-start: 2;
+    grid-column-end: 4;
+    grid-row-start: 2;
+    grid-row-end: 3;
+  }
+`;
+
+const ProjectGridCell = styled.div.withConfig({
+  shouldForwardProp: (prop) => !["imgUrl"].includes(prop),
+})`
+  width: 100%;
+  height: 100%;
+  background-image: url(${({ imgUrl }) => imgUrl});
+  background-size: cover;
+  background-position: center;
+  border-radius: 8px;
+
+  &:hover {
+    opacity: 0.5;
+    cursor: pointer;
+  }
+`;
+
+const DescriptionGridCell = styled(FlexBox)`
+  width: 100%;
+  height: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+`;
+
+const WorkSection = ({ scroll }) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const getVisibility = () => {
+    const result = 1 - (scroll - window.outerHeight * 2) / window.outerHeight;
+
+    return result > 1 ? 1 : result < 0 ? 0 : result;
   };
-  const HEIGHT = getHeight();
+
+  const buttonTemplate = {
+    type: "link",
+    url: "/works",
+    title: "View Project",
+  };
+
+  const handleClick = (e, idx) => {
+    dispatch(setSelectedProjectId(idx));
+  };
+
+  const selectedProjectId = useSelector(
+    (state) => state.project.selectedProjectId
+  );
+
+  useEffect(() => {
+    if (selectedProjectId) {
+      navigate("/works");
+    } else if (selectedProjectId === null) {
+      navigate("/");
+    }
+  }, [selectedProjectId]);
+
   return (
     <>
-      <FullContainer justify="start">
+      <FullContainer justify="center" align="center" height="100%">
+        <ProjectWrap visibility={getVisibility()}>
+          <GridCell>
+            <ProjectGridCell
+              onClick={(e) => handleClick(e, 3)}
+              imgUrl={projectsData[3].thumbnail}
+            />
+          </GridCell>
+          <GridCell>
+            <DescriptionGridCell
+              direction="column"
+              justify="space-between"
+              align="start"
+            >
+              {projectsData[3].description.toString()}
+              <CustomButton
+                onClick={(e) => handleClick(e, 3)}
+                button={{
+                  ...buttonTemplate,
+                }}
+                isBlank={false}
+              />
+            </DescriptionGridCell>
+          </GridCell>
+          <GridCell>
+            <DescriptionGridCell
+              direction="column"
+              justify="space-between"
+              align="end"
+            >
+              <CustomButton
+                onClick={(e) => handleClick(e, 5)}
+                button={{
+                  ...buttonTemplate,
+                }}
+                isBlank={false}
+              />
+              {projectsData[5].description.toString()}
+            </DescriptionGridCell>
+          </GridCell>
+          <GridCell>
+            <ProjectGridCell
+              onClick={(e) => handleClick(e, 5)}
+              imgUrl={projectsData[5].thumbnail}
+            />
+          </GridCell>
+        </ProjectWrap>
         <WavySeparator mainColor={waveColorSet.layer4} />
-        {/* <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3440 300">
-          <path
-            d="M-174.61 -157V-116.765C-174.61 15.4344 -112.186 139 -3.49988 139C111 139 138.787 62.2189 249.697 62.2189C360.606 62.2189 356 156.175 533.698 156.175C683 156.175 698.557 75.6322 817.699 62.2189C930.436 49.5265 988.565 138.856 1101.7 138.856C1214.83 138.856 1274.79 62.2189 1385.7 62.2189C1496.61 62.2189 1556.57 138.856 1669.7 138.856C1782.84 138.856 1842.79 62.2189 1953.7 62.2189C2064.61 62.2189 2124.57 138.856 2237.7 138.856C2350.84 138.856 2408.57 62.2188 2521.7 62.2189C2634.84 62.2189 2694.8 138.856 2805.71 138.856C2916.61 138.856 2976.57 62.2189 3089.71 62.2189C3202.84 62.2188 3260.57 138.856 3373.71 138.856C3486.84 138.856 3546.8 62.2189 3657.71 62.2189C3768.62 62.2189 3867.02 222.761 3941.71 108.856C3998.61 22.0779 3941.71 -157 3941.71 -157H5000V1000H-174.61Z"
-            stroke="black"
-            stroke-width="2"
-            fill="none"
-          ></path>
-        </svg> */}
-        <Column width={HEIGHT}>
-          <InfiniteAutoSlider
-            projects={projectsData}
-            isUp={true}
-            clickProject={() => {}}
-            columnIndex={0}
-            height={HEIGHT}
-          />
-        </Column>
       </FullContainer>
     </>
   );

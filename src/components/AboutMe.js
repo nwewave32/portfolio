@@ -138,7 +138,8 @@ const SlideIn = keyframes`
 `;
 const DetailsSection = styled(FlexBox)`
   width: 100%;
-  max-width: 1000px;
+
+  background-color: ${colorSet.background};
 `;
 const DetailsWrapper = styled.div`
   animation: ${SlideIn} 0.6s ease forwards;
@@ -154,7 +155,7 @@ const StyledUl = styled.ul`
 const SkillsSection = styled.section`
   padding: 80px 100px 50px 100px;
   text-align: center;
-
+  max-width: 1000px;
   /* Mobile 이하 */
   @media (max-width: ${breakpoints.mobile}px) {
     padding: 50px 18px;

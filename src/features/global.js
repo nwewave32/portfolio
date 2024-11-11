@@ -1,25 +1,22 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-export const trackSlice = createSlice({
-  name: "track",
+export const projectSlice = createSlice({
+  name: "project",
   initialState: {
-    value: true,
+    selectedProjectId: null,
   },
   reducers: {
-    stop: (state) => {
-      // Redux Toolkit allows us to write "mutating" logic in reducers. It
-      // doesn't actually mutate the state because it uses the Immer library,
-      // which detects changes to a "draft state" and produces a brand new
-      // immutable state based off those changes
-      state.value = false;
+    setSelectedProjectId: (state, action) => {
+      state.selectedProjectId = action.payload;
     },
-    restart: (state) => {
-      state.value = true;
+    clearSelectedProjectId: (state) => {
+      state.selectedProjectId = null;
     },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { stop, restart } = trackSlice.actions;
+export const { setSelectedProjectId, clearSelectedProjectId } =
+  projectSlice.actions;
 
-export default trackSlice.reducer;
+export default projectSlice.reducer;

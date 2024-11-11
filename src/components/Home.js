@@ -218,7 +218,6 @@ const Home = () => {
   }, []);
 
   useEffect(() => {
-    console.log("##waveTop", waveTop);
     setPercent((waveTop * PACE + 100) / window.innerHeight);
   }, [waveTop]);
 
@@ -252,7 +251,7 @@ const Home = () => {
           <AboutSection isTargetShown={isTarget1Shown} scroll={waveTop} />
         </Section>
         <Section id="second" bg={colorSet.background}>
-          <WorkSection />
+          <WorkSection scroll={waveTop} />
         </Section>
         <Section id="third" ref={section3Ref}>
           <BottomSection isTargetShown={isTarget3Shown} />

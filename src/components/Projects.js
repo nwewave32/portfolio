@@ -9,6 +9,8 @@ import { colorSet } from "lib/colorSet";
 import InfiniteAutoSlider from "./InfiniteAutoSlider";
 import { useDispatch, useSelector } from "react-redux";
 import { breakpoints, projectsData } from "lib/globalData";
+import { clearSelectedProjectId, setSelectedProjectId } from "features/global";
+import { useLocation } from "react-router-dom";
 
 const ProjectContainer = styled(FlexBox)`
   width: 100%;
@@ -16,7 +18,16 @@ const ProjectContainer = styled(FlexBox)`
   background-color: ${colorSet.base};
 `;
 
-const ProjectsSection = styled(FlexBox)`
+const ProjectsSection = styled(FlexBox)
+  .attrs(({ visibility }) => ({
+    style: {
+      opacity: `${visibility}`,
+      transform: `${`scale(${visibility})`}`,
+    },
+  }))
+  .withConfig({
+    shouldForwardProp: (prop) => !["visibility"].includes(prop),
+  })`
   position: relative;
   width: 100vw;
   overflow: hidden;
@@ -24,8 +35,7 @@ const ProjectsSection = styled(FlexBox)`
   background-color: ${colorSet.base};
   box-sizing: border-box;
   will-change: opacity, transform;
-  opacity: ${(props) => props.visibility};
-  transform: ${(props) => `scale(${props.visibility})`};
+
   transition: opacity 1s ease-in-out, transform 0.4s ease-in-out;
 `;
 
@@ -86,15 +96,27 @@ const Letter = styled.span`
 `;
 
 const Projects = () => {
+  const dispatch = useDispatch();
+  const location = useLocation();
   const [visibility, setVisibility] = useState(1);
   const sectionRef = useRef(null);
   const [topBtnVisibility, setTopBtnVisibility] = useState(false);
+
+  useEffect(() => {
+    // const params = new URLSearchParams(location.search);
+    // const projectId = params.get("projectId");
+    // if (projectId) {
+    //   dispatch(setSelectedProjectId(Number(projectId)));
+    // }
+  }, [dispatch, location]);
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const [selectedProjectIndex, setSelectedProjectIndex] = useState(null);
+  const selectedProjectId = useSelector(
+    (state) => state.project.selectedProjectId
+  );
 
   useEffect(() => {
     const detailSection = document.body.querySelector("#detail");
@@ -117,8 +139,9 @@ const Projects = () => {
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
+      dispatch(clearSelectedProjectId());
     };
-  }, [selectedProjectIndex]);
+  }, [selectedProjectId]);
 
   const text = "back to top";
   const letters = text.split("");
@@ -133,7 +156,7 @@ const Projects = () => {
         >
           <GridProjecet
             clickProject={(index) => {
-              setSelectedProjectIndex(index);
+              dispatch(setSelectedProjectId(index));
             }}
           />
         </ProjectsSection>
@@ -145,9 +168,9 @@ const Projects = () => {
           backColor={colorSet.accent}
         />
       </EmptySeparator>
-      {selectedProjectIndex !== null && (
+      {selectedProjectId !== null && (
         <DetailSection id="detail">
-          <DetailLayout project={projectsData[selectedProjectIndex]} />
+          <DetailLayout project={projectsData[selectedProjectId]} />
         </DetailSection>
       )}
 
