@@ -15,7 +15,7 @@ const FooterContainer = styled.footer.withConfig({
   shouldForwardProp: (prop) => !["isHome"].includes(prop),
 })`
   background-color: ${({ isHome }) =>
-    isHome ? waveColorSet.layer4 : colorSet.background};
+    isHome ? colorSet.background : colorSet.background};
   overflow-y: hidden;
   padding: 20px 0 25px 0;
   text-align: center;

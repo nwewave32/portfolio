@@ -164,7 +164,7 @@ const Arrow = styled.div`
 const ArrowImg = styled.img`
   transform: rotate(90deg);
   width: 36px;
-  filter: invert(100%);
+  filter: invert(60%);
   margin-top: -5px;
 `;
 
@@ -250,10 +250,10 @@ const Home = () => {
         <Section id="first" ref={section1Ref}>
           <AboutSection isTargetShown={isTarget1Shown} scroll={waveTop} />
         </Section>
-        <Section id="second" bg={colorSet.background}>
+        <Section id="second" bg={colorSet.secondary}>
           <WorkSection scroll={waveTop} />
         </Section>
-        <Section id="third" ref={section3Ref}>
+        <Section id="third" ref={section3Ref} bg={colorSet.background}>
           <BottomSection isTargetShown={isTarget3Shown} />
           <ContactArrow>
             {[0, 0, 0].map((item, idx) => (

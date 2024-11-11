@@ -139,9 +139,14 @@ const Projects = () => {
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
-      dispatch(clearSelectedProjectId());
     };
   }, [selectedProjectId]);
+
+  useEffect(() => {
+    return () => {
+      dispatch(clearSelectedProjectId());
+    };
+  }, []);
 
   const text = "back to top";
   const letters = text.split("");

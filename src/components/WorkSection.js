@@ -134,17 +134,17 @@ const WorkSection = ({ scroll }) => {
         <ProjectWrap visibility={getVisibility()} direction="column">
           <RowContainer>
             <ProjectBox
-              onClick={(e) => handleClick(e, 3)}
-              imgUrl={projectsData[3].thumbnail}
+              onClick={(e) => handleClick(e, 1)}
+              imgUrl={projectsData[1].thumbnail}
             />
             <DescriptionBox
               direction="column"
               justify="space-between"
               align="start"
             >
-              {!isMobile && projectsData[3].description.toString()}
+              {!isMobile && projectsData[1].description.toString()}
               <CustomButton
-                onClick={(e) => handleClick(e, 3)}
+                onClick={(e) => handleClick(e, 1)}
                 button={{
                   ...buttonTemplate,
                 }}
@@ -160,21 +160,21 @@ const WorkSection = ({ scroll }) => {
               align="end"
             >
               <CustomButton
-                onClick={(e) => handleClick(e, 5)}
+                onClick={(e) => handleClick(e, 6)}
                 button={{
                   ...buttonTemplate,
                 }}
                 isBlank={false}
               />
-              {!isMobile && projectsData[5].description.toString()}
+              {!isMobile && projectsData[6].description.toString()}
             </DescriptionBox>
             <ProjectBox
-              onClick={(e) => handleClick(e, 5)}
-              imgUrl={projectsData[5].thumbnail}
+              onClick={(e) => handleClick(e, 6)}
+              imgUrl={projectsData[6].thumbnail}
             />
           </RowContainer>
         </ProjectWrap>
-        <WavySeparator mainColor={waveColorSet.layer4} />
+        <WavySeparator mainColor={colorSet.background} />
       </FullContainer>
     </>
   );
