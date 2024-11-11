@@ -42,6 +42,7 @@ const ContactForm = styled.form`
   /* Tablet - Portrait 이상 */
   @media (max-width: ${breakpoints.tabletPortrait}px) {
     padding: 18px;
+    margin-top: 10px;
   }
 
   /* Desktop 이상 */
@@ -52,6 +53,7 @@ const ContactForm = styled.form`
 
 const TitleH2 = styled.h2`
   font-size: 3.5vh;
+  box-sizing: border-box;
   /* Tablet - Portrait 이상 */
   @media (max-width: ${breakpoints.tabletPortrait}px) {
     padding: 18px;
@@ -71,6 +73,7 @@ const Input = styled.input`
   border-radius: 4px;
   width: 100%;
   font-weight: 300;
+  box-sizing: border-box;
 `;
 
 const Textarea = styled.textarea`
@@ -83,6 +86,7 @@ const Textarea = styled.textarea`
   width: 100%;
   font-weight: 300;
   resize: none;
+  box-sizing: border-box;
 `;
 
 const SubmitButton = styled.button`
@@ -104,6 +108,11 @@ const LeftSide = styled(FlexBox)`
 const RightSide = styled(FlexBox)`
   flex: 4;
   padding: 50px 20px;
+  box-sizing: border-box;
+  /* Tablet - Portrait 이상 */
+  @media (max-width: ${breakpoints.tabletPortrait}px) {
+    padding: 20px 20px;
+  }
 `;
 
 const StyledSVG = styled.svg`

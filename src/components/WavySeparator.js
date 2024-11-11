@@ -2,12 +2,15 @@ import { colorSet } from "lib/colorSet";
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { BrowserRouter as Router, useLocation } from "react-router-dom";
+import { breakpoints } from "lib/globalData";
 
-const WaveContainer = styled.div`
+const WaveContainer = styled.div.withConfig({
+  shouldForwardProp: (prop) => !["isMobile"].includes(prop),
+})`
   position: absolute;
   bottom: 0;
   width: 100vw;
-  height: 300px;
+  height: ${({ isMobile }) => (isMobile ? 200 : 300)}px;
   overflow: hidden;
 `;
 
@@ -71,12 +74,14 @@ const WavySeparator = ({
     return isMain ? result : result + 800;
   };
 
+  const isMobile = window.innerWidth <= breakpoints.mobile;
   const getPy = ({ isSecond, isBack }) => {
-    return isBack || !isSecond ? 0 : -302;
+    const result = isBack || !isSecond ? 0 : -302;
+    return result;
   };
   return (
     <>
-      <WaveContainer ref={seperatorRef}>
+      <WaveContainer ref={seperatorRef} isMobile={isMobile}>
         <BackSVG
           xmlns="http://www.w3.org/2000/svg"
           viewBox={`0 0 ${window.outerWidth * 2} 300`}

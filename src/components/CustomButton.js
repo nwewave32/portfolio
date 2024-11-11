@@ -7,6 +7,7 @@ import { FlexBox } from "./GlobalStyles";
 const LinkBtn = styled(FlexBox).withConfig({
   shouldForwardProp: (prop) => !["isHovered"].includes(prop),
 })`
+  min-width: 100px;
   width: max-content;
   max-width: 135px;
   flex-wrap: nowrap;

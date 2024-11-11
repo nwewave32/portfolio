@@ -11,19 +11,14 @@ import {
   StyledSvg,
 } from "./GlobalStyles";
 import WavySeparator from "./WavySeparator";
-import InfiniteAutoSlider from "./InfiniteAutoSlider";
+
 import CustomButton from "./CustomButton";
 import { type } from "@testing-library/user-event/dist/type";
 import { useDispatch, useSelector } from "react-redux";
 import { setSelectedProjectId } from "features/global";
 import { useNavigate } from "react-router-dom";
 
-const Column = styled.div`
-  width: ${({ width }) => width}px;
-  padding: 0px 20px;
-`;
-
-const ProjectWrap = styled.div
+const ProjectWrap = styled(FlexBox)
   .attrs(({ visibility }) => ({
     style: {
       opacity: `${visibility}`,
@@ -37,37 +32,35 @@ const ProjectWrap = styled.div
   width: 50vw;
   height: 70%;
 
-  display:grid;
-	grid-template-columns: repeat(3, minmax(100px, auto));
-	grid-template-rows: repeat(2, minmax(100px, auto));
-  row-gap: 20px;
-
-  
-
   transition: opacity 1s ease-in-out, transform 0.4s ease-in-out;
-`;
 
-const GridCell = styled.div`
-  &:nth-child(1) {
-    grid-column-start: 1;
-    grid-column-end: 3;
-    grid-row-start: 1;
-    grid-row-end: 2;
+    
+  @media (max-width: ${breakpoints.tabletPortrait}px) {
+    width: 90vw;
   }
 
-  &:nth-child(4) {
-    grid-column-start: 2;
-    grid-column-end: 4;
-    grid-row-start: 2;
-    grid-row-end: 3;
+
+
+`;
+
+const RowContainer = styled(FlexBox)`
+  flex-wrap: nowrap;
+  margin-bottom: 20px;
+
+  @media (max-width: ${breakpoints.tabletPortrait}px) {
+    flex-wrap: wrap;
+    &:last-child {
+      flex-wrap: wrap-reverse;
+    }
   }
 `;
 
-const ProjectGridCell = styled.div.withConfig({
+const ProjectBox = styled(FlexBox).withConfig({
   shouldForwardProp: (prop) => !["imgUrl"].includes(prop),
 })`
+  flex: 3;
   width: 100%;
-  height: 100%;
+  height: 30vh;
   background-image: url(${({ imgUrl }) => imgUrl});
   background-size: cover;
   background-position: center;
@@ -77,21 +70,38 @@ const ProjectGridCell = styled.div.withConfig({
     opacity: 0.5;
     cursor: pointer;
   }
+
+  @media (max-width: ${breakpoints.tabletPortrait}px) {
+    height: 25vh;
+  }
+
+  /* Mobile 이하 */
+  @media (max-width: ${breakpoints.mobile}px) {
+    min-width: 300px;
+  }
 `;
 
-const DescriptionGridCell = styled(FlexBox)`
+const DescriptionBox = styled(FlexBox)`
+  flex: 2;
   width: 100%;
   height: 100%;
   padding: 20px;
   box-sizing: border-box;
+  flex-wrap: wrap;
+
+  /* Mobile 이하 */
+  @media (max-width: ${breakpoints.mobile}px) {
+    height: auto;
+  }
 `;
 
 const WorkSection = ({ scroll }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const isMobile = window.innerWidth <= breakpoints.mobile;
 
   const getVisibility = () => {
-    const result = 1 - (scroll - window.outerHeight * 2) / window.outerHeight;
+    const result = 1 - (scroll - window.innerHeight * 2) / window.innerHeight;
 
     return result > 1 ? 1 : result < 0 ? 0 : result;
   };
@@ -121,20 +131,18 @@ const WorkSection = ({ scroll }) => {
   return (
     <>
       <FullContainer justify="center" align="center" height="100%">
-        <ProjectWrap visibility={getVisibility()}>
-          <GridCell>
-            <ProjectGridCell
+        <ProjectWrap visibility={getVisibility()} direction="column">
+          <RowContainer>
+            <ProjectBox
               onClick={(e) => handleClick(e, 3)}
               imgUrl={projectsData[3].thumbnail}
             />
-          </GridCell>
-          <GridCell>
-            <DescriptionGridCell
+            <DescriptionBox
               direction="column"
               justify="space-between"
               align="start"
             >
-              {projectsData[3].description.toString()}
+              {!isMobile && projectsData[3].description.toString()}
               <CustomButton
                 onClick={(e) => handleClick(e, 3)}
                 button={{
@@ -142,10 +150,11 @@ const WorkSection = ({ scroll }) => {
                 }}
                 isBlank={false}
               />
-            </DescriptionGridCell>
-          </GridCell>
-          <GridCell>
-            <DescriptionGridCell
+            </DescriptionBox>
+          </RowContainer>
+
+          <RowContainer>
+            <DescriptionBox
               direction="column"
               justify="space-between"
               align="end"
@@ -157,15 +166,13 @@ const WorkSection = ({ scroll }) => {
                 }}
                 isBlank={false}
               />
-              {projectsData[5].description.toString()}
-            </DescriptionGridCell>
-          </GridCell>
-          <GridCell>
-            <ProjectGridCell
+              {!isMobile && projectsData[5].description.toString()}
+            </DescriptionBox>
+            <ProjectBox
               onClick={(e) => handleClick(e, 5)}
               imgUrl={projectsData[5].thumbnail}
             />
-          </GridCell>
+          </RowContainer>
         </ProjectWrap>
         <WavySeparator mainColor={waveColorSet.layer4} />
       </FullContainer>
