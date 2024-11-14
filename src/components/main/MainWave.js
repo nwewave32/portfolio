@@ -2,7 +2,7 @@ import React, { useEffect, useLayoutEffect, useState } from "react";
 import styled, { keyframes } from "styled-components";
 import gsap from "gsap";
 import { colorSet, waveColorSet } from "lib/colorSet";
-import { FlexBox, WavyText } from "./GlobalStyles";
+import { FlexBox, WavyText } from "../GlobalStyles";
 
 const FixedWave = styled.div.withConfig({
   shouldForwardProp: (prop) => !["waveTop", "pace"].includes(prop),

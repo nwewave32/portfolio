@@ -1,17 +1,13 @@
 import styled, { keyframes } from "styled-components";
 import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
-
-import gsap from "gsap";
-
-import WavySeparator from "./WavySeparator";
 import { colorSet, waveColorSet } from "lib/colorSet";
-import Moon from "./Moon";
-import MainWave from "./MainWave";
-import { Fade, Slide } from "react-awesome-reveal";
+
+import MainWave from "./main/MainWave";
+
 import { breakpoints } from "lib/globalData";
-import BottomSection from "./BottomSection";
-import AboutSection from "./AboutSection";
-import WorkSection from "./WorkSection";
+import BottomSection from "./main/BottomSection";
+import AboutSection from "./main/AboutSection";
+import WorkSection from "./main/WorkSection";
 
 const HOME_BACK_COLOR = "#1d343d";
 const HOME_TOP_COLOR = colorSet.secondary;

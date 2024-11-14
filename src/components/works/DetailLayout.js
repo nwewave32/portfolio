@@ -6,12 +6,15 @@ import React, {
   useRef,
 } from "react";
 import styled, { keyframes } from "styled-components";
-import { Technology, TechnologiesUsed, FlexBox } from "./GlobalStyles";
+import { Technology, TechnologiesUsed, FlexBox } from "components/GlobalStyles";
 import { useInView } from "react-intersection-observer";
 import { Fade, Slide } from "react-awesome-reveal";
 import { colorSet } from "lib/colorSet";
-import { breakpoints } from "lib/globalData";
-import CustomButton from "./CustomButton";
+import { breakpoints, projectsData } from "lib/globalData";
+import CustomButton from "components/CustomButton";
+import WavyText from "components/WavyText";
+import { useDispatch } from "react-redux";
+import { setSelectedProjectId } from "features/global";
 
 const FullContainer = styled(FlexBox)`
   width: 100%;
@@ -140,12 +143,6 @@ const ImageBox = styled.div`
   opacity: 1;
 `;
 
-const EmptySeparator = styled.div`
-  height: 500px;
-  width: 100%;
-  background-color: pink;
-`;
-
 const ButtonContainer = styled(FlexBox)`
   cursor: pointer;
   padding: 0 20px;
@@ -160,71 +157,10 @@ const ButtonsLayout = styled.div.withConfig({
   column-gap: 10px;
 `;
 
-const LinkBtn = styled(FlexBox).withConfig({
-  shouldForwardProp: (prop) => !["isHovered"].includes(prop),
-})`
-  max-width: 135px;
-  flex-wrap: nowrap;
-  text-align: center;
-  position: relative;
-
-  padding: 10px;
-  line-height: 24px;
-  word-break: keep-all;
-  cursor: pointer;
-  border: 2px solid ${colorSet.base};
-  border-radius: 10px;
-  will-change: color;
-  color: ${(props) => (props.isHovered ? colorSet.text : colorSet.base)};
-  font-weight: 500;
-  background-color: transparent;
-  overflow: hidden;
-  transition: color 1.2s ease-in-out;
-`;
-
-const BtnWave = styled.div.withConfig({
-  shouldForwardProp: (prop) => !["isHovered"].includes(prop),
-})`
-  position: absolute;
-  will-change: bottom;
-  bottom: ${(props) => (props.isHovered ? "0px" : "-100%")};
-  left: 0;
-  opacity: 0.4;
-  transform: ${(props) =>
-    props.isHovered ? "translateX(-20px)" : " translateX(0px)"};
-  width: 100%;
-  height: 100%;
-  transition: bottom 1.2s ease-in-out, transform 5.2s ease-in-out;
-`;
-
-const Arrow = styled.img.withConfig({
-  shouldForwardProp: (prop) => !["isHovered"].includes(prop),
-})`
-  position: absolute;
-  right: 5px;
-  bottom: ${(props) => (props.isHovered ? "10px" : "-100%")};
-  padding: 2px;
-  width: 18px;
-  height: 18px;
-  transform: rotate(-125deg);
-  transition: color 1.2s ease-in-out, bottom 1s ease-in;
-`;
-
-const BtnImg = styled.img.withConfig({
-  shouldForwardProp: (prop) => !["isHover"].includes(prop),
-})`
-  will-change: opacity;
-  opacity: ${(props) => (props.isHover ? "0.4" : "0")};
-`;
-
-const StyledSvg = styled.svg.attrs((props) => ({}))`
-  width: 200px;
-`;
-
-// Usage
-<StyledSvg fill="#000" transform="rotate(45deg)" />;
+const StyledButton = styled.div``;
 
 const DetailLayout = ({ project }) => {
+  const projectId = project.id;
   const titleSectionArr = [
     {
       key: "Subtitle:",
@@ -254,9 +190,22 @@ const DetailLayout = ({ project }) => {
   }, []);
 
   const titleSection = useRef();
+  const PREV = "prev";
+  const NEXT = "next";
+  const getProjectId = (type) => {
+    if (type === PREV)
+      return projectId - 1 < 0 ? projectsData.length - 1 : projectId - 1;
+    else return projectId + 1 > projectsData.length - 1 ? 0 : projectId + 1;
+  };
 
+  const dispatch = useDispatch();
+
+  const handleClick = (index) => {
+    dispatch(setSelectedProjectId(index));
+    // window.location.reload();
+  };
   return (
-    <FullContainer justify="center">
+    <FullContainer align="center" direction="column">
       <ContentContainer
         direction="column"
         justify="space-between"
@@ -336,6 +285,29 @@ const DetailLayout = ({ project }) => {
           </Fade>
         </DescriptionSection>
       </ContentContainer>
+      <ButtonContainer
+        style={{
+          width: "100%",
+          padding: "0 20px",
+          boxSizing: "border-box",
+        }}
+        justify="space-around"
+      >
+        <StyledButton onClick={() => handleClick(getProjectId(PREV))}>
+          <WavyText
+            color={colorSet.highlight}
+            fontSize={5}
+            text={projectsData[getProjectId(PREV)].title.replace(/\s/g, "")}
+          />
+        </StyledButton>
+        <StyledButton onClick={() => handleClick(getProjectId(NEXT))}>
+          <WavyText
+            color={colorSet.highlight}
+            fontSize={5}
+            text={projectsData[getProjectId(NEXT)].title.replace(/\s/g, "")}
+          />
+        </StyledButton>
+      </ButtonContainer>
     </FullContainer>
   );
 };

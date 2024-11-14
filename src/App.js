@@ -2,14 +2,14 @@ import "./css/reset.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import React from "react";
 
-import Home from "./components/Home";
-import AboutMe from "./components/AboutMe";
-import Projects from "./components/Projects";
-import Footer from "./components/Footer";
-import Header from "./components/Header";
+import Home from "components/Home";
+import AboutMe from "components/AboutMe";
+import Projects from "components/works/Projects";
+import Footer from "components/Footer";
+import Header from "components/Header";
 
-import Contact from "./components/Contact";
-import Test from "./components/Test";
+import Contact from "components/Contact";
+import Test from "components/Test";
 import styled from "styled-components";
 
 import { colorSet } from "lib/colorSet";

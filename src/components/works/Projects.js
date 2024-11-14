@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import styled, { keyframes } from "styled-components";
 
-import WavySeparator from "./WavySeparator";
+import WavySeparator from "components/WavySeparator";
 import DetailLayout from "./DetailLayout";
-import { Technology, TechnologiesUsed, FlexBox } from "./GlobalStyles";
+import { Technology, TechnologiesUsed, FlexBox } from "components/GlobalStyles";
 import { Zoom } from "react-awesome-reveal";
 import { colorSet } from "lib/colorSet";
 import InfiniteAutoSlider from "./InfiniteAutoSlider";

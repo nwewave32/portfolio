@@ -9,10 +9,10 @@ import {
   WavyText,
   StyledSpan,
   StyledSvg,
-} from "./GlobalStyles";
-import WavySeparator from "./WavySeparator";
+} from "../GlobalStyles";
+import WavySeparator from "../WavySeparator";
 
-import CustomButton from "./CustomButton";
+import CustomButton from "../CustomButton";
 import { type } from "@testing-library/user-event/dist/type";
 import { useDispatch, useSelector } from "react-redux";
 import { setSelectedProjectId } from "features/global";

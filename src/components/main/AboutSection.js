@@ -1,7 +1,7 @@
 import { breakpoints } from "lib/globalData";
 import React from "react";
 import styled from "styled-components";
-import { FlexBox } from "./GlobalStyles";
+import { FlexBox } from "../GlobalStyles";
 
 // 전체 컨테이너 스타일 정의
 const FullFullContainer = styled.div`

@@ -104,8 +104,17 @@ export const projectsData = [
       "Styled-components",
       "React Router",
       "Framer Motion",
+      "Figma",
+      "Redux",
     ],
     thumbnail: "portfolio/portfolio_main.png",
+    images: [
+      "portfolio/portfolio_main.png",
+      "portfolio/portfolio1.png",
+      "portfolio/portfolio2.png",
+      "portfolio/portfolio3.png",
+      "portfolio/portfolio4.png",
+    ],
     buttons: [
       {
         id: 0,
