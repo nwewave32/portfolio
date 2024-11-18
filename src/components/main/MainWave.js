@@ -3,6 +3,7 @@ import styled, { keyframes } from "styled-components";
 import gsap from "gsap";
 import { colorSet, waveColorSet } from "lib/colorSet";
 import { FlexBox, WavyText } from "../GlobalStyles";
+import { breakpoints } from "lib/globalData";
 
 const FixedWave = styled.div.withConfig({
   shouldForwardProp: (prop) => !["waveTop", "pace"].includes(prop),
@@ -36,6 +37,17 @@ const DynamicWave = styled.path
 `;
 
 const MainWave = ({ waveTop, pace, text1, text2 }) => {
+  const TOP = "top";
+  const BOTTOM = "bottom";
+  const getStartOffset = (type) => {
+    let result = 0;
+    if (type === TOP) {
+      result = waveTop * 4 - 500;
+    } else result = waveTop * 4 - window.innerWidth - 500;
+
+    const isImac = window.innerWidth >= breakpoints.imac;
+    return isImac && type === TOP ? result - 800 : result;
+  };
   return (
     <FixedWave waveTop={waveTop} pace={pace}>
       <StyledSVG
@@ -56,8 +68,7 @@ const MainWave = ({ waveTop, pace, text1, text2 }) => {
           <textPath
             id="text-path"
             href="#text-curve"
-            startOffset={waveTop * 4 - 500}
-            //todo: 해당 문구 어떻게 보여주지
+            startOffset={getStartOffset(TOP)}
           >
             {text1}
           </textPath>
@@ -88,7 +99,7 @@ const MainWave = ({ waveTop, pace, text1, text2 }) => {
           <textPath
             id="text-path"
             href="#text-curve2"
-            startOffset={waveTop * 4 - window.innerWidth - 500}
+            startOffset={getStartOffset(BOTTOM)}
           >
             {text2}
           </textPath>

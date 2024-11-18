@@ -82,7 +82,7 @@ const Textarea = styled.textarea`
   font-size: 1vh;
   border: 1px solid #ccc;
   border-radius: 4px;
-  height: 150px;
+  height: 20vh;
   width: 100%;
   font-weight: 300;
   resize: none;

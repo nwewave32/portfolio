@@ -46,7 +46,7 @@ const TitleSection = styled.section.withConfig({
   justify-content: space-between;
   flex-direction: column;
   width: 80%;
-  height: 50%;
+  height: 40vh;
   padding: 100px 0 30px 0;
 
   margin-bottom: 20px;
@@ -57,6 +57,9 @@ const TitleSection = styled.section.withConfig({
   /* Mobile 이하 */
   @media (max-width: ${breakpoints.mobile}px) {
     width: 100%;
+  }
+  @media (min-width: ${breakpoints.imac}px) {
+    background-color: pink;
   }
 `;
 // will-change: transform;
@@ -124,6 +127,9 @@ const ImageSection = styled.section`
   /* Tablet - Portrait 이상 */
   @media (max-width: ${breakpoints.tabletPortrait}px) {
     width: 90vw;
+  }
+  @media (min-width: ${breakpoints.imac}px) {
+    margin-bottom: 100vh;
   }
 `;
 

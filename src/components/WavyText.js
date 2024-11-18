@@ -44,8 +44,8 @@ const Container = styled(FlexBox).withConfig({
   line-height: 1;
 
   /* Mobile 이하 */
-  @media (max-width: ${breakpoints.mobile}px) {
-    font-size: 7vh;
+  @media (max-width: ${breakpoints.tabletPortrait}px) {
+    font-size: 5vh;
   }
 `;
 

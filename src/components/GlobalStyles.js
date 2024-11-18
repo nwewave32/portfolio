@@ -1,4 +1,5 @@
 import { colorSet } from "lib/colorSet";
+import { breakpoints } from "lib/globalData";
 import styled from "styled-components";
 
 export const TechnologiesUsed = styled.div`
