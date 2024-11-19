@@ -3,12 +3,14 @@ import styled, { keyframes, css } from "styled-components";
 
 import { colorSet, waveColorSet } from "lib/colorSet";
 import { FlexBox } from "./GlobalStyles";
+import { breakpoints } from "lib/globalData";
+import { util } from "lib/util";
 
 const LinkBtn = styled(FlexBox).withConfig({
   shouldForwardProp: (prop) => !["isHovered"].includes(prop),
 })`
   width: max-content;
-  max-width: 135px;
+
   flex-wrap: nowrap;
   text-align: center;
   position: relative;
@@ -18,13 +20,17 @@ const LinkBtn = styled(FlexBox).withConfig({
   word-break: keep-all;
   cursor: pointer;
   border: 2px solid ${colorSet.base};
-  border-radius: 10px;
+  border-radius: 1.4vh;
   will-change: color;
   color: ${(props) => (props.isHovered ? colorSet.text : colorSet.base)};
   font-weight: 500;
   background-color: transparent;
   overflow: hidden;
   transition: color 1.2s ease-in-out;
+
+  @media (min-width: ${breakpoints.imac}px) {
+    padding: 30px;
+  }
 `;
 
 const BtnWave = styled.div.withConfig({
@@ -40,12 +46,15 @@ const BtnWave = styled.div.withConfig({
   width: 100%;
   height: 100%;
   transition: bottom 1.2s ease-in-out, transform 5.2s ease-in-out;
+  @media (min-width: ${breakpoints.imac}px) {
+    bottom: ${(props) => (props.isHovered ? "100%" : "-100%")};
+  }
 `;
 
 const CustomButton = ({ button, isBlank = true, onClick }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [hoveredType, setHoveredType] = useState("");
-
+  const isImac = util.getWindowType("imac");
   const handleMouseEvent = (type) => {
     setIsHovered((prev) => !prev);
     setHoveredType(type);
@@ -70,12 +79,13 @@ const CustomButton = ({ button, isBlank = true, onClick }) => {
         onMouseLeave={() => handleMouseEvent(button.type)}
         isHovered={isHovered && hoveredType === button.type}
       >
-        {button.title}
+        <span>{button.title}</span>
+
         <BtnWave isHovered={isHovered && hoveredType === button.type}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            width={350}
-            height={80}
+            width={isImac ? 1000 : 350}
+            height={isImac ? 240 : 80}
             viewBox="0 0 3150 200"
           >
             <path

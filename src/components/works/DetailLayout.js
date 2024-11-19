@@ -71,17 +71,16 @@ const TitleContainer = styled.div`
 `;
 
 const ProjectTitle = styled.h2`
-  font-size: 5em;
   font-weight: 400;
   line-height: 1;
   height: max-content;
   /* Mobile 이하 */
   @media (max-width: ${breakpoints.mobile}px) {
-    font-size: 2em;
+    // font-size: 2em;
   }
   /* Tablet - Portrait 이상 */
   @media (max-width: ${breakpoints.tabletPortrait}px) {
-    font-size: 3em;
+    // font-size: 3em;
   }
 `;
 
@@ -163,7 +162,14 @@ const ButtonsLayout = styled.div.withConfig({
   column-gap: 10px;
 `;
 
-const StyledButton = styled.div``;
+const StyledButton = styled.div`
+  font-size: 3vh;
+  color: ${colorSet.highlight};
+
+  @media (max-width: ${breakpoints.mobile}px) {
+    font-size: 1.8vh;
+  }
+`;
 
 const DetailLayout = ({ project }) => {
   const projectId = project.id;
@@ -300,18 +306,10 @@ const DetailLayout = ({ project }) => {
         justify="space-around"
       >
         <StyledButton onClick={() => handleClick(getProjectId(PREV))}>
-          <WavyText
-            color={colorSet.highlight}
-            fontSize={5}
-            text={projectsData[getProjectId(PREV)].title.replace(/\s/g, "")}
-          />
+          {projectsData[getProjectId(PREV)].title}
         </StyledButton>
         <StyledButton onClick={() => handleClick(getProjectId(NEXT))}>
-          <WavyText
-            color={colorSet.highlight}
-            fontSize={5}
-            text={projectsData[getProjectId(NEXT)].title.replace(/\s/g, "")}
-          />
+          {projectsData[getProjectId(NEXT)].title}
         </StyledButton>
       </ButtonContainer>
     </FullContainer>

@@ -19,6 +19,14 @@ const Logo = styled.div`
   cursor: pointer;
   display: flex;
   align-items: center;
+  > img {
+    width: 5vh;
+
+    /* imac 이상 */
+    @media (min-width: ${breakpoints.imac}px) {
+      width: 6vh;
+    }
+  }
 `;
 
 const HeaderToggleButton = styled.button`
@@ -27,6 +35,12 @@ const HeaderToggleButton = styled.button`
   right: 45px;
   z-index: 101;
   border: none;
+
+  /* imac 이상 */
+  @media (min-width: ${breakpoints.imac}px) {
+    top: 1.5vw;
+    right: 4vw;
+  }
 `;
 
 const MainNavToggle = styled.a`
@@ -39,6 +53,11 @@ const MainNavToggle = styled.a`
 
   cursor: pointer;
 
+  /* imac 이상 */
+  @media (min-width: ${breakpoints.imac}px) {
+    width: 2.5vw;
+    height: 1.5vw;
+  }
   &:after,
   &:before {
     content: "";
@@ -50,6 +69,11 @@ const MainNavToggle = styled.a`
     left: 0;
     right: 0;
     transition: all ease-out 0.3s;
+
+    /* imac 이상 */
+    @media (min-width: ${breakpoints.imac}px) {
+      border-bottom: 0.3vw solid ${colorSet.accent};
+    }
   }
 
   &:after {
@@ -67,6 +91,11 @@ const MainNavToggle = styled.a`
     position: absolute;
     top: 50%;
     transition: all ease-out 0.1s;
+
+    /* imac 이상 */
+    @media (min-width: ${breakpoints.imac}px) {
+      height: 0.3vw;
+    }
   }
 
   &.active-menu {
@@ -151,7 +180,6 @@ const StyledLink = styled(Link)`
 const LinkItem = styled.div.withConfig({
   shouldForwardProp: (prop) => !["isSamePage"].includes(prop),
 })`
-  font-size: 5em;
   text-decoration: ${(props) => (props.isSamePage ? "underline" : "none")};
   width: min-content;
 `;
@@ -172,10 +200,6 @@ const navArr = [
   {
     title: "Contact",
     path: "/contact",
-  },
-  {
-    title: "test",
-    path: "/test",
   },
 ];
 
@@ -205,7 +229,7 @@ const Header = () => {
           navigate("/");
         }}
       >
-        <img src="wave.png" width={50} alt="nwewave" />
+        <img src="wave.png" alt="nwewave" />
       </Logo>
       <HeaderToggleButton onClick={toggleHeader}>
         <MainNavToggle className={isOpen ? "active-menu" : ""}>

@@ -9,7 +9,6 @@ export const TechnologiesUsed = styled.div`
 `;
 
 export const Technology = styled.div`
-  font-size: 0.9rem;
   margin-bottom: 5px;
   background-color: ${colorSet.accent};
   max-width: fit-content;
@@ -53,6 +52,9 @@ export const WavyText = styled.text`
   fill: ${({ color }) => color};
   font-size: 3vh;
   opacity: 0.7;
+  @media (min-width: ${breakpoints.imac}px) {
+    font-size: 2vh;
+  }
 `;
 
 export const StyledSpan = styled.tspan`

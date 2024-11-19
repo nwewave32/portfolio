@@ -2,14 +2,14 @@ import "./css/reset.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import React from "react";
 
-import Home from "components/Home";
-import AboutMe from "components/AboutMe";
-import Projects from "components/works/Projects";
+import Home from "screen/Home";
+import AboutMe from "screen/AboutMe";
+import Projects from "screen/Projects";
 import Footer from "components/Footer";
 import Header from "components/Header";
 
-import Contact from "components/Contact";
-import Test from "components/Test";
+import Contact from "screen/Contact";
+import Test from "screen/Test";
 import styled from "styled-components";
 
 import { colorSet } from "lib/colorSet";
@@ -57,6 +57,15 @@ const AppContainer = styled.div`
   }
 `;
 
+const FixedWidth = styled.div`
+  position: fixed;
+  top: 0;
+  left: ${({ pos }) => pos}%;
+  height: 100px;
+  width: 1px;
+  border-right: 2px solid red;
+  z-index: 999;
+`;
 const App = () => {
   return (
     <>
@@ -64,6 +73,11 @@ const App = () => {
         <AppContainer>
           <Header />
           <MainContainer>
+            {/* {[0, 10, 20, 30, 40, 50, 60, 70, 80, 90].map((item) => (
+              <FixedWidth pos={item}>
+                {item},{(window.innerWidth * item) / 100}
+              </FixedWidth>
+            ))} */}
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/about" element={<AboutMe />} />

@@ -53,7 +53,7 @@ const Slide = styled.div.withConfig({
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   margin-bottom: ${(props) => props.margin}px;
   height: ${(props) => props.height}px;
-  font-size: 32px;
+
   font-weight: 400;
   ${backgroundImg}
 `;

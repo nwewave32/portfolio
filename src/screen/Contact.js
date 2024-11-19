@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useEffect } from "react";
 import styled from "styled-components";
-import { FlexBox } from "./GlobalStyles";
+import { FlexBox } from "../components/GlobalStyles";
 import { colorSet } from "lib/colorSet";
 import { breakpoints } from "lib/globalData";
 
@@ -52,7 +52,6 @@ const ContactForm = styled.form`
 `;
 
 const TitleH2 = styled.h2`
-  font-size: 3.5vh;
   box-sizing: border-box;
   /* Tablet - Portrait 이상 */
   @media (max-width: ${breakpoints.tabletPortrait}px) {
@@ -62,13 +61,12 @@ const TitleH2 = styled.h2`
 
 const Label = styled.label`
   margin-bottom: 10px;
-  font-size: 1.5vh;
 `;
 
 const Input = styled.input`
   padding: 10px;
   margin-bottom: 20px;
-  font-size: 1vh;
+
   border: 1px solid #ccc;
   border-radius: 4px;
   width: 100%;
@@ -79,7 +77,7 @@ const Input = styled.input`
 const Textarea = styled.textarea`
   padding: 10px;
   margin-bottom: 20px;
-  font-size: 1vh;
+
   border: 1px solid #ccc;
   border-radius: 4px;
   height: 20vh;
@@ -91,7 +89,7 @@ const Textarea = styled.textarea`
 
 const SubmitButton = styled.button`
   padding: 10px 20px;
-  font-size: 1.2rem;
+
   color: ${colorSet.background};
 
   border: none;

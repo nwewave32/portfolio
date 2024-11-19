@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { FlexBox } from "../GlobalStyles";
 import { colorSet } from "lib/colorSet";
 import { Fade } from "react-awesome-reveal";
+import { util } from "lib/util";
 
 // 전체 컨테이너 스타일 정의
 const FullFullContainer = styled.div`
@@ -17,41 +18,30 @@ const FullFullContainer = styled.div`
   overflow: hidden;
 `;
 
-const BottomImg = styled.img`
-  width: 100%;
-
-  position: absolute;
-  bottom: -25vh;
-  right: 0;
-
-  @media (max-width: ${breakpoints.tabletPortrait}px) {
-    bottom: 0;
-  }
-`;
-
 const TextBox = styled(FlexBox)`
   color: ${colorSet.background};
   box-sizing: border-box;
   padding: 0 25%;
-  font-size: 3vh;
+
   position: absolute;
   top: 0;
   left: 0;
-  // left: 50%;
-  // top: 50%;
-  // transform: translate(-50%, -50%);
+  font-size: 3vh;
   z-index: 2;
   text-align: center;
 
   width: 100%;
   height: 100%;
-  font-weight: 400;
+  font-weight: 300;
+  line-height: 1.8;
+  @media (max-width: ${breakpoints.mobile}px) {
+    padding: 0 10%;
+  }
 
   @media (max-width: ${breakpoints.tabletPortrait}px) {
-    padding: 0 10%;
-    font-size: 2.5vh;
     color: ${colorSet.text};
     font-weight: 100;
+    font-size: 1.8vh;
   }
 `;
 
@@ -61,6 +51,9 @@ const TextBox2 = styled(TextBox)`
 
   width: 100%;
   height: 100%;
+  > div {
+    font-size: 3vh;
+  }
 `;
 
 const StyledSVG = styled.svg`
@@ -75,9 +68,10 @@ const StyledSVG = styled.svg`
 `;
 
 const AboutSection = () => {
-  const isMobile = window.innerWidth <= breakpoints.tabletPortrait;
+  const isTablet = util.getWindowType("tabletPortrait");
   const text =
-    "개발자는 새로운 것을 창조하는 사람이라고 생각합니다. 저는 창의적인 아이디어를 기술로 뒷받침하며 더 나은 사용자 경험을 만들어가는 데 가치를 둡니다. 프론트엔드 개발은 사용자와 가장 가까운 곳에서 소통하는 창구로, 제가 만든 화면이 직관적으로 메시지를 전달하고 주제를 돋보이게 할 수 있다는 점이 매력적입니다. 특히 리액트를 기반으로 한 개발을 주로 해왔으며, 앞으로는 더 단순하면서도 명확한 사용자 친화적인 화면을 설계하고 싶습니다. 제 포트폴리오의 주제는 'wave'로, 물의 유동성과 유연함을 통해 자연의 원리를 친근하게 느끼며 안정감을 얻을 수 있도록 구성했습니다. 끊임없이 변화하는 웹 환경 속에서 흐름을 따라가며 창의적이고 유연한 개발자로 성장하고자 합니다.";
+    "저는 새로운 경험을 창조하는 개발자입니다. 창의적인 아이디어와 기술을 결합해, 사용자와 직관적으로 소통하는 화면을 만들어내는 데 열정을 쏟고 있습니다. 프론트엔드 개발은 단순한 코딩을 넘어 예술처럼 느껴지는 과정으로, 리액트를 기반으로 사용자 친화적이고 명확한 메시지를 전달하는 인터페이스를 설계합니다. 제 포트폴리오의 주제인 'wave'는 물의 유동성과 유연함을 담아 자연의 원리를 친근하고 편안하게 느낄 수 있도록 구성했습니다. 변화의 흐름을 따라가며, 창의적이고 유연한 시선으로 세상을 바라보는 개발자가 되고자 합니다.";
+  // "개발자는 새로운 것을 창조하는 사람이라고 생각합니다. 저는 창의적인 아이디어를 기술로 뒷받침하며 더 나은 사용자 경험을 만들어가는 데 가치를 둡니다. 프론트엔드 개발은 사용자와 가장 가까운 곳에서 소통하는 창구로, 제가 만든 화면이 직관적으로 메시지를 전달하고 주제를 돋보이게 할 수 있다는 점이 매력적입니다. 특히 리액트를 기반으로 한 개발을 주로 해왔으며, 앞으로는 더 단순하면서도 명확한 사용자 친화적인 화면을 설계하고 싶습니다. 제 포트폴리오의 주제는 'wave'로, 물의 유동성과 유연함을 통해 자연의 원리를 친근하게 느끼며 안정감을 얻을 수 있도록 구성했습니다. 끊임없이 변화하는 웹 환경 속에서 흐름을 따라가며 창의적이고 유연한 개발자로 성장하고자 합니다.";
   return (
     <FullFullContainer>
       <>
@@ -112,7 +106,7 @@ const AboutSection = () => {
         <StyledSVG
           viewBox="0 0 1278 804"
           xmlns="http://www.w3.org/2000/svg"
-          preserveAspectRatio={isMobile ? "xMidYMax slice" : "none"}
+          preserveAspectRatio={isTablet ? "xMidYMax slice" : "none"}
         >
           <defs>
             <clipPath id="myClipPath" clipPathUnits="objectBoundingBox">
@@ -141,7 +135,7 @@ const AboutSection = () => {
         {/* <Fade delay={1e5}>{text}</Fade> */}
         {text}
       </TextBox>
-      {!isMobile && (
+      {!isTablet && (
         <TextBox2 justify="center" align="center">
           <Fade delay={1e5}>{text}</Fade>
           {/* {text} */}

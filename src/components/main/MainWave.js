@@ -4,6 +4,7 @@ import gsap from "gsap";
 import { colorSet, waveColorSet } from "lib/colorSet";
 import { FlexBox, WavyText } from "../GlobalStyles";
 import { breakpoints } from "lib/globalData";
+import { util } from "lib/util";
 
 const FixedWave = styled.div.withConfig({
   shouldForwardProp: (prop) => !["waveTop", "pace"].includes(prop),
@@ -15,12 +16,19 @@ const FixedWave = styled.div.withConfig({
   transform: perspective(1200px);
 
   z-index: 10;
+  @media (min-width: ${breakpoints.imac}px) {
+    top: -800px;
+  }
 `;
 
 const StyledSVG = styled.svg`
   width: 6000px;
   height: 400px;
   filter: drop-shadow(-4px -5px -3px rgb(0 0 0 / 0.4));
+  @media (min-width: ${breakpoints.imac}px) {
+    width: 12000px;
+    height: 800px;
+  }
 `;
 
 const DynamicWave = styled.path
@@ -45,7 +53,7 @@ const MainWave = ({ waveTop, pace, text1, text2 }) => {
       result = waveTop * 4 - 500;
     } else result = waveTop * 4 - window.innerWidth - 500;
 
-    const isImac = window.innerWidth >= breakpoints.imac;
+    const isImac = util.getWindowType("imac");
     return isImac && type === TOP ? result - 800 : result;
   };
   return (
@@ -53,10 +61,9 @@ const MainWave = ({ waveTop, pace, text1, text2 }) => {
       <StyledSVG
         id="visual"
         viewBox="0 0 6000 400"
-        width="6000"
-        height="400"
         xmlns="http://www.w3.org/2000/svg"
         version="1.1"
+        preserveAspectRatio="none"
       >
         <DynamicWave
           id="text-curve"
@@ -93,7 +100,7 @@ const MainWave = ({ waveTop, pace, text1, text2 }) => {
           id="text-curve2"
           d="M0 326L43.5 324.5C87 323 174 320 261 329.8C348 339.7 435 362.3 522 362C609 361.7 696 338.3 782.8 331.7C869.7 325 956.3 335 1043.2 345.5C1130 356 1217 367 1304 360.5C1391 354 1478 330 1565 332.2C1652 334.3 1739 362.7 1826 375.5C1913 388.3 2000 385.7 2087 377.5C2174 369.3 2261 355.7 2348 349C2435 342.3 2522 342.7 2609 345.5C2696 348.3 2783 353.7 2869.8 359.3C2956.7 365 3043.3 371 3130.2 362C3217 353 3304 329 3391 322.8C3478 316.7 3565 328.3 3652 337.5C3739 346.7 3826 353.3 3913 361.8C4000 370.3 4087 380.7 4174 385.5C4261 390.3 4348 389.7 4435 386.3C4522 383 4609 377 4696 373.5C4783 370 4870 369 4956.8 371C5043.7 373 5130.3 378 5217.2 371.2C5304 364.3 5391 345.7 5478 338.2C5565 330.7 5652 334.3 5739 337C5826 339.7 5913 341.3 5956.5 342.2L6000 343L6000 401L5956.5 401C5913 401 5826 401 5739 401C5652 401 5565 401 5478 401C5391 401 5304 401 5217.2 401C5130.3 401 5043.7 401 4956.8 401C4870 401 4783 401 4696 401C4609 401 4522 401 4435 401C4348 401 4261 401 4174 401C4087 401 4000 401 3913 401C3826 401 3739 401 3652 401C3565 401 3478 401 3391 401C3304 401 3217 401 3130.2 401C3043.3 401 2956.7 401 2869.8 401C2783 401 2696 401 2609 401C2522 401 2435 401 2348 401C2261 401 2174 401 2087 401C2000 401 1913 401 1826 401C1739 401 1652 401 1565 401C1478 401 1391 401 1304 401C1217 401 1130 401 1043.2 401C956.3 401 869.7 401 782.8 401C696 401 609 401 522 401C435 401 348 401 261 401C174 401 87 401 43.5 401L0 401Z"
           fill={waveColorSet.layer4}
-          wavePace={waveTop * 0.5}
+          wavePace={waveTop * 0.3}
         ></DynamicWave>
         <WavyText fontSize={20} color={colorSet.background}>
           <textPath

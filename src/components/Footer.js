@@ -9,7 +9,7 @@ import {
   useNavigate,
 } from "react-router-dom";
 import { Fade, Slide, Zoom } from "react-awesome-reveal";
-import Contact from "./Contact";
+import Contact from "../screen/Contact";
 
 const FooterContainer = styled.footer.withConfig({
   shouldForwardProp: (prop) => !["isHome"].includes(prop),

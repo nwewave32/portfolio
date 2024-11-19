@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { BrowserRouter as Router, useLocation } from "react-router-dom";
 import { breakpoints } from "lib/globalData";
+import { util } from "lib/util";
 
 const WaveContainer = styled.div.withConfig({
   shouldForwardProp: (prop) => !["isMobile"].includes(prop),
@@ -68,13 +69,15 @@ const WavySeparator = ({
 
   const getPx = ({ isSecond, pace }) => {
     const windowWidth = window.outerWidth;
+
     const isMain = location.pathname === "/";
-    const result = -(isSecond ? windowWidth + 1350 : 0) + scrollY * pace;
+    // const result = -(isSecond ? windowWidth + 1350 : 0) + scrollY * pace; // 1470
+    const result = -(isSecond ? windowWidth + 1490 : 0) + scrollY * pace; //1920
 
     return isMain ? result : result + 800;
   };
 
-  const isMobile = window.innerWidth <= breakpoints.mobile;
+  const isMobile = util.getWindowType("mobile");
   const getPy = ({ isSecond, isBack }) => {
     const result = isBack || !isSecond ? 0 : -304;
     return result;

@@ -1,16 +1,17 @@
 import React, { useState, useEffect, useRef } from "react";
 import styled, { keyframes } from "styled-components";
 
-import WavySeparator from "components/WavySeparator";
-import DetailLayout from "./DetailLayout";
+import WavySeparator2 from "components/WavySeparator2";
+import DetailLayout from "../components/works/DetailLayout";
 import { Technology, TechnologiesUsed, FlexBox } from "components/GlobalStyles";
 import { Zoom } from "react-awesome-reveal";
 import { colorSet } from "lib/colorSet";
-import InfiniteAutoSlider from "./InfiniteAutoSlider";
+import InfiniteAutoSlider from "../components/works/InfiniteAutoSlider";
 import { useDispatch, useSelector } from "react-redux";
 import { breakpoints, projectsData } from "lib/globalData";
 import { clearSelectedProjectId, setSelectedProjectId } from "features/global";
 import { useLocation } from "react-router-dom";
+import { util } from "lib/util";
 
 const ProjectContainer = styled(FlexBox)`
   width: 100%;
@@ -48,6 +49,10 @@ const EmptySeparator = styled.div`
   padding-top: 500px;
   background-color: ${colorSet.base};
   position: relative;
+
+  @media (min-width: ${breakpoints.imac}px) {
+    padding-top: 900px;
+  }
 `;
 
 const rotateText = keyframes`
@@ -71,7 +76,7 @@ const BackToTopButton = styled.button`
   justify-content: center;
   cursor: pointer;
   overflow: hidden;
-  z-index: 10;
+  z-index: 15;
 
   &:hover {
     animation: ${rotateText} 2s linear infinite;
@@ -168,7 +173,7 @@ const Projects = () => {
       </Zoom>
 
       <EmptySeparator>
-        <WavySeparator
+        <WavySeparator2
           mainColor={colorSet.background}
           backColor={colorSet.accent}
         />
@@ -219,7 +224,7 @@ const Column = styled.div`
 `;
 
 const GridProjecet = ({ clickProject }) => {
-  const isMobile = window.innerWidth <= breakpoints.mobile;
+  const isMobile = util.getWindowType("mobile");
   const getHeight = () => {
     if (isMobile) return 250;
     else return Math.max(Math.floor(window.innerHeight / 4), 300);

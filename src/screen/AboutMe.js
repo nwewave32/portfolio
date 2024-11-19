@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import styled, { keyframes } from "styled-components";
 import { Fade } from "react-awesome-reveal";
-import { FlexBox } from "./GlobalStyles";
-import WavySeparator from "./WavySeparator";
+import { FlexBox } from "../components/GlobalStyles";
+import WavySeparator2 from "../components/WavySeparator2";
 import { colorSet } from "lib/colorSet";
 import { breakpoints } from "lib/globalData";
+import { skills } from "lib/globalData";
 
 const AboutContainer = styled(FlexBox)`
   width: 100%;
@@ -27,8 +28,8 @@ const StyledFade = styled(Fade)`
 
 const ProfileImageWrapper = styled.div`
   position: relative;
-  width: 180px;
-  height: 180px;
+  width: 20vh;
+  height: 20vh;
   border-radius: 50%;
   overflow: hidden;
   box-shadow: 0 4px 20px rgba(255, 255, 255, 0.2);
@@ -41,27 +42,15 @@ const ProfileImage = styled.img`
   height: 100%;
   object-fit: cover;
   transition: transform 0.4s ease-in-out;
-
+  cursor: pointer;
   &:hover {
     transform: scale(1.1);
   }
 `;
 
 const AboutHeading = styled.h2`
-  font-size: 2.5rem;
   margin: 30px 0;
   text-shadow: 1px 1px 5px rgba(255, 255, 255, 0.3);
-  color: ${colorSet.background};
-`;
-
-const AboutText = styled.p`
-  width: 50%;
-  text-align: center;
-  margin: 20px 0;
-  padding: 0 20px;
-  font-size: 1.1rem;
-  line-height: 2.1rem;
-  word-break: keep-all;
   color: ${colorSet.background};
 `;
 
@@ -71,15 +60,15 @@ const TextFade = styled(Fade)`
   text-align: center;
   margin: 20px 0;
   padding: 0 20px;
-  font-size: 1.1rem;
-  line-height: 2.1rem;
+  font-size: 2vh;
+  line-height: 1.5;
 
   color: ${colorSet.background};
   overflow-wrap: break-word;
   white-space: normal !important;
 
   /* Mobile 이하 */
-  @media (max-width: ${breakpoints.mobile}px) {
+  @media (max-width: ${breakpoints.tabletPortrait}px) {
     width: 90%;
   }
 
@@ -89,22 +78,7 @@ const TextFade = styled(Fade)`
   }
 `;
 
-const Button = styled.button`
-  color: #282c34; /* 버튼 텍스트 색상 */
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 1rem;
-  transition: background-color 0.3s ease-in-out;
-
-  &:hover {
-    background-color: #21a1f1; /* 호버 시 버튼 배경색 */
-  }
-`;
-
 const CareerHeading = styled.h3`
-  font-size: 1.8rem;
   margin-bottom: 10px;
   cursor: pointer;
 `;
@@ -115,13 +89,11 @@ const CareerList = styled.ul`
 `;
 
 const CareerItem = styled.li`
-  font-size: 1.1rem;
   margin-bottom: 15px;
   position: relative;
 `;
 
 const EducationHeading = styled.h3`
-  font-size: 1.8rem;
   margin-top: 30px;
   margin-bottom: 10px;
 `;
@@ -144,6 +116,10 @@ const DetailsSection = styled(FlexBox)`
 const DetailsWrapper = styled.div`
   animation: ${SlideIn} 0.6s ease forwards;
   padding: 50px 18px;
+
+  @media (max-width: ${breakpoints.mobile}px) {
+    padding: 50px 24px;
+  }
 `;
 
 const StyledUl = styled.ul`
@@ -156,9 +132,14 @@ const SkillsSection = styled.section`
   padding: 80px 100px 50px 100px;
   text-align: center;
   max-width: 1000px;
+
   /* Mobile 이하 */
   @media (max-width: ${breakpoints.mobile}px) {
     padding: 50px 18px;
+  }
+
+  @media (min-width: ${breakpoints.imac}px) {
+    max-width: 3000px;
   }
 `;
 
@@ -177,24 +158,33 @@ const SkillCard = styled.div`
   box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
   padding: 15px;
   border-radius: 10px;
+  @media (max-width: ${breakpoints.mobile}px) {
+    margin: 5px;
+    padding: 10px;
+  }
+
+  @media (min-width: ${breakpoints.imac}px) {
+    margin: 15px;
+    padding: 20px;
+  }
 `;
 
 const SkillIcon = styled.img`
-  width: 80px;
-  height: 80px;
+  width: 10vw;
+  height: 10vw;
   margin-bottom: 10px;
 
   /* Mobile 이하 */
   @media (max-width: ${breakpoints.mobile}px) {
-    width: 50px;
-    height: 50px;
     margin-bottom: 5px;
+  }
+
+  @media (min-width: ${breakpoints.imac}px) {
+    margin-bottom: 15px;
   }
 `;
 
-const SkillName = styled.p`
-  font-size: 1.2rem;
-`;
+const SkillName = styled.p``;
 
 const EmptySeparator = styled.div`
   width: 100%;
@@ -211,34 +201,11 @@ const EmptySeparator = styled.div`
   @media (min-width: ${breakpoints.mobile}px) {
     padding-top: 350px;
   }
-`;
 
-const skills = [
-  { name: "HTML", icon: "/skills/HTML.svg" },
-  { name: "CSS", icon: "/skills/CSS.svg" },
-  { name: "JavaScript", icon: "/skills/JavaScript.svg" },
-  { name: "React", icon: "/skills/react.png" },
-  { name: "Vue", icon: "/skills/VueJS-Light.svg" },
-  { name: "TypeScript", icon: "/skills/TypeScript.svg" },
-  { name: "Recoil", icon: "/skills/recoil.png" },
-  { name: "Redux", icon: "/skills/Redux.svg" },
-  { name: "PHP", icon: "/skills/php.png" },
-  { name: "Laravel", icon: "/skills/Laravel-Light.svg" },
-  { name: "MySQL", icon: "/skills/MySQL-Light.svg" },
-  { name: "Dart", icon: "/skills/Dart-Light.svg" },
-  { name: "Flutter", icon: "/skills/Flutter-Light.svg" },
-  { name: "Python", icon: "/skills/Python-Light.svg" },
-  { name: "Babel", icon: "/skills/Babel.svg" },
-  { name: "Zeplin", icon: "/skills/zeplin.png" },
-  { name: "Figma", icon: "/skills/Figma.svg" },
-  { name: "StyledComponents", icon: "/skills/StyledComponents.svg" },
-  { name: "TailwindCSS", icon: "/skills/TailwindCSS-Light.svg" },
-  { name: "Git", icon: "/skills/Git.svg" },
-  { name: "Github", icon: "/skills/Github-Light.svg" },
-  { name: "Firebase", icon: "/skills/Firebase-Light.svg" },
-  { name: "LinkedIn", icon: "/skills/LinkedIn.svg" },
-  { name: "VSCode", icon: "/skills/VSCode-Light.svg" },
-];
+  @media (min-width: ${breakpoints.imac}px) {
+    padding-top: 900px;
+  }
+`;
 
 const AboutMe = () => {
   const [isHovered, setIsHovered] = useState(false);
@@ -284,7 +251,7 @@ const AboutMe = () => {
       </AboutSection>
 
       <EmptySeparator>
-        <WavySeparator
+        <WavySeparator2
           mainColor={colorSet.background}
           backColor={colorSet.accent}
         />

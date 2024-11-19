@@ -15,7 +15,6 @@ export const projectSlice = createSlice({
   },
 });
 
-// Action creators are generated for each case reducer function
 export const { setSelectedProjectId, clearSelectedProjectId } =
   projectSlice.actions;
 

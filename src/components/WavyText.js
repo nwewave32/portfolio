@@ -28,33 +28,26 @@ const WavyLetter = styled.span
   position: relative;
   display: inline-block;
   animation: ${wavyAnimation} 1.3s ease infinite;
-  min-width: ${({ fontSize }) => fontSize}vh;
+  font-size: 10vh;
+
+
+  
 `;
 
 const Container = styled(FlexBox).withConfig({
-  shouldForwardProp: (prop) =>
-    !["highlight", "color", "fontSize"].includes(prop),
+  shouldForwardProp: (prop) => !["highlight", "color"].includes(prop),
 })`
   margin-bottom: 2rem;
   color: ${({ color }) => color};
   border-bottom: ${(props) => (props.highlight ? "2px solid" : "none")};
   padding-bottom: 1px;
   box-sizing: border-box;
-  font-size: ${({ fontSize }) => fontSize}vh;
-  line-height: 1;
+  font-size: 10vh;
 
-  /* Mobile 이하 */
-  @media (max-width: ${breakpoints.tabletPortrait}px) {
-    font-size: 5vh;
-  }
+  line-height: 1;
 `;
 
-const WavyText = ({
-  text,
-  highlight = false,
-  color = colorSet.background,
-  fontSize = 10,
-}) => {
+const WavyText = ({ text, highlight = false, color = colorSet.background }) => {
   const [isHovered, setIsHovered] = useState(false);
   const animatedText = text.split("").map((letter, index) => (
     <WavyLetter key={index} delay={index * 0.06}>
@@ -72,7 +65,6 @@ const WavyText = ({
       onMouseLeave={handleMouseEvent}
       highlight={highlight}
       color={color}
-      fontSize={fontSize}
     >
       {isHovered ? animatedText : text}
     </Container>

@@ -2,12 +2,12 @@ import styled, { keyframes } from "styled-components";
 import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { colorSet, waveColorSet } from "lib/colorSet";
 
-import MainWave from "./main/MainWave";
+import MainWave from "../components/main/MainWave";
 
 import { breakpoints } from "lib/globalData";
-import BottomSection from "./main/BottomSection";
-import AboutSection from "./main/AboutSection";
-import WorkSection from "./main/WorkSection";
+import BottomSection from "../components/main/BottomSection";
+import AboutSection from "../components/main/AboutSection";
+import WorkSection from "../components/main/WorkSection";
 
 const HOME_BACK_COLOR = "#1d343d";
 const HOME_TOP_COLOR = colorSet.secondary;
@@ -93,20 +93,6 @@ const FixedSection = styled(Section).withConfig({
   top: ${({ per }) => (per > 100 ? -30 : 0)}%;
   left: 0;
   background-color: ${HOME_TOP_COLOR};
-`;
-
-const IntroContainer = styled.div`
-  position: absolute;
-  right: 5%;
-  top: 0;
-  width: 50vw;
-  padding: 20px;
-  border-radius: 20px;
-  background-color: rgba(247, 247, 247, 0.1);
-  box-sizing: border-box;
-  font-size: 3vh;
-  line-height: 2;
-  color: ${colorSet.background};
 `;
 
 const BottomImg = styled.img`

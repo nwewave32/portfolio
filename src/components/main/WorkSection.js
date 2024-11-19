@@ -3,20 +3,15 @@ import React, { useState, useEffect, useRef, useCallback } from "react";
 import styled, { keyframes, css } from "styled-components";
 
 import { colorSet, waveColorSet } from "lib/colorSet";
-import {
-  FlexBox,
-  FullContainer,
-  WavyText,
-  StyledSpan,
-  StyledSvg,
-} from "../GlobalStyles";
-import WavySeparator from "../WavySeparator";
+import { FlexBox, FullContainer, StyledSpan, StyledSvg } from "../GlobalStyles";
+import WavySeparator2 from "../WavySeparator2";
 
 import CustomButton from "../CustomButton";
 import { type } from "@testing-library/user-event/dist/type";
 import { useDispatch, useSelector } from "react-redux";
 import { setSelectedProjectId } from "features/global";
 import { useNavigate } from "react-router-dom";
+import { util } from "lib/util";
 
 const ProjectWrap = styled(FlexBox)
   .attrs(({ visibility }) => ({
@@ -93,12 +88,15 @@ const DescriptionBox = styled(FlexBox)`
   @media (max-width: ${breakpoints.mobile}px) {
     height: auto;
   }
+
+  @media (min-width: ${breakpoints.imac}px) {
+  }
 `;
 
 const WorkSection = ({ scroll }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const isMobile = window.innerWidth <= breakpoints.mobile;
+  const isMobile = util.getWindowType("mobile");
 
   const getVisibility = () => {
     const result = 1 - (scroll - window.innerHeight * 2) / window.innerHeight;
@@ -142,7 +140,7 @@ const WorkSection = ({ scroll }) => {
               justify="space-between"
               align="start"
             >
-              {!isMobile && projectsData[1].description.toString()}
+              <span>{!isMobile && projectsData[1].description.toString()}</span>
               <CustomButton
                 onClick={(e) => handleClick(e, 1)}
                 button={{
@@ -166,7 +164,7 @@ const WorkSection = ({ scroll }) => {
                 }}
                 isBlank={false}
               />
-              {!isMobile && projectsData[6].description.toString()}
+              <span>{!isMobile && projectsData[6].description.toString()}</span>
             </DescriptionBox>
             <ProjectBox
               onClick={(e) => handleClick(e, 6)}
@@ -174,7 +172,7 @@ const WorkSection = ({ scroll }) => {
             />
           </RowContainer>
         </ProjectWrap>
-        <WavySeparator mainColor={colorSet.background} />
+        <WavySeparator2 mainColor={colorSet.background} />
       </FullContainer>
     </>
   );

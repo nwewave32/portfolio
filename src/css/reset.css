@@ -43,13 +43,39 @@ h6 {
   word-break: keep-all;
 }
 
+h2 {
+  font-size: 4vh;
+}
+
+h3 {
+  font-size: 3vh;
+}
+
+span {
+  font-size: 1.8vh;
+}
+
 p,
 li,
 div {
   font-weight: 200;
-  color: #050505; /*text color*/
+  color: #050505;
   text-decoration: none;
   word-break: keep-all;
+  font-size: 1.8vh;
+}
+
+textarea,
+input {
+  font-size: 1.5vh;
+}
+
+label {
+  font-size: 2.5vh;
+}
+
+button {
+  font-size: 2vh;
 }
 
 a {
