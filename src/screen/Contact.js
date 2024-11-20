@@ -26,7 +26,7 @@ const ContactSection = styled.section
   position: fixed;
   bottom: 0;
 
-  /* Tablet - Portrait 이상 */
+  
   @media (max-width: ${breakpoints.tabletPortrait}px) {
     flex-direction: column-reverse;
   }
@@ -39,13 +39,11 @@ const ContactForm = styled.form`
   align-items: flex-start;
   box-sizing: border-box;
 
-  /* Tablet - Portrait 이상 */
   @media (max-width: ${breakpoints.tabletPortrait}px) {
-    padding: 18px;
+    padding: 10px;
     margin-top: 10px;
   }
 
-  /* Desktop 이상 */
   @media (min-width: ${breakpoints.imac}px) {
     padding: 80px;
   }
@@ -53,8 +51,8 @@ const ContactForm = styled.form`
 
 const TitleH2 = styled.h2`
   box-sizing: border-box;
-  /* Tablet - Portrait 이상 */
-  @media (max-width: ${breakpoints.tabletPortrait}px) {
+
+  @media (min-width: ${breakpoints.tabletLandscape}px) {
     padding: 18px;
   }
 `;
@@ -72,6 +70,10 @@ const Input = styled.input`
   width: 100%;
   font-weight: 300;
   box-sizing: border-box;
+
+  @media (max-width: ${breakpoints.tabletPortrait}px) {
+    margin-bottom: 10px;
+  }
 `;
 
 const Textarea = styled.textarea`
@@ -105,9 +107,10 @@ const LeftSide = styled(FlexBox)`
 `;
 const RightSide = styled(FlexBox)`
   flex: 4;
+
   padding: 50px 20px;
   box-sizing: border-box;
-  /* Tablet - Portrait 이상 */
+
   @media (max-width: ${breakpoints.tabletPortrait}px) {
     padding: 20px 20px;
   }

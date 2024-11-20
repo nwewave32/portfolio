@@ -30,7 +30,9 @@ const WavyLetter = styled.span
   animation: ${wavyAnimation} 1.3s ease infinite;
   font-size: 10vh;
 
-
+  @media (max-width: ${breakpoints.mobile}px) {
+  font-size: 8vh;
+  }
   
 `;
 
@@ -43,8 +45,10 @@ const Container = styled(FlexBox).withConfig({
   padding-bottom: 1px;
   box-sizing: border-box;
   font-size: 10vh;
-
   line-height: 1;
+  @media (max-width: ${breakpoints.mobile}px) {
+    font-size: 8vh;
+  }
 `;
 
 const WavyText = ({ text, highlight = false, color = colorSet.background }) => {

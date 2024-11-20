@@ -51,12 +51,10 @@ const StyledImg = styled.img.attrs(() => ({}))`
   height: 15vh;
   display: block;
 
-  /* Mobile 이하 */
   @media (max-width: ${breakpoints.mobile}px) {
     height: 10vw;
   }
 
-  /* Tablet - Portrait 이상 */
   @media (max-width: ${breakpoints.tabletPortrait}px) {
     height: 10vw;
   }
@@ -80,7 +78,7 @@ const BottomSection = ({ isTargetShown }) => {
             left={isTablet ? 2 : 8}
             time={4}
           >
-            <StyledImg src="main/&.svg" alt="logo" />
+            <StyledImg src="main/&.svg" alt="logo" loading="lazy" />
           </Bubble>
           <Bubble
             isVisible={isTargetShown}

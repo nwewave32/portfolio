@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled, { keyframes } from "styled-components";
 import { Fade } from "react-awesome-reveal";
 import { FlexBox } from "../components/GlobalStyles";
-import WavySeparator2 from "../components/WavySeparator2";
+import WavySeparator from "../components/WavySeparator";
 import { colorSet } from "lib/colorSet";
 import { breakpoints } from "lib/globalData";
 import { skills } from "lib/globalData";
@@ -67,12 +67,10 @@ const TextFade = styled(Fade)`
   overflow-wrap: break-word;
   white-space: normal !important;
 
-  /* Mobile 이하 */
   @media (max-width: ${breakpoints.tabletPortrait}px) {
     width: 90%;
   }
 
-  /* Desktop 이상 */
   @media (min-width: ${breakpoints.imac}px) {
     width: 35%;
   }
@@ -133,7 +131,6 @@ const SkillsSection = styled.section`
   text-align: center;
   max-width: 1000px;
 
-  /* Mobile 이하 */
   @media (max-width: ${breakpoints.mobile}px) {
     padding: 50px 18px;
   }
@@ -145,7 +142,7 @@ const SkillsSection = styled.section`
 
 const SkillTitle = styled.h2`
   margin-bottom: 20px;
-  font-weight: 200;
+  font-weight: 400;
 `;
 
 const SkillSet = styled(FlexBox)`
@@ -174,7 +171,6 @@ const SkillIcon = styled.img`
   height: 10vw;
   margin-bottom: 10px;
 
-  /* Mobile 이하 */
   @media (max-width: ${breakpoints.mobile}px) {
     margin-bottom: 5px;
   }
@@ -192,12 +188,10 @@ const EmptySeparator = styled.div`
   background-color: ${colorSet.base};
   position: relative;
 
-  /* Mobile 이하 */
   @media (max-width: ${breakpoints.mobile}px) {
     padding-top: 200px;
   }
 
-  /* Tablet - Portrait 이상 */
   @media (min-width: ${breakpoints.mobile}px) {
     padding-top: 350px;
   }
@@ -224,10 +218,11 @@ const AboutMe = () => {
             }}
           >
             <ProfileImage
-              src={isHovered ? "main/me.png" : "wave.png"}
+              src={isHovered ? "/main/me.png" : "/wave.png"}
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => setIsHovered(false)}
               alt="My Profile"
+              loading="lazy"
             />
           </ProfileImageWrapper>
           <AboutHeading>About Me</AboutHeading>
@@ -251,7 +246,7 @@ const AboutMe = () => {
       </AboutSection>
 
       <EmptySeparator>
-        <WavySeparator2
+        <WavySeparator
           mainColor={colorSet.background}
           backColor={colorSet.accent}
         />
@@ -264,7 +259,11 @@ const AboutMe = () => {
               {skills.map((skill) => (
                 <Fade delay={100} key={skill.name}>
                   <SkillCard key={skill.name}>
-                    <SkillIcon src={skill.icon} alt={skill.name} />
+                    <SkillIcon
+                      src={skill.icon}
+                      alt={skill.name}
+                      loading="lazy"
+                    />
                     <SkillName>{skill.name}</SkillName>
                   </SkillCard>
                 </Fade>

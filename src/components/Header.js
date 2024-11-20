@@ -22,7 +22,6 @@ const Logo = styled.div`
   > img {
     width: 5vh;
 
-    /* imac 이상 */
     @media (min-width: ${breakpoints.imac}px) {
       width: 6vh;
     }
@@ -36,7 +35,6 @@ const HeaderToggleButton = styled.button`
   z-index: 101;
   border: none;
 
-  /* imac 이상 */
   @media (min-width: ${breakpoints.imac}px) {
     top: 1.5vw;
     right: 4vw;
@@ -53,7 +51,6 @@ const MainNavToggle = styled.a`
 
   cursor: pointer;
 
-  /* imac 이상 */
   @media (min-width: ${breakpoints.imac}px) {
     width: 2.5vw;
     height: 1.5vw;
@@ -70,7 +67,6 @@ const MainNavToggle = styled.a`
     right: 0;
     transition: all ease-out 0.3s;
 
-    /* imac 이상 */
     @media (min-width: ${breakpoints.imac}px) {
       border-bottom: 0.3vw solid ${colorSet.accent};
     }
@@ -92,7 +88,6 @@ const MainNavToggle = styled.a`
     top: 50%;
     transition: all ease-out 0.1s;
 
-    /* imac 이상 */
     @media (min-width: ${breakpoints.imac}px) {
       height: 0.3vw;
     }
@@ -168,7 +163,6 @@ const NavContainer = styled(FlexBox)`
   position: relative;
   z-index: 101;
 
-  /* Mobile 이하 */
   @media (max-width: ${breakpoints.mobile}px) {
     padding: 20px;
   }
@@ -229,7 +223,7 @@ const Header = () => {
           navigate("/");
         }}
       >
-        <img src="wave.png" alt="nwewave" />
+        <img src="/wave.png" alt="nwewave" loading="lazy" />
       </Logo>
       <HeaderToggleButton onClick={toggleHeader}>
         <MainNavToggle className={isOpen ? "active-menu" : ""}>

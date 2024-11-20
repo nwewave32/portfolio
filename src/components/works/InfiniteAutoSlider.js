@@ -144,7 +144,7 @@ const InfiniteAutoSlider = ({
             onMouseEnter={() => handleMouseEnter(project.id)}
             onMouseLeave={handleMouseLeave}
             isHovered={checkIsHovered(project.id)}
-            imgUrl={project.thumbnail}
+            imgUrl={"/" + project.thumbnail}
           >
             {checkIsHovered(project.id) && <BlurredCover />}
             <CardTitle isHovered={checkIsHovered(project.id)}>

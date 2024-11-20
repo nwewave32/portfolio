@@ -4,7 +4,7 @@ import styled, { keyframes, css } from "styled-components";
 
 import { colorSet, waveColorSet } from "lib/colorSet";
 import { FlexBox, FullContainer, StyledSpan, StyledSvg } from "../GlobalStyles";
-import WavySeparator2 from "../WavySeparator2";
+import WavySeparator from "../WavySeparator";
 
 import CustomButton from "../CustomButton";
 import { type } from "@testing-library/user-event/dist/type";
@@ -70,7 +70,6 @@ const ProjectBox = styled(FlexBox).withConfig({
     height: 25vh;
   }
 
-  /* Mobile 이하 */
   @media (max-width: ${breakpoints.mobile}px) {
     min-width: 300px;
   }
@@ -84,7 +83,6 @@ const DescriptionBox = styled(FlexBox)`
   box-sizing: border-box;
   flex-wrap: wrap;
 
-  /* Mobile 이하 */
   @media (max-width: ${breakpoints.mobile}px) {
     height: auto;
   }
@@ -120,7 +118,7 @@ const WorkSection = ({ scroll }) => {
 
   useEffect(() => {
     if (selectedProjectId) {
-      navigate("/works");
+      navigate(`/works/${selectedProjectId}`);
     } else if (selectedProjectId === null) {
       navigate("/");
     }
@@ -140,7 +138,7 @@ const WorkSection = ({ scroll }) => {
               justify="space-between"
               align="start"
             >
-              <span>{!isMobile && projectsData[1].description.toString()}</span>
+              <span>{!isMobile && projectsData[1].description[0]}</span>
               <CustomButton
                 onClick={(e) => handleClick(e, 1)}
                 button={{
@@ -164,7 +162,7 @@ const WorkSection = ({ scroll }) => {
                 }}
                 isBlank={false}
               />
-              <span>{!isMobile && projectsData[6].description.toString()}</span>
+              <span>{!isMobile && projectsData[6].description[0]}</span>
             </DescriptionBox>
             <ProjectBox
               onClick={(e) => handleClick(e, 6)}
@@ -172,7 +170,7 @@ const WorkSection = ({ scroll }) => {
             />
           </RowContainer>
         </ProjectWrap>
-        <WavySeparator2 mainColor={colorSet.background} />
+        <WavySeparator mainColor={colorSet.background} />
       </FullContainer>
     </>
   );

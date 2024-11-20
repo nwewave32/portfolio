@@ -13,7 +13,7 @@ export const projectsData = [
     title: "Cookie or Death",
     date: "2021.08 - 2021.09",
     subtitle:
-      "쿠키를 좋아하는 외계인이 지구에 와서 소통하기 위한 영어 - 외계어 번역기",
+      "쿠키를 좋아하는 외계인이 지구에 와서 소통하기 위한 외계어 번역기",
     description: [
       "데이터 통신 과목에서 1:1 암호화를 배우고 영감을 받아 만든 웹사이트",
       "프레임워크 없이 VanilaJS로만 구현",
@@ -257,6 +257,7 @@ export const skills = [
   { name: "Babel", icon: "/skills/Babel.svg" },
   { name: "Zeplin", icon: "/skills/zeplin.png" },
   { name: "Figma", icon: "/skills/Figma.svg" },
+  { name: "Framer", icon: "/skills/Framer.svg" },
   { name: "StyledComponents", icon: "/skills/StyledComponents.svg" },
   { name: "TailwindCSS", icon: "/skills/TailwindCSS-Light.svg" },
   { name: "Git", icon: "/skills/Git.svg" },

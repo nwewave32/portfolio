@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import styled, { keyframes } from "styled-components";
 
-import WavySeparator2 from "components/WavySeparator2";
+import WavySeparator from "components/WavySeparator";
 import DetailLayout from "../components/works/DetailLayout";
 import { Technology, TechnologiesUsed, FlexBox } from "components/GlobalStyles";
 import { Zoom } from "react-awesome-reveal";
@@ -10,7 +10,7 @@ import InfiniteAutoSlider from "../components/works/InfiniteAutoSlider";
 import { useDispatch, useSelector } from "react-redux";
 import { breakpoints, projectsData } from "lib/globalData";
 import { clearSelectedProjectId, setSelectedProjectId } from "features/global";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { util } from "lib/util";
 
 const ProjectContainer = styled(FlexBox)`
@@ -102,18 +102,10 @@ const Letter = styled.span`
 
 const Projects = () => {
   const dispatch = useDispatch();
-  const location = useLocation();
+  const navigate = useNavigate();
   const [visibility, setVisibility] = useState(1);
   const sectionRef = useRef(null);
   const [topBtnVisibility, setTopBtnVisibility] = useState(false);
-
-  useEffect(() => {
-    // const params = new URLSearchParams(location.search);
-    // const projectId = params.get("projectId");
-    // if (projectId) {
-    //   dispatch(setSelectedProjectId(Number(projectId)));
-    // }
-  }, [dispatch, location]);
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -167,13 +159,14 @@ const Projects = () => {
           <GridProjecet
             clickProject={(index) => {
               dispatch(setSelectedProjectId(index));
+              navigate(`/works/${index}`);
             }}
           />
         </ProjectsSection>
       </Zoom>
 
       <EmptySeparator>
-        <WavySeparator2
+        <WavySeparator
           mainColor={colorSet.background}
           backColor={colorSet.accent}
         />

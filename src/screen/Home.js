@@ -50,12 +50,10 @@ const Logo = styled.div.withConfig({
 const StyledImg = styled.img.attrs(() => ({}))`
   height: 20vh;
 
-  /* Mobile 이하 */
   @media (max-width: ${breakpoints.mobile}px) {
     height: 10vw;
   }
 
-  /* Tablet - Portrait 이상 */
   @media (max-width: ${breakpoints.tabletPortrait}px) {
     height: 10vw;
   }
@@ -207,13 +205,13 @@ const Home = () => {
     <HomeContainer>
       <FixedSection per={Math.floor(percent * 100)}>
         <Logo per={percent.toFixed(3)}>
-          <StyledImg src="main/n.svg" alt="logo" />
-          <StyledImg src="main/w.svg" alt="logo" />
-          <StyledImg src="main/e.svg" alt="logo" />
-          <StyledImg src="main/w.svg" alt="logo" />
-          <StyledImg src="main/a.svg" alt="logo" />
-          <StyledImg src="main/v.svg" alt="logo" />
-          <StyledImg src="main/e.svg" alt="logo" />
+          <StyledImg src="main/n.svg" alt="logo" loading="lazy" />
+          <StyledImg src="main/w.svg" alt="logo" loading="lazy" />
+          <StyledImg src="main/e.svg" alt="logo" loading="lazy" />
+          <StyledImg src="main/w.svg" alt="logo" loading="lazy" />
+          <StyledImg src="main/a.svg" alt="logo" loading="lazy" />
+          <StyledImg src="main/v.svg" alt="logo" loading="lazy" />
+          <StyledImg src="main/e.svg" alt="logo" loading="lazy" />
         </Logo>
       </FixedSection>
       <SectionContainer
@@ -240,11 +238,11 @@ const Home = () => {
           <ContactArrow>
             {[0, 0, 0].map((item, idx) => (
               <Arrow key={idx + item}>
-                <ArrowImg src="next.png" alt="keep_scroll" />
+                <ArrowImg src="/next.png" alt="keep_scroll" loading="lazy" />
               </Arrow>
             ))}
           </ContactArrow>
-          <BottomImg src="main/bottom.svg" alt="bottom_" />
+          <BottomImg src="main/bottom.svg" alt="bottom_" loading="lazy" />
         </Section>
       </SectionContainer>
     </HomeContainer>

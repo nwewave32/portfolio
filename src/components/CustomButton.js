@@ -16,14 +16,14 @@ const LinkBtn = styled(FlexBox).withConfig({
   position: relative;
 
   padding: 10px;
-  line-height: 24px;
+
   word-break: keep-all;
   cursor: pointer;
-  border: 2px solid ${colorSet.base};
+  border: 1px solid ${colorSet.base};
   border-radius: 1.4vh;
   will-change: color;
   color: ${(props) => (props.isHovered ? colorSet.text : colorSet.base)};
-  font-weight: 500;
+  font-weight: 400;
   background-color: transparent;
   overflow: hidden;
   transition: color 1.2s ease-in-out;
