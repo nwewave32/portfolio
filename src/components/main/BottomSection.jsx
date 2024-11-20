@@ -78,7 +78,7 @@ const BottomSection = ({ isTargetShown }) => {
             left={isTablet ? 2 : 8}
             time={4}
           >
-            <StyledImg src="main/&.svg" alt="logo" loading="lazy" />
+            <StyledImg src="/main/&.svg" alt="logo" loading="lazy" />
           </Bubble>
           <Bubble
             isVisible={isTargetShown}
@@ -86,8 +86,8 @@ const BottomSection = ({ isTargetShown }) => {
             left={isTablet ? 14 : 20}
             time={3}
           >
-            <StyledImg src="main/w.svg" alt="logo" />
-            <StyledImg src="main/e.svg" alt="logo" />
+            <StyledImg src="/main/w.svg" alt="logo" />
+            <StyledImg src="/main/e.svg" alt="logo" />
           </Bubble>
           <Bubble
             isVisible={isTargetShown}
@@ -95,10 +95,10 @@ const BottomSection = ({ isTargetShown }) => {
             left={isTablet ? 38 : 50}
             time={2.5}
           >
-            <StyledImg src="main/w.svg" alt="logo" />
-            <StyledImg src="main/a.svg" alt="logo" />
-            <StyledImg src="main/v.svg" alt="logo" />
-            <StyledImg src="main/e.svg" alt="logo" />
+            <StyledImg src="/main/w.svg" alt="logo" />
+            <StyledImg src="/main/a.svg" alt="logo" />
+            <StyledImg src="/main/v.svg" alt="logo" />
+            <StyledImg src="/main/e.svg" alt="logo" />
           </Bubble>
         </>
       )}

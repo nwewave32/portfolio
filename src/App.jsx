@@ -27,25 +27,23 @@ const AppContainer = styled.div`
 
 const App = () => {
   return (
-    <>
-      <Router>
-        <AppContainer>
-          <Header />
-          <MainContainer>
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/about" element={<AboutMe />} />
-              <Route path="/works" element={<Projects />}>
-                <Route path="/works/:id" element={<Projects />} />
-              </Route>
-              <Route path="/contact" element={<Contact />} />
-              <Route path="/test" element={<Test />} />
-            </Routes>
-          </MainContainer>
-          <Footer />
-        </AppContainer>
-      </Router>
-    </>
+    <Router>
+      <AppContainer>
+        <Header />
+        <MainContainer>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/about" element={<AboutMe />} />
+            <Route path="/works" element={<Projects />}>
+              <Route path="/works/:id" element={<Projects />} />
+            </Route>
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/test" element={<Test />} />
+          </Routes>
+        </MainContainer>
+        <Footer />
+      </AppContainer>
+    </Router>
   );
 };
 
