@@ -1,5 +1,3 @@
 # https://www.robotstxt.org/robotstxt.html
 User-agent: *
-Disallow: /rentve/
-Disallow: /Rentve/
-Disallow: /RentVe/
+Disallow:

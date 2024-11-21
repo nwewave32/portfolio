@@ -205,13 +205,13 @@ const Home = () => {
     <HomeContainer>
       <FixedSection per={Math.floor(percent * 100)}>
         <Logo per={percent.toFixed(3)}>
-          <StyledImg src="/main/n.svg" alt="logo" loading="lazy" />
-          <StyledImg src="/main/w.svg" alt="logo" loading="lazy" />
-          <StyledImg src="/main/e.svg" alt="logo" loading="lazy" />
-          <StyledImg src="/main/w.svg" alt="logo" loading="lazy" />
-          <StyledImg src="/main/a.svg" alt="logo" loading="lazy" />
-          <StyledImg src="/main/v.svg" alt="logo" loading="lazy" />
-          <StyledImg src="/main/e.svg" alt="logo" loading="lazy" />
+          <StyledImg src="main/n.svg" alt="logo" loading="lazy" />
+          <StyledImg src="main/w.svg" alt="logo" loading="lazy" />
+          <StyledImg src="main/e.svg" alt="logo" loading="lazy" />
+          <StyledImg src="main/w.svg" alt="logo" loading="lazy" />
+          <StyledImg src="main/a.svg" alt="logo" loading="lazy" />
+          <StyledImg src="main/v.svg" alt="logo" loading="lazy" />
+          <StyledImg src="main/e.svg" alt="logo" loading="lazy" />
         </Logo>
       </FixedSection>
       <SectionContainer
@@ -236,13 +236,13 @@ const Home = () => {
         <Section id="third" ref={section3Ref} bg={colorSet.background}>
           <BottomSection isTargetShown={isTarget3Shown} />
           <ContactArrow>
-            {Array.from({ length: 3 }, (_, idx) => (
-              <Arrow key={idx}>
+            {[0, 0, 0].map((item, idx) => (
+              <Arrow key={idx + item}>
                 <ArrowImg src="/next.png" alt="keep_scroll" loading="lazy" />
               </Arrow>
             ))}
           </ContactArrow>
-          <BottomImg src="/main/bottom.svg" alt="bottom_" loading="lazy" />
+          <BottomImg src="main/bottom.svg" alt="bottom_" loading="lazy" />
         </Section>
       </SectionContainer>
     </HomeContainer>

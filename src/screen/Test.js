@@ -1,3 +1,4 @@
+// App.js
 import React from "react";
 import styled, { createGlobalStyle } from "styled-components";
 
@@ -32,7 +33,7 @@ const TextWithSvgClip = styled(Wrapper)`
 
 function App() {
   return (
-    <React.Fragment>
+    <>
       <GlobalStyle />
       <Wrapper>
         Lorem Ipsum is simply dummy text of the printing and typesetting
@@ -70,7 +71,7 @@ function App() {
           </clipPath>
         </defs>
       </svg>
-    </React.Fragment>
+    </>
   );
 }
 
