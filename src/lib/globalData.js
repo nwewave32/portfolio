@@ -83,6 +83,7 @@ export const projectsData = [
     subtitle: "필라테스 센터에 자동으로 빠르게 예약해주는 매크로",
     description: [
       "티켓팅을 능가하는 어려움을 매크로로 해소",
+      "타이밍 이슈 개선을 위한 시간 조절 기능",
       "매크로 실행 중 발생할 수 있는 다양한 예외 상황을 처리하기 위한 에러 핸들링",
     ],
     technologies: ["Python", "selenium"],
@@ -96,15 +97,17 @@ export const projectsData = [
     date: "2024.10 - 2024.11",
     subtitle: "포트폴리오 전시 사이트",
     description: [
-      "내 포트폴리오를 전시하는 웹사이트를 제작하여 인터랙티브한 사용자 경험과 반응형 디자인을 구현",
+      "포트폴리오를 전시하는 웹사이트를 제작",
+      "인터랙티브한 사용자 경험과 반응형 디자인을 구현",
       "최신 React 기술과 styled-components를 사용하여 개발",
+      "웨이브의 컨셉을 알 수 있는 재사용 가능한 컴포넌트 개발",
+      "1人 기획, 디자인(Framer 경험), 개발",
     ],
     technologies: [
       "React",
       "Styled-components",
       "React Router",
-      "Framer Motion",
-      "Figma",
+      "Framer",
       "Redux",
     ],
     thumbnail: "portfolio/portfolio_main.png",
@@ -131,7 +134,7 @@ export const projectsData = [
     date: "2022.01 - 2024.04",
     subtitle: "LG 전자의 IoT 제품 전용 어플리케이션 ",
     description: [
-      "5개 이상의 제품에서 React.js 프레임워크 이용한 개발 및 유지보수 작업",
+      "5개 이상의 제품에서 React.js 프레임워크 이용한 신규 개발 및 유지보수 작업",
       "디자이너, 백엔드 개발자, PM 등 다양한 팀원들과의 원활한 협업",
       "RESTful API 연동 및 상태 관리(Recoil) 구현",
       "단위 테스트, 통합 테스트 등의 테스팅 경험과 버전 관리 경험(CI/CD 경험)",
@@ -180,7 +183,7 @@ export const projectsData = [
     date: "2023.05 - 2023.09",
     subtitle: "스포츠 코치 매칭 플랫폼 ",
     description: [
-      "외부 개발자와 협업",
+      "외부 개발자(백엔드)와 협업",
       "GetX, Bloc, Provider를 이용해 상태 관리와 효율적인 UX를 제공",
       "RESTful API 연동 및 상태 관리(GetX) 구현",
       "3명의 개발자와 CI 경험",
