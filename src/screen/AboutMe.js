@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled, { keyframes } from "styled-components";
 import { Fade } from "react-awesome-reveal";
 import { FlexBox } from "../components/GlobalStyles";
@@ -6,6 +6,7 @@ import WavySeparator from "../components/WavySeparator";
 import { colorSet } from "lib/colorSet";
 import { breakpoints } from "lib/globalData";
 import { skills } from "lib/globalData";
+import CustomImg from "components/CustomImg";
 
 const AboutContainer = styled(FlexBox)`
   width: 100%;
@@ -37,7 +38,7 @@ const ProfileImageWrapper = styled.div`
   margin-bottom: 10px;
 `;
 
-const ProfileImage = styled.img`
+const ProfileImage = styled(CustomImg)`
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -166,7 +167,7 @@ const SkillCard = styled.div`
   }
 `;
 
-const SkillIcon = styled.img`
+const SkillIcon = styled(CustomImg)`
   width: 10vw;
   height: 10vw;
   margin-bottom: 10px;
@@ -203,7 +204,9 @@ const EmptySeparator = styled.div`
 
 const AboutMe = () => {
   const [isHovered, setIsHovered] = useState(false);
-
+  useEffect(() => {
+    console.log("##isHovered", isHovered);
+  }, [isHovered]);
   return (
     <AboutContainer direction="column" align="center">
       <AboutSection>
@@ -218,11 +221,10 @@ const AboutMe = () => {
             }}
           >
             <ProfileImage
-              src={isHovered ? "/main/me.png" : "/wave.png"}
+              imgSrc={isHovered ? "main/me.png" : "wave.png"}
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => setIsHovered(false)}
               alt="My Profile"
-              loading="lazy"
             />
           </ProfileImageWrapper>
           <AboutHeading>About Me</AboutHeading>
@@ -259,11 +261,7 @@ const AboutMe = () => {
               {skills.map((skill) => (
                 <Fade delay={100} key={skill.name}>
                   <SkillCard key={skill.name}>
-                    <SkillIcon
-                      src={skill.icon}
-                      alt={skill.name}
-                      loading="lazy"
-                    />
+                    <SkillIcon imgSrc={skill.icon} alt={skill.name} />
                     <SkillName>{skill.name}</SkillName>
                   </SkillCard>
                 </Fade>

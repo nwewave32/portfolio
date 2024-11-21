@@ -1,13 +1,13 @@
 import { breakpoints, projectsData } from "lib/globalData";
-import React, { useState, useEffect, useRef, useCallback } from "react";
-import styled, { keyframes, css } from "styled-components";
+import React, { useState, useEffect } from "react";
+import styled from "styled-components";
 
-import { colorSet, waveColorSet } from "lib/colorSet";
-import { FlexBox, FullContainer, StyledSpan, StyledSvg } from "../GlobalStyles";
+import { colorSet } from "lib/colorSet";
+import { FlexBox, FullContainer } from "../GlobalStyles";
 import WavySeparator from "../WavySeparator";
 
 import CustomButton from "../CustomButton";
-import { type } from "@testing-library/user-event/dist/type";
+
 import { useDispatch, useSelector } from "react-redux";
 import { setSelectedProjectId } from "features/global";
 import { useNavigate } from "react-router-dom";
@@ -23,18 +23,12 @@ const ProjectWrap = styled(FlexBox)
   .withConfig({
     shouldForwardProp: (prop) => !["visibility"].includes(prop),
   })`
-  
   width: 50vw;
   height: 70%;
-
-  transition: opacity 1s ease-in-out, transform 0.4s ease-in-out;
-
-    
+  transition: opacity 1s ease-in-out, transform 0.4s ease-in-out;    
   @media (max-width: ${breakpoints.tabletPortrait}px) {
     width: 90vw;
   }
-
-
 
 `;
 
@@ -56,7 +50,8 @@ const ProjectBox = styled(FlexBox).withConfig({
   flex: 3;
   width: 100%;
   height: 30vh;
-  background-image: url(${({ imgUrl }) => imgUrl});
+  background-image: url(${({ imgUrl }) =>
+    process.env.PUBLIC_URL + "/assets/" + imgUrl});
   background-size: cover;
   background-position: center;
   border-radius: 8px;
@@ -122,7 +117,7 @@ const WorkSection = ({ scroll }) => {
     } else if (selectedProjectId === null) {
       navigate("/");
     }
-  }, [selectedProjectId]);
+  }, [selectedProjectId, navigate]);
 
   return (
     <>

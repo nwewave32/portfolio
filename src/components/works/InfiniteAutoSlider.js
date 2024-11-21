@@ -37,7 +37,9 @@ const SlideTrack = styled.div.withConfig({
 
 const backgroundImg = ({ isHovered, imgUrl }) => {
   return isHovered
-    ? `background-image: url(${imgUrl}); background-size: cover; background-position: center; `
+    ? `background-image: url(${
+        process.env.PUBLIC_URL + "/assets/" + imgUrl
+      }); background-size: cover; background-position: center; `
     : "";
 };
 
@@ -144,7 +146,7 @@ const InfiniteAutoSlider = ({
             onMouseEnter={() => handleMouseEnter(project.id)}
             onMouseLeave={handleMouseLeave}
             isHovered={checkIsHovered(project.id)}
-            imgUrl={"/" + project.thumbnail}
+            imgUrl={project.thumbnail}
           >
             {checkIsHovered(project.id) && <BlurredCover />}
             <CardTitle isHovered={checkIsHovered(project.id)}>

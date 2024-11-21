@@ -3,6 +3,7 @@ import styled, { keyframes, css } from "styled-components";
 
 import { colorSet } from "lib/colorSet";
 import { breakpoints } from "lib/globalData";
+import CustomImg from "./CustomImg";
 
 const transition = ({ type, isHovered }) => {
   if (type === "prev") {
@@ -66,7 +67,7 @@ const ArrowButton = ({ text, type, onClick }) => {
       >
         {text}
         <div>
-          <img src={`/${type}.png`} alt={type} loading="lazy" />
+          <CustomImg imgSrc={`${type}.png`} alt={type} />
         </div>
       </StyledButton>
     </>

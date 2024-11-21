@@ -1,8 +1,8 @@
 import { breakpoints } from "lib/globalData";
 import React, { useState, useEffect, useRef } from "react";
 import styled, { keyframes, css } from "styled-components";
-import { FlexBox } from "../GlobalStyles";
-import { colorSet, waveColorSet } from "lib/colorSet";
+import { FlexBox, StyledImg, WordBubble } from "../GlobalStyles";
+import { util } from "lib/util";
 
 const floatUp = (top) => keyframes`
   from {
@@ -47,27 +47,9 @@ const Bubble = styled(FlexBox).withConfig({
     `}
 `;
 
-const StyledImg = styled.img.attrs(() => ({}))`
-  height: 15vh;
-  display: block;
-
-  @media (max-width: ${breakpoints.mobile}px) {
-    height: 10vw;
-  }
-
-  @media (max-width: ${breakpoints.tabletPortrait}px) {
-    height: 10vw;
-  }
-`;
-
 const BottomSection = ({ isTargetShown }) => {
-  const [isTablet, setIsTablet] = useState(false);
+  const isTablet = util.getWindowType("tabletPortrait");
 
-  useEffect(() => {
-    setIsTablet(() => {
-      return window.innerWidth <= breakpoints.tabletPortrait;
-    });
-  }, [window]);
   return (
     <>
       {isTargetShown && (
@@ -78,7 +60,7 @@ const BottomSection = ({ isTargetShown }) => {
             left={isTablet ? 2 : 8}
             time={4}
           >
-            <StyledImg src="main/&.svg" alt="logo" loading="lazy" />
+            <StyledImg imgSrc={`main/&.svg`} alt="logo" height={15} />
           </Bubble>
           <Bubble
             isVisible={isTargetShown}
@@ -86,8 +68,7 @@ const BottomSection = ({ isTargetShown }) => {
             left={isTablet ? 14 : 20}
             time={3}
           >
-            <StyledImg src="main/w.svg" alt="logo" />
-            <StyledImg src="main/e.svg" alt="logo" />
+            <WordBubble word="we" height={15} />
           </Bubble>
           <Bubble
             isVisible={isTargetShown}
@@ -95,10 +76,7 @@ const BottomSection = ({ isTargetShown }) => {
             left={isTablet ? 38 : 50}
             time={2.5}
           >
-            <StyledImg src="main/w.svg" alt="logo" />
-            <StyledImg src="main/a.svg" alt="logo" />
-            <StyledImg src="main/v.svg" alt="logo" />
-            <StyledImg src="main/e.svg" alt="logo" />
+            <WordBubble word="wave" height={15} />
           </Bubble>
         </>
       )}

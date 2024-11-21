@@ -214,7 +214,7 @@ export const projectsData = [
   {
     id: 6,
     category: "corp",
-    title: "RentVe",
+    title: "Rent-Ve",
     date: "2023.10 - 2024.04",
     subtitle: "렌트카 업체 CMS ",
     description: [

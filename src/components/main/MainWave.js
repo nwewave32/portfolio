@@ -1,8 +1,8 @@
-import React, { useEffect, useLayoutEffect, useState } from "react";
+import React from "react";
 import styled, { keyframes } from "styled-components";
 import gsap from "gsap";
 import { colorSet, waveColorSet } from "lib/colorSet";
-import { FlexBox, WavyText } from "../GlobalStyles";
+import { FlexBox, TextOnWave } from "../GlobalStyles";
 import { breakpoints } from "lib/globalData";
 import { util } from "lib/util";
 
@@ -47,6 +47,7 @@ const DynamicWave = styled.path
 const MainWave = ({ waveTop, pace, text1, text2 }) => {
   const TOP = "top";
   const BOTTOM = "bottom";
+
   const getStartOffset = (type) => {
     let result = 0;
     if (type === TOP) {
@@ -56,6 +57,7 @@ const MainWave = ({ waveTop, pace, text1, text2 }) => {
     const isImac = util.getWindowType("imac");
     return isImac && type === TOP ? result - 800 : result;
   };
+
   return (
     <FixedWave waveTop={waveTop} pace={pace}>
       <StyledSVG
@@ -71,7 +73,7 @@ const MainWave = ({ waveTop, pace, text1, text2 }) => {
           fill={colorSet.neutral}
           wavePace={waveTop * 0.35}
         ></DynamicWave>
-        <WavyText color={colorSet.text}>
+        <TextOnWave color={colorSet.text}>
           <textPath
             id="text-path"
             href="#text-curve"
@@ -79,7 +81,7 @@ const MainWave = ({ waveTop, pace, text1, text2 }) => {
           >
             {text1}
           </textPath>
-        </WavyText>
+        </TextOnWave>
         <DynamicWave
           d="M0 155L52.7 170.2C105.3 185.3 210.7 215.7 316 224.2C421.3 232.7 526.7 219.3 631.8 204.7C737 190 842 174 947.2 173.3C1052.3 172.7 1157.7 187.3 1263 197C1368.3 206.7 1473.7 211.3 1579 196.5C1684.3 181.7 1789.7 147.3 1895 147.8C2000.3 148.3 2105.7 183.7 2210.8 190C2316 196.3 2421 173.7 2526.2 164.5C2631.3 155.3 2736.7 159.7 2842 170.3C2947.3 181 3052.7 198 3158 204.7C3263.3 211.3 3368.7 207.7 3473.8 196.8C3579 186 3684 168 3789.2 162.2C3894.3 156.3 3999.7 162.7 4105 182.5C4210.3 202.3 4315.7 235.7 4421 232.5C4526.3 229.3 4631.7 189.7 4737 175.8C4842.3 162 4947.7 174 5052.8 182C5158 190 5263 194 5368.2 188C5473.3 182 5578.7 166 5684 153.8C5789.3 141.7 5894.7 133.3 5947.3 129.2L6000 125L6000 401L5947.3 401C5894.7 401 5789.3 401 5684 401C5578.7 401 5473.3 401 5368.2 401C5263 401 5158 401 5052.8 401C4947.7 401 4842.3 401 4737 401C4631.7 401 4526.3 401 4421 401C4315.7 401 4210.3 401 4105 401C3999.7 401 3894.3 401 3789.2 401C3684 401 3579 401 3473.8 401C3368.7 401 3263.3 401 3158 401C3052.7 401 2947.3 401 2842 401C2736.7 401 2631.3 401 2526.2 401C2421 401 2316 401 2210.8 401C2105.7 401 2000.3 401 1895 401C1789.7 401 1684.3 401 1579 401C1473.7 401 1368.3 401 1263 401C1157.7 401 1052.3 401 947.2 401C842 401 737 401 631.8 401C526.7 401 421.3 401 316 401C210.7 401 105.3 401 52.7 401L0 401Z"
           fill={waveColorSet.layer1}
@@ -102,7 +104,7 @@ const MainWave = ({ waveTop, pace, text1, text2 }) => {
           fill={waveColorSet.layer4}
           wavePace={waveTop * 0.3}
         ></DynamicWave>
-        <WavyText fontSize={20} color={colorSet.background}>
+        <TextOnWave fontSize={20} color={colorSet.background}>
           <textPath
             id="text-path"
             href="#text-curve2"
@@ -110,7 +112,7 @@ const MainWave = ({ waveTop, pace, text1, text2 }) => {
           >
             {text2}
           </textPath>
-        </WavyText>
+        </TextOnWave>
       </StyledSVG>
     </FixedWave>
   );

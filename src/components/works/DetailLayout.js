@@ -1,10 +1,4 @@
-import React, {
-  useEffect,
-  useLayoutEffect,
-  useState,
-  Fragment,
-  useRef,
-} from "react";
+import React, { useRef } from "react";
 import styled, { keyframes } from "styled-components";
 import { Technology, TechnologiesUsed, FlexBox } from "components/GlobalStyles";
 
@@ -17,6 +11,7 @@ import { useDispatch } from "react-redux";
 import { setSelectedProjectId } from "features/global";
 import ArrowButton from "components/ArrowButton";
 import { useNavigate } from "react-router-dom";
+import CustomImg from "components/CustomImg";
 
 const FullContainer = styled(FlexBox)`
   width: 100%;
@@ -233,12 +228,7 @@ const DetailLayout = ({ project }) => {
                 {project.images.map((image, idx) => {
                   return (
                     <ImageBox key={`img-${idx}`}>
-                      <img
-                        src={"/" + image}
-                        width="100%"
-                        alt={image}
-                        loading="lazy"
-                      />
+                      <CustomImg imgSrc={image} alt={image} width="100%" />
                     </ImageBox>
                   );
                 })}

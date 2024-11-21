@@ -28,12 +28,12 @@ const AppContainer = styled.div`
 const App = () => {
   return (
     <>
-      <Router>
+      <Router basename={process.env.PUBLIC_URL}>
         <AppContainer>
           <Header />
           <MainContainer>
             <Routes>
-              <Route path="/" element={<Home />} />
+              <Route exact path="/" element={<Home />} />
               <Route path="/about" element={<AboutMe />} />
               <Route path="/works" element={<Projects />}>
                 <Route path="/works/:id" element={<Projects />} />

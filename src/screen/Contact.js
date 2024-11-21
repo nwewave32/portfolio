@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useEffect } from "react";
 import styled from "styled-components";
-import { FlexBox } from "../components/GlobalStyles";
+import { FlexBox, StyledSvg } from "../components/GlobalStyles";
 import { colorSet } from "lib/colorSet";
 import { breakpoints } from "lib/globalData";
 
@@ -116,10 +116,6 @@ const RightSide = styled(FlexBox)`
   }
 `;
 
-const StyledSVG = styled.svg`
-  width: 100%;
-`;
-
 const Contact = ({ visible = true, isContact = true }) => {
   const [name, setName] = useState("");
   const [emailContent, setEmailContent] = useState("");
@@ -165,7 +161,7 @@ const Contact = ({ visible = true, isContact = true }) => {
   return (
     <ContactSection scrollPer={scrollPer}>
       <LeftSide>
-        <StyledSVG
+        <StyledSvg
           id="visual"
           viewBox="0 0 900 600"
           xmlns="http://www.w3.org/2000/svg"
@@ -192,7 +188,7 @@ const Contact = ({ visible = true, isContact = true }) => {
             d="M0 601L25 601C50 601 100 601 150 601C200 601 250 601 300 601C350 601 400 601 450 601C500 601 550 601 600 601C650 601 700 601 750 601C800 601 850 601 875 601L900 601L900 515L875 522C850 529 800 543 750 549C700 555 650 553 600 551C550 549 500 547 450 547C400 547 350 549 300 547C250 545 200 539 150 533C100 527 50 521 25 518L0 515Z"
             fill="#5c968f"
           ></path>
-        </StyledSVG>
+        </StyledSvg>
       </LeftSide>
       <RightSide direction="column" justify="center">
         <TitleH2>Let's surf with me!</TitleH2>

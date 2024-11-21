@@ -3,7 +3,7 @@ import styled, { keyframes } from "styled-components";
 
 import WavySeparator from "components/WavySeparator";
 import DetailLayout from "../components/works/DetailLayout";
-import { Technology, TechnologiesUsed, FlexBox } from "components/GlobalStyles";
+import { FlexBox } from "components/GlobalStyles";
 import { Zoom } from "react-awesome-reveal";
 import { colorSet } from "lib/colorSet";
 import InfiniteAutoSlider from "../components/works/InfiniteAutoSlider";

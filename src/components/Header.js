@@ -10,6 +10,7 @@ import { colorSet } from "lib/colorSet";
 import { FlexBox } from "./GlobalStyles";
 import WavyText from "./WavyText";
 import { breakpoints } from "lib/globalData";
+import CustomImg from "./CustomImg";
 
 const Logo = styled.div`
   position: fixed;
@@ -223,7 +224,7 @@ const Header = () => {
           navigate("/");
         }}
       >
-        <img src="/wave.png" alt="nwewave" loading="lazy" />
+        <CustomImg imgSrc="wave.png" alt="nwewave" />
       </Logo>
       <HeaderToggleButton onClick={toggleHeader}>
         <MainNavToggle className={isOpen ? "active-menu" : ""}>

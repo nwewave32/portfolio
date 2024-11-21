@@ -1,6 +1,7 @@
 import { colorSet } from "lib/colorSet";
 import { breakpoints } from "lib/globalData";
 import styled from "styled-components";
+import CustomImg from "./CustomImg";
 
 export const TechnologiesUsed = styled.div`
   display: flex;
@@ -47,7 +48,7 @@ export const StyledSvg = styled.svg`
   width: 100%;
 `;
 
-export const WavyText = styled.text`
+export const TextOnWave = styled.text`
   font-weight: 300;
   fill: ${({ color }) => color};
   font-size: 3vh;
@@ -61,3 +62,29 @@ export const StyledSpan = styled.tspan`
   fill: ${colorSet.accent};
   font-size: 2em;
 `;
+
+export const StyledImg = styled(CustomImg).withConfig({
+  shouldForwardProp: (prop) => !["height"].includes(prop),
+})`
+  height: ${({ height }) => height}vh;
+
+  @media (max-width: ${breakpoints.mobile}px) {
+    height: 10vw;
+  }
+
+  @media (max-width: ${breakpoints.tabletPortrait}px) {
+    height: 10vw;
+  }
+`;
+
+export const WordBubble = ({ word, height }) => {
+  const wordArr = word.split("");
+  return wordArr.map((char, idx) => (
+    <StyledImg
+      key={char + idx}
+      imgSrc={`main/${char}.svg`}
+      alt={char + " logo"}
+      height={height}
+    />
+  ));
+};

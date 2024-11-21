@@ -1,0 +1,133 @@
+.
+├── README.md
+├── index.html
+├── jsconfig.json
+├── package-lock.json
+├── package.json
+├── public
+│   ├── cookie_or_death
+│   │   ├── cookie1.png
+│   │   ├── cookie2.png
+│   │   ├── cookie3.png
+│   │   ├── cookie4.png
+│   │   └── cookie_thumb.png
+│   ├── main
+│   │   ├── &.svg
+│   │   ├── a.svg
+│   │   ├── about.svg
+│   │   ├── bottom.svg
+│   │   ├── e.svg
+│   │   ├── me.png
+│   │   ├── n.svg
+│   │   ├── v.svg
+│   │   └── w.svg
+│   ├── manifest.json
+│   ├── nacocha
+│   │   ├── nacocha.png
+│   │   ├── nacocha1.png
+│   │   ├── nacocha2.png
+│   │   └── nacocha3.png
+│   ├── next.png
+│   ├── nicknamemaker
+│   │   ├── nicknamemaker1.png
+│   │   ├── nicknamemaker2.png
+│   │   ├── nicknamemaker3.png
+│   │   ├── nicknamemaker4.png
+│   │   ├── nicknamemaker5.png
+│   │   └── nicknamemaker6.png
+│   ├── pilates
+│   │   ├── pilates1.png
+│   │   └── pilates_thumb.png
+│   ├── portfolio
+│   │   ├── portfolio1.png
+│   │   ├── portfolio2.png
+│   │   ├── portfolio3.png
+│   │   ├── portfolio4.png
+│   │   └── portfolio_main.png
+│   ├── prev.png
+│   ├── rentve
+│   │   └── rentve.png
+│   ├── robots.txt
+│   ├── skills
+│   │   ├── Babel.svg
+│   │   ├── CSS.svg
+│   │   ├── Dart-Light.svg
+│   │   ├── Figma.svg
+│   │   ├── Firebase-Light.svg
+│   │   ├── Flutter-Light.svg
+│   │   ├── Framer.svg
+│   │   ├── Git.svg
+│   │   ├── Github-Light.svg
+│   │   ├── HTML.svg
+│   │   ├── JavaScript.svg
+│   │   ├── Laravel-Light.svg
+│   │   ├── LinkedIn.svg
+│   │   ├── MySQL-Light.svg
+│   │   ├── NextJS-Light.svg
+│   │   ├── NodeJS-Light.svg
+│   │   ├── PHP-Light.svg
+│   │   ├── Python-Light.svg
+│   │   ├── React-Light.svg
+│   │   ├── Redux.svg
+│   │   ├── StyledComponents.svg
+│   │   ├── TailwindCSS-Light.svg
+│   │   ├── TypeScript.svg
+│   │   ├── VSCode-Light.svg
+│   │   ├── VueJS-Light.svg
+│   │   ├── css.png
+│   │   ├── html.png
+│   │   ├── js.png
+│   │   ├── php.png
+│   │   ├── react.png
+│   │   ├── recoil.png
+│   │   └── zeplin.png
+│   ├── thinq
+│   │   ├── dw.png
+│   │   ├── hb.png
+│   │   ├── sc.png
+│   │   ├── thinq.png
+│   │   ├── thinq_logo.png
+│   │   ├── thinq_thumb.png
+│   │   └── wm.png
+│   └── wave.png
+├── src
+│   ├── App.jsx
+│   ├── components
+│   │   ├── ArrowButton.jsx
+│   │   ├── CustomButton.jsx
+│   │   ├── Footer.jsx
+│   │   ├── GlobalStyles.jsx
+│   │   ├── Header.jsx
+│   │   ├── WavySeparator.jsx
+│   │   ├── WavyText.jsx
+│   │   ├── main
+│   │   │   ├── AboutSection.jsx
+│   │   │   ├── BottomSection.jsx
+│   │   │   ├── MainWave.jsx
+│   │   │   └── WorkSection.jsx
+│   │   └── works
+│   │       ├── DetailLayout.jsx
+│   │       └── InfiniteAutoSlider.jsx
+│   ├── css
+│   │   └── reset.css
+│   ├── features
+│   │   └── global.js
+│   ├── index.jsx
+│   ├── lib
+│   │   ├── colorSet.js
+│   │   ├── globalData.js
+│   │   ├── store.js
+│   │   └── util.js
+│   ├── reportWebVitals.js
+│   ├── screen
+│   │   ├── AboutMe.jsx
+│   │   ├── Contact.jsx
+│   │   ├── Home.jsx
+│   │   ├── Projects.jsx
+│   │   └── Test.jsx
+│   └── setupTests.js
+├── structure.txt
+├── vite.config.js
+└── yarn.lock
+
+19 directories, 112 files

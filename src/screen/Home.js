@@ -8,6 +8,8 @@ import { breakpoints } from "lib/globalData";
 import BottomSection from "../components/main/BottomSection";
 import AboutSection from "../components/main/AboutSection";
 import WorkSection from "../components/main/WorkSection";
+import CustomImg from "components/CustomImg";
+import { StyledImg, WordBubble } from "components/GlobalStyles";
 
 const HOME_BACK_COLOR = "#1d343d";
 const HOME_TOP_COLOR = colorSet.secondary;
@@ -47,18 +49,6 @@ const Logo = styled.div.withConfig({
   transition: transform 2s linear;
 `;
 
-const StyledImg = styled.img.attrs(() => ({}))`
-  height: 20vh;
-
-  @media (max-width: ${breakpoints.mobile}px) {
-    height: 10vw;
-  }
-
-  @media (max-width: ${breakpoints.tabletPortrait}px) {
-    height: 10vw;
-  }
-`;
-
 const SectionContainer = styled.div
   .attrs(({ per }) => ({
     style: {
@@ -80,10 +70,6 @@ const Section = styled.section.withConfig({
   background-color: ${({ bg }) => bg ?? HOME_BACK_COLOR};
 `;
 
-const StyledSVG = styled.svg`
-  background-color: pink;
-`;
-
 const FixedSection = styled(Section).withConfig({
   shouldForwardProp: (prop) => !["per"].includes(prop),
 })`
@@ -93,7 +79,7 @@ const FixedSection = styled(Section).withConfig({
   background-color: ${HOME_TOP_COLOR};
 `;
 
-const BottomImg = styled.img`
+const BottomImg = styled(StyledImg)`
   width: 100%;
   position: absolute;
   bottom: 0;
@@ -141,7 +127,7 @@ const Arrow = styled.div`
   }
 `;
 
-const ArrowImg = styled.img`
+const ArrowImg = styled(CustomImg)`
   transform: rotate(90deg);
   width: 36px;
   filter: invert(60%);
@@ -205,13 +191,7 @@ const Home = () => {
     <HomeContainer>
       <FixedSection per={Math.floor(percent * 100)}>
         <Logo per={percent.toFixed(3)}>
-          <StyledImg src="main/n.svg" alt="logo" loading="lazy" />
-          <StyledImg src="main/w.svg" alt="logo" loading="lazy" />
-          <StyledImg src="main/e.svg" alt="logo" loading="lazy" />
-          <StyledImg src="main/w.svg" alt="logo" loading="lazy" />
-          <StyledImg src="main/a.svg" alt="logo" loading="lazy" />
-          <StyledImg src="main/v.svg" alt="logo" loading="lazy" />
-          <StyledImg src="main/e.svg" alt="logo" loading="lazy" />
+          <WordBubble height={20} word="nwewave" />
         </Logo>
       </FixedSection>
       <SectionContainer
@@ -236,13 +216,13 @@ const Home = () => {
         <Section id="third" ref={section3Ref} bg={colorSet.background}>
           <BottomSection isTargetShown={isTarget3Shown} />
           <ContactArrow>
-            {[0, 0, 0].map((item, idx) => (
-              <Arrow key={idx + item}>
-                <ArrowImg src="/next.png" alt="keep_scroll" loading="lazy" />
+            {Array.from({ length: 3 }, (_, idx) => (
+              <Arrow key={idx}>
+                <ArrowImg imgSrc="next.png" alt="keep_scroll" />
               </Arrow>
             ))}
           </ContactArrow>
-          <BottomImg src="main/bottom.svg" alt="bottom_" loading="lazy" />
+          <BottomImg imgSrc="main/bottom.svg" alt="bottom_" />
         </Section>
       </SectionContainer>
     </HomeContainer>
