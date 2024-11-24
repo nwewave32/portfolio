@@ -7,10 +7,9 @@ import MainWave from "../components/main/MainWave";
 import BottomSection from "../components/main/BottomSection";
 import AboutSection from "../components/main/AboutSection";
 import WorkSection from "../components/main/WorkSection";
-import CustomImg from "components/CustomImg";
 import { WordBubble } from "components/GlobalStyles";
 
-const HOME_BACK_COLOR = "#1d343d";
+const HOME_BACK_COLOR = colorSet.background;
 const HOME_TOP_COLOR = colorSet.secondary;
 
 const HomeContainer = styled.div`
@@ -24,7 +23,7 @@ const transform = ({ per }) => {
   const percent = 100 - per * 100;
   const percent2 = Number(per) * 1.5;
 
-  if (percent < 50) {
+  if (percent < 20) {
     return "display: none;";
   } else
     return `
@@ -73,62 +72,10 @@ const FixedSection = styled(Section).withConfig({
   shouldForwardProp: (prop) => !["per"].includes(prop),
 })`
   position: fixed;
-  top: ${({ per }) => (per > 100 ? -30 : 0)}%;
+  top: 0;
   left: 0;
   background-color: ${HOME_TOP_COLOR};
-`;
-
-const BottomImg = styled(CustomImg)`
-  position: absolute;
-  bottom: 0;
-  right: 0;
-`;
-
-const scrollAnimation = keyframes`
-  0% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  50% {
-    opacity: 0.5;
-    transform: translateY(10px);
-  }
-  100% {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-`;
-
-const ContactArrow = styled.div`
-  position: absolute;
-  bottom: 40%;
-  left: 50%;
-  transform: translate(-50%, -10%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-
-const Arrow = styled.div`
-  opacity: 1;
-  animation: ${scrollAnimation} 1.5s ease-in-out infinite;
-
-  &:nth-child(1) {
-    animation-delay: 0s;
-  }
-  &:nth-child(2) {
-    animation-delay: 0.3s;
-  }
-  &:nth-child(3) {
-    animation-delay: 0.6s;
-  }
-`;
-
-const ArrowImg = styled(CustomImg)`
-  transform: rotate(90deg);
-  width: 36px;
-  filter: invert(60%);
-  margin-top: -5px;
+  visibility: ${({ per }) => (per > 200 ? "hidden" : "visible")};
 `;
 
 const phraseArr = [
@@ -212,14 +159,6 @@ const Home = () => {
         </Section>
         <Section id="third" ref={section3Ref} bg={colorSet.background}>
           <BottomSection isTargetShown={isTarget3Shown} />
-          <ContactArrow>
-            {Array.from({ length: 3 }, (_, idx) => (
-              <Arrow key={idx}>
-                <ArrowImg imgSrc="next.png" alt="keep_scroll" />
-              </Arrow>
-            ))}
-          </ContactArrow>
-          <BottomImg imgSrc="main/bottom.svg" alt="bottom_" width="100%" />
         </Section>
       </SectionContainer>
     </HomeContainer>

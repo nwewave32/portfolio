@@ -90,7 +90,7 @@ const RotatingSection = styled.section`
 
 const Letter = styled.span`
   position: absolute;
-  font-family: Poppins;
+
   top: -35px;
   will-change: transform;
   font-size: 10px;

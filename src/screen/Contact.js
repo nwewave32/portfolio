@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useCallback, useEffect, useRef } from "react";
 import styled from "styled-components";
 import { FlexBox, StyledSvg } from "../components/GlobalStyles";
 import { colorSet } from "lib/colorSet";
@@ -40,7 +40,6 @@ const ContactForm = styled.form`
   box-sizing: border-box;
 
   @media (max-width: ${breakpoints.tabletPortrait}px) {
-    padding: 10px;
     margin-top: 10px;
   }
 
@@ -51,19 +50,19 @@ const ContactForm = styled.form`
 
 const TitleH2 = styled.h2`
   box-sizing: border-box;
-
+  margin-top: 20px;
   @media (min-width: ${breakpoints.tabletLandscape}px) {
     padding: 18px;
   }
 `;
 
 const Label = styled.label`
-  margin-bottom: 10px;
+  margin-bottom: 1vh;
 `;
 
 const Input = styled.input`
   padding: 10px;
-  margin-bottom: 20px;
+  margin-bottom: 2vh;
 
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -78,7 +77,7 @@ const Input = styled.input`
 
 const Textarea = styled.textarea`
   padding: 10px;
-  margin-bottom: 20px;
+  margin-bottom: 2vh;
 
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -87,11 +86,14 @@ const Textarea = styled.textarea`
   font-weight: 300;
   resize: none;
   box-sizing: border-box;
+  @media (max-width: ${breakpoints.tabletPortrait}px) {
+    height: 15vh;
+  }
 `;
 
 const SubmitButton = styled.button`
   padding: 10px 20px;
-
+  background-color: rgb(239, 239, 239);
   color: ${colorSet.background};
 
   border: none;
@@ -100,10 +102,17 @@ const SubmitButton = styled.button`
   &:hover {
     background-color: ${colorSet.highlight};
   }
+
+  @media (max-width: ${breakpoints.tabletPortrait}px) {
+    padding: 1vh;
+  }
 `;
 
 const LeftSide = styled(FlexBox)`
   flex: 6;
+  @media (max-width: ${breakpoints.tabletPortrait}px) {
+    flex: 1;
+  }
 `;
 const RightSide = styled(FlexBox)`
   flex: 4;
@@ -112,7 +121,8 @@ const RightSide = styled(FlexBox)`
   box-sizing: border-box;
 
   @media (max-width: ${breakpoints.tabletPortrait}px) {
-    padding: 20px 20px;
+    padding: 2vh 3.5vh;
+    flex: 1;
   }
 `;
 
@@ -130,33 +140,77 @@ const Contact = ({ visible = true, isContact = true }) => {
 
   const [scrollPer, setScrollPer] = useState(isContact ? 100 : 0);
 
-  const handleScroll = useCallback(
+  const touchStartY = useRef(0); // 터치 시작 위치 저장
+
+  const handleWheel = useCallback(
     (e) => {
-      if (visible) {
-        setScrollPer((prev) => {
-          if (prev === undefined || prev < 0) prev = 0;
-          let result = prev;
+      if (!visible) {
+        setScrollPer(0);
+        return;
+      }
 
-          if (e.deltaY > 0) {
-            result += 5;
-            if (result > 100) result = 100;
-          } else if (e.deltaY < 0) {
-            result -= 1;
-          }
+      setScrollPer((prev) => {
+        let result = prev !== undefined && prev >= 0 ? prev : 0;
 
-          return result;
-        });
-      } else setScrollPer(0);
+        if (e.deltaY > 0) {
+          result += 5;
+          if (result > 100) result = 100;
+        } else if (e.deltaY < 0) {
+          result -= 5;
+          if (result < 0) result = 0;
+        }
+
+        return result;
+      });
+    },
+    [visible]
+  );
+
+  const handleTouchStart = useCallback((e) => {
+    touchStartY.current = e.touches[0].clientY;
+  }, []);
+
+  const handleTouchMove = useCallback(
+    (e) => {
+      if (!visible) {
+        setScrollPer(0);
+        return;
+      }
+
+      const touchEndY = e.touches[0].clientY;
+      const deltaY = touchStartY.current - touchEndY;
+
+      setScrollPer((prev) => {
+        let result = prev !== undefined && prev >= 0 ? prev : 0;
+
+        if (deltaY > 0) {
+          result += 5; // 아래로 스크롤
+          if (result > 100) result = 100;
+        } else if (deltaY < 0) {
+          result -= 5; // 위로 스크롤
+          if (result < 0) result = 0;
+        }
+
+        return result;
+      });
+
+      touchStartY.current = touchEndY; // 터치 이동 시 위치 갱신
     },
     [visible]
   );
 
   useEffect(() => {
-    if (!isContact) window.addEventListener("wheel", handleScroll);
+    if (!isContact) {
+      window.addEventListener("wheel", handleWheel);
+      window.addEventListener("touchstart", handleTouchStart);
+      window.addEventListener("touchmove", handleTouchMove);
+    }
     return () => {
-      window.removeEventListener("wheel", handleScroll);
+      window.removeEventListener("wheel", handleWheel);
+      window.removeEventListener("touchstart", handleTouchStart);
+      window.removeEventListener("touchmove", handleTouchMove);
     };
-  }, [visible]);
+  }, [handleWheel, handleTouchStart, handleTouchMove, visible]);
 
   return (
     <ContactSection scrollPer={scrollPer}>
@@ -191,7 +245,7 @@ const Contact = ({ visible = true, isContact = true }) => {
         </StyledSvg>
       </LeftSide>
       <RightSide direction="column" justify="center">
-        <TitleH2>Let's surf with me! {scrollPer}</TitleH2>
+        <TitleH2>Let's surf with me!</TitleH2>
         <ContactForm onSubmit={handleSubmit}>
           <Label>Name</Label>
           <Input

@@ -22,7 +22,7 @@ const TextBox = styled(FlexBox)`
   padding: 0 25%;
 
   position: absolute;
-  top: 0;
+  top: 2%;
   left: 0;
   font-size: 3vh;
   z-index: 2;

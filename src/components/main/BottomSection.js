@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef } from "react";
 import styled, { keyframes, css } from "styled-components";
 import { FlexBox, StyledImg, WordBubble } from "../GlobalStyles";
 import { util } from "lib/util";
+import CustomImg from "components/CustomImg";
 
 const floatUp = (top) => keyframes`
   from {
@@ -46,6 +47,58 @@ const Bubble = styled(FlexBox).withConfig({
         ${hovering(time)} ${time}s ease-in-out infinite 3s;
     `}
 `;
+const scrollAnimation = keyframes`
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  50% {
+    opacity: 0.5;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+`;
+
+const ContactArrow = styled.div`
+  position: absolute;
+  bottom: 40%;
+  left: 50%;
+  transform: translate(-50%, -10%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const Arrow = styled.div`
+  opacity: 1;
+  animation: ${scrollAnimation} 1.5s ease-in-out infinite;
+
+  &:nth-child(1) {
+    animation-delay: 0s;
+  }
+  &:nth-child(2) {
+    animation-delay: 0.3s;
+  }
+  &:nth-child(3) {
+    animation-delay: 0.6s;
+  }
+`;
+
+const ArrowImg = styled(CustomImg)`
+  transform: rotate(90deg);
+  width: 3vh;
+  filter: invert(60%);
+  margin-top: -5px;
+`;
+
+const BottomImg = styled(CustomImg)`
+  position: absolute;
+  bottom: 0;
+  right: 0;
+`;
 
 const BottomSection = ({ isTargetShown }) => {
   const isTablet = util.getWindowType("tabletPortrait");
@@ -80,6 +133,14 @@ const BottomSection = ({ isTargetShown }) => {
           </Bubble>
         </>
       )}
+      <ContactArrow>
+        {Array.from({ length: 3 }, (_, idx) => (
+          <Arrow key={idx}>
+            <ArrowImg imgSrc="next.png" alt="keep_scroll" />
+          </Arrow>
+        ))}
+      </ContactArrow>
+      <BottomImg imgSrc="main/bottom.svg" alt="bottom_" width="100%" />
     </>
   );
 };

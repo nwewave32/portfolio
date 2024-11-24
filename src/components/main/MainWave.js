@@ -13,8 +13,6 @@ const FixedWave = styled.div.withConfig({
   top: -390px;
   left: 0;
 
-  transform: perspective(1200px);
-
   z-index: 10;
   @media (min-width: ${breakpoints.imac}px) {
     top: -790px;
@@ -51,8 +49,8 @@ const MainWave = ({ waveTop, pace, text1, text2 }) => {
   const getStartOffset = (type) => {
     let result = 0;
     if (type === TOP) {
-      result = waveTop * 4 - 500;
-    } else result = waveTop * 4 - window.innerWidth - 500;
+      result = waveTop * 4 - 550;
+    } else result = waveTop * 4 - window.innerWidth - 550;
 
     const isImac = util.getWindowType("imac");
     return isImac && type === TOP ? result - 800 : result;

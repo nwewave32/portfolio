@@ -5,19 +5,27 @@ import CustomImg from "./CustomImg";
 
 export const TechnologiesUsed = styled.div`
   display: flex;
-  padding: 5px;
+  padding: 1vh;
   flex-wrap: wrap;
+  @media (max-width: ${breakpoints.mobile}px) {
+    flex-wrap: nowrap;
+    overflow-x: scroll;
+  }
 `;
 
 export const Technology = styled.div`
-  margin-bottom: 5px;
+  margin-bottom: 1vh;
   background-color: ${colorSet.accent};
   max-width: fit-content;
   padding: 4px 5px;
   border-radius: 8px;
-  margin-right: 5px;
+  margin-right: 1vh;
   word-break: keep-all;
-  color: white;
+  color: ${colorSet.background};
+
+  @media (max-width: ${breakpoints.mobile}px) {
+    white-space: nowrap;
+  }
 `;
 
 export const FlexBox = styled.div

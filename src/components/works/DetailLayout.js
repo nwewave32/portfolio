@@ -12,6 +12,8 @@ import { setSelectedProjectId } from "features/global";
 import ArrowButton from "components/ArrowButton";
 import { useNavigate } from "react-router-dom";
 import CustomImg from "components/CustomImg";
+import { util } from "lib/util";
+import ImageSectionForMobile from "components/works/ImageSection";
 
 const FullContainer = styled(FlexBox)`
   width: 100%;
@@ -42,7 +44,7 @@ const TitleSection = styled.section`
   height: 40vh;
   padding: 100px 0 30px 0;
   box-sizing: border-box;
-  margin-bottom: 20px;
+  margin-bottom: 30vh;
 
   position: sticky;
   top: 0px;
@@ -95,7 +97,6 @@ const DescriptionSection = styled.section`
   width: 80%;
   margin-top: 20px;
 
-  overflow: scroll;
   box-sizing: border-box;
 
   @media (max-width: ${breakpoints.mobile}px) {
@@ -106,7 +107,10 @@ const DescriptionSection = styled.section`
 const ProjectDescription = styled.ul`
   list-style: decimal-leading-zero;
   list-style-position: inside;
-  margin-bottom: 20px;
+
+  max-height: 30vh;
+  overflow: scroll;
+  margin-bottom: 5px;
 `;
 
 const ProjectDesc = styled.li`
@@ -134,15 +138,35 @@ const ImageContainer = styled(FlexBox)`
   transform: perspective(1200px);
 `;
 
-const ImageBox = styled.div`
+const ImageBox = styled(FlexBox).withConfig({
+  shouldForwardProp: (prop) => !["imgUrl", "height"].includes(prop),
+})`
   margin-bottom: 300px;
-
+  box-sizing: border-box;
   position: sticky;
   top: 100px;
+
   height: 100%;
   min-height: 500px;
   background-color: ${colorSet.background};
   opacity: 1;
+
+  @media (min-width: ${breakpoints.tabletPortrait}px) {
+    padding: 0 20px;
+    width: 100%;
+    height: ${({ height }) => height}px;
+    overflow: hidden;
+    background-image: url(${({ imgUrl }) =>
+      process.env.PUBLIC_URL + "/assets/" + imgUrl});
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+`;
+
+const StyledImg = styled.img`
+  width: 100%;
+  height: ${({ height }) => height};
 `;
 
 const ButtonContainer = styled(FlexBox)`
@@ -192,6 +216,9 @@ const DetailLayout = ({ project }) => {
     dispatch(setSelectedProjectId(index));
     navigate(`/works/${index}`);
   };
+
+  const isMobile = util.getWindowType("mobile");
+
   return (
     <FullContainer align="center" direction="column">
       <ContentContainer
@@ -222,21 +249,30 @@ const DetailLayout = ({ project }) => {
             </ButtonsLayout>
           )}
         </TitleSection>
-        <ImageSection>
-          {project?.images && (
-            <Fade>
-              <ImageContainer direction="column">
-                {project.images.map((image, idx) => {
-                  return (
-                    <ImageBox key={`img-${idx}`}>
-                      <CustomImg imgSrc={image} alt={image} width="100%" />
-                    </ImageBox>
-                  );
-                })}
-              </ImageContainer>
-            </Fade>
-          )}
-        </ImageSection>
+        {isMobile ? (
+          <ImageSectionForMobile images={project?.images} />
+        ) : (
+          <ImageSection>
+            {project?.images && (
+              <Fade>
+                <ImageContainer direction="column">
+                  {project.images.map((image, idx) => {
+                    return (
+                      <Fade>
+                        <ImageBox
+                          key={`img-${idx}`}
+                          justify="center"
+                          imgUrl={image}
+                          height={window.innerHeight - 100 - 20}
+                        />
+                      </Fade>
+                    );
+                  })}
+                </ImageContainer>
+              </Fade>
+            )}
+          </ImageSection>
+        )}
 
         <DescriptionSection>
           <Fade>
