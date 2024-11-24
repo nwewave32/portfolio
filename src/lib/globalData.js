@@ -219,9 +219,9 @@ export const projectsData = [
     category: "corp",
     title: "Rent-Ve",
     date: "2023.10 - 2024.04",
-    subtitle: "렌트카 업체 SaaS 기반 CMS ",
+    subtitle: "렌트카 업체 SaaS 기반 CMS",
     description: [
-      "담당 프로젝트",
+      "렌트카 업체 SaaS 기반 CMS",
       "1人 기획, 개발(프론트와 백 동시에 개발)",
       "직관적인 UI/UX와 API 연동을 통해 관리자의 업무 효율을 높임",
       "Tailwind CSS를 활용하여 별도의 CSS 파일 없이 스타일링",

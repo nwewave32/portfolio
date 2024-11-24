@@ -164,11 +164,6 @@ const ImageBox = styled(FlexBox).withConfig({
   }
 `;
 
-const StyledImg = styled.img`
-  width: 100%;
-  height: ${({ height }) => height};
-`;
-
 const ButtonContainer = styled(FlexBox)`
   cursor: pointer;
   padding: 0 20px;
