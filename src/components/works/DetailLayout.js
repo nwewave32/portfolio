@@ -151,7 +151,7 @@ const ImageBox = styled(FlexBox).withConfig({
   background-color: ${colorSet.background};
   opacity: 1;
 
-  @media (min-width: ${breakpoints.tabletPortrait}px) {
+  @media (min-width: ${breakpoints.mobile + 50}px) {
     padding: 0 20px;
     width: 100%;
     height: ${({ height }) => height}px;
