@@ -191,7 +191,7 @@ const Contact = ({ visible = true, isContact = true }) => {
         </StyledSvg>
       </LeftSide>
       <RightSide direction="column" justify="center">
-        <TitleH2>Let's surf with me!</TitleH2>
+        <TitleH2>Let's surf with me! {scrollPer}</TitleH2>
         <ContactForm onSubmit={handleSubmit}>
           <Label>Name</Label>
           <Input

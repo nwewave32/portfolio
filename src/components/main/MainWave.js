@@ -10,14 +10,14 @@ const FixedWave = styled.div.withConfig({
   shouldForwardProp: (prop) => !["waveTop", "pace"].includes(prop),
 })`
   position: absolute;
-  top: -400px;
+  top: -390px;
   left: 0;
 
   transform: perspective(1200px);
 
   z-index: 10;
   @media (min-width: ${breakpoints.imac}px) {
-    top: -800px;
+    top: -790px;
   }
 `;
 

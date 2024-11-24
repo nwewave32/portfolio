@@ -51,7 +51,7 @@ export const projectsData = [
       "1人 기획, 디자인(Figma경험), 개발",
     ],
     technologies: [
-      "React Native & TypeScript -> React.js",
+      "React Native & TypeScript -> ReactJS",
       "Styled-components",
       "Recoil",
       "Figma",
@@ -134,7 +134,7 @@ export const projectsData = [
     date: "2022.01 - 2024.04",
     subtitle: "LG 전자의 IoT 제품 전용 어플리케이션 ",
     description: [
-      "5개 이상의 제품에서 React.js 프레임워크 이용한 신규 개발 및 유지보수 작업",
+      "5개 이상의 제품에서 ReactJS 프레임워크 이용한 신규 개발 및 유지보수 작업",
       "디자이너, 백엔드 개발자, PM 등 다양한 팀원들과의 원활한 협업",
       "RESTful API 연동 및 상태 관리(Recoil) 구현",
       "단위 테스트, 통합 테스트 등의 테스팅 경험과 버전 관리 경험(CI/CD 경험)",
@@ -142,7 +142,7 @@ export const projectsData = [
       "웹 접근성 최적화",
     ],
     technologies: [
-      "React.js",
+      "ReactJS",
       "Styled-components",
       "Recoil",
       "Zeplin",
@@ -219,14 +219,24 @@ export const projectsData = [
     category: "corp",
     title: "Rent-Ve",
     date: "2023.10 - 2024.04",
-    subtitle: "렌트카 업체 CMS ",
+    subtitle: "렌트카 업체 SaaS 기반 CMS ",
     description: [
       "담당 프로젝트",
       "1人 기획, 개발(프론트와 백 동시에 개발)",
       "직관적인 UI/UX와 API 연동을 통해 관리자의 업무 효율을 높임",
       "Tailwind CSS를 활용하여 별도의 CSS 파일 없이 스타일링",
     ],
-    technologies: ["PHP", "Laravel", "Vue.js", "Vuex", "MySQL", "TailwindCSS"],
+    technologies: [
+      "PHP",
+      "Laravel",
+      "Vue.js",
+      "Vuex",
+      "MySQL",
+      "TailwindCSS",
+      "Aligo",
+      "Nova",
+      "tenancy for laravel",
+    ],
 
     buttons: [
       {

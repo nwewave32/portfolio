@@ -6,12 +6,12 @@ const StyledImg = styled.img.withConfig({
 })`
   width: ${({ width }) => width};
 `;
-const CustomImg = ({ imgSrc, alt, width, ...rest }) => {
+const CustomImg = ({ imgSrc, alt, width, isLazy = true, ...rest }) => {
   return (
     <StyledImg
       src={`${process.env.PUBLIC_URL}/assets/${imgSrc}`}
       alt={alt}
-      loading="lazy"
+      loading={isLazy ? "lazy" : "eager"}
       width={width}
       {...rest}
     />

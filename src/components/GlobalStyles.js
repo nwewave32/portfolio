@@ -77,7 +77,7 @@ export const StyledImg = styled(CustomImg).withConfig({
   }
 `;
 
-export const WordBubble = ({ word, height }) => {
+export const WordBubble = ({ word, height, isLazy = true }) => {
   const wordArr = word.split("");
   return wordArr.map((char, idx) => (
     <StyledImg
@@ -85,6 +85,7 @@ export const WordBubble = ({ word, height }) => {
       imgSrc={`main/${char}.svg`}
       alt={char + " logo"}
       height={height}
+      isLazy={isLazy}
     />
   ));
 };

@@ -11,6 +11,7 @@ import { FlexBox } from "./GlobalStyles";
 import WavyText from "./WavyText";
 import { breakpoints } from "lib/globalData";
 import CustomImg from "./CustomImg";
+import { util } from "lib/util";
 
 const Logo = styled.div`
   position: fixed;
@@ -236,9 +237,7 @@ const Header = () => {
           viewBox="0 0 1440 780"
           fill="none"
           preserveAspectRatio={
-            window.innerWidth <= breakpoints.tabletPortrait
-              ? "xMinYMin slice"
-              : "none"
+            util.getWindowType("tabletPortrait") ? "xMinYMin slice" : "none"
           }
           xmlns="http://www.w3.org/2000/svg"
         >

@@ -2,7 +2,7 @@ import { breakpoints } from "lib/globalData";
 import React from "react";
 import styled from "styled-components";
 import { FlexBox, StyledSvg } from "../GlobalStyles";
-import { colorSet } from "lib/colorSet";
+import { colorSet, waveColorSet } from "lib/colorSet";
 import { Fade } from "react-awesome-reveal";
 import { util } from "lib/util";
 
@@ -12,8 +12,7 @@ const FullFullContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-
-  color: white;
+  background-color: ${waveColorSet.layer4};
   overflow: hidden;
 `;
 
@@ -57,11 +56,11 @@ const TextBoxMask = styled(TextBox)`
 
 const StyledSVG = styled(StyledSvg)`
   position: absolute;
-
+  top: 2%;
   height: 100%;
   background: linear-gradient(
     to bottom,
-    transparent 51%,
+    ${waveColorSet.layer4} 51%,
     ${colorSet.secondary} 51%
   );
 `;

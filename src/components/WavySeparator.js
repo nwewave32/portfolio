@@ -6,7 +6,7 @@ import styled from "styled-components";
 
 const WaveContainer = styled.div`
   position: absolute;
-  bottom: 0;
+  bottom: -2%;
   width: 100vw;
   height: 300px;
   overflow: hidden;

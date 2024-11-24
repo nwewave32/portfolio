@@ -21,7 +21,7 @@ const FullContainer = styled(FlexBox)`
 const ContentContainer = styled(FlexBox)`
   padding: 24px 0px;
   width: 80%;
-
+  box-sizing: border-box;
   @media (max-width: ${breakpoints.mobile}px) {
     width: 100%;
 
@@ -95,6 +95,7 @@ const DescriptionSection = styled.section`
   width: 80%;
   margin-top: 20px;
 
+  overflow: scroll;
   box-sizing: border-box;
 
   @media (max-width: ${breakpoints.mobile}px) {

@@ -4,12 +4,11 @@ import { colorSet, waveColorSet } from "lib/colorSet";
 
 import MainWave from "../components/main/MainWave";
 
-import { breakpoints } from "lib/globalData";
 import BottomSection from "../components/main/BottomSection";
 import AboutSection from "../components/main/AboutSection";
 import WorkSection from "../components/main/WorkSection";
 import CustomImg from "components/CustomImg";
-import { StyledImg, WordBubble } from "components/GlobalStyles";
+import { WordBubble } from "components/GlobalStyles";
 
 const HOME_BACK_COLOR = "#1d343d";
 const HOME_TOP_COLOR = colorSet.secondary;
@@ -79,14 +78,12 @@ const FixedSection = styled(Section).withConfig({
   background-color: ${HOME_TOP_COLOR};
 `;
 
-const BottomImg = styled(StyledImg)`
-  width: 100%;
+const BottomImg = styled(CustomImg)`
   position: absolute;
   bottom: 0;
   right: 0;
 `;
 
-// 점차 밑으로 이동하며 페이드 아웃되는 애니메이션
 const scrollAnimation = keyframes`
   0% {
     opacity: 1;
@@ -191,7 +188,7 @@ const Home = () => {
     <HomeContainer>
       <FixedSection per={Math.floor(percent * 100)}>
         <Logo per={percent.toFixed(3)}>
-          <WordBubble height={20} word="nwewave" />
+          <WordBubble height={20} word="nwewave" isLazy={false} />
         </Logo>
       </FixedSection>
       <SectionContainer
@@ -222,7 +219,7 @@ const Home = () => {
               </Arrow>
             ))}
           </ContactArrow>
-          <BottomImg imgSrc="main/bottom.svg" alt="bottom_" />
+          <BottomImg imgSrc="main/bottom.svg" alt="bottom_" width="100%" />
         </Section>
       </SectionContainer>
     </HomeContainer>
