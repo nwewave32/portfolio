@@ -1,5 +1,5 @@
 import "./css/reset.css";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { HashRouter as Router, Route, Routes } from "react-router-dom";
 import React from "react";
 
 import Home from "screen/Home";
@@ -28,7 +28,7 @@ const AppContainer = styled.div`
 const App = () => {
   return (
     <>
-      <Router basename={process.env.PUBLIC_URL}>
+      <Router>
         <AppContainer>
           <Header />
           <MainContainer>
