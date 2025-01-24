@@ -250,6 +250,42 @@ export const projectsData = [
     thumbnail: "rentve/rentve.png",
     images: ["rentve/rentve.png"],
   },
+  {
+    id: 7,
+    category: "side",
+    title: "나이키+3D",
+    date: "2024.12 - 2025.01",
+    subtitle: "나이키 클론 + three.js ",
+    description: [
+      "three.js를 이용한 웹사이트 제작",
+      "나이키 사이트를 참고하여 상품 페이지 개발",
+      "글로벌 스타일 적용",
+      "재사용 가능한 컴포넌트 개발",
+    ],
+    technologies: [
+      "TypeScript",
+      "React",
+      "Styled-components",
+      "React Router",
+      "Vercel",
+      "Node.js",
+    ],
+    thumbnail: "nike/nike4.png",
+    images: [
+      "nike/nike1.png",
+      "nike/nike2.png",
+      "nike/nike3.png",
+      "nike/nike4.png",
+    ],
+    buttons: [
+      {
+        id: 0,
+        type: "link",
+        url: "https://nike-custom-gamma.vercel.app/",
+        title: "Visit Site",
+      },
+    ],
+  },
 ];
 
 export const skills = [
@@ -275,6 +311,7 @@ export const skills = [
   { name: "TailwindCSS", icon: "/skills/TailwindCSS-Light.svg" },
   { name: "Git", icon: "/skills/Git.svg" },
   { name: "Github", icon: "/skills/Github-Light.svg" },
+  { name: "Vercel", icon: "/skills/Vercel.svg" },
   { name: "Firebase", icon: "/skills/Firebase-Light.svg" },
   { name: "LinkedIn", icon: "/skills/LinkedIn.svg" },
   { name: "VSCode", icon: "/skills/VSCode-Light.svg" },
